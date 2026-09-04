@@ -27,12 +27,24 @@ const isCurrent = (href: string) =>
     data-mobile-nav-toggle
   >
     <Icon class="mobile-nav__icon mobile-nav__icon--menu" name="menu" size={20} />
-    <Icon class="mobile-nav__icon mobile-nav__icon--close" name="x" size={20} />
+    {
+      /* A single rule rather than an X: the open state reads as "collapse this
+        back", and the rule is the same stroke the three-line menu mark is built
+        from. The button's aria-label still swaps to "Close navigation", so the
+        accessible name does not depend on reading the glyph. */
+    }
+    <Icon class="mobile-nav__icon mobile-nav__icon--close" name="minus" size={20} />
   </button>
 
+  {
+    /* tabindex="-1" so opening can move focus to the panel itself. Focusing the
+      first link instead put the focus ring on Home every time the menu opened —
+      on Home whatever page you were on, since it is first, not current. */
+  }
   <div
     class="mobile-nav__panel"
     id="mobile-nav-panel"
+    tabindex="-1"
     hidden
     inert
     aria-hidden="true"
@@ -123,7 +135,11 @@ const isCurrent = (href: string) =>
 
         requestAnimationFrame(() => {
           if (root.dataset.state === "opening") root.dataset.state = "open";
-          panel.querySelector<HTMLAnchorElement>("a")?.focus();
+          // The panel, not its first link: this is a modal surface, so focus
+          // belongs inside it, but landing on a link paints that link's focus
+          // ring on every open, including taps. Tab from here still reaches
+          // the links in order, each with its own ring.
+          panel.focus();
         });
       };
 
@@ -252,7 +268,11 @@ const isCurrent = (href: string) =>
     z-index: 20;
     top: calc(3.5rem + var(--space-2));
     right: max(var(--page-gutter), calc((100vw - var(--content-width)) / 2));
-    width: min(20rem, calc(100vw - 2 * var(--page-gutter)));
+    /* Sized to the list, not to the screen. The longest label, Publications,
+       measures 75px; at 20rem the panel was 320px and better than half of it
+       was empty. 13rem leaves the label roughly twice its own width to sit in
+       and still gives the Contact pill a button-like footprint. */
+    width: min(13rem, calc(100vw - 2 * var(--page-gutter)));
     border: var(--control-stroke) solid var(--color-control);
     border-radius: var(--radius-sheet);
     padding: var(--space-2);
@@ -266,6 +286,14 @@ const isCurrent = (href: string) =>
 
   .mobile-nav__panel[hidden] {
     display: none;
+  }
+
+  /* The panel is a focus target only so the modal can hand focus inward; it is
+     not a control, and its own outline would just redraw the border already
+     there. The links keep theirs. */
+  .mobile-nav__panel:focus,
+  .mobile-nav__panel:focus-visible {
+    outline: none;
   }
 
   .mobile-nav[data-state="opening"] .mobile-nav__panel,
