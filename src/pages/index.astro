@@ -1,7 +1,18 @@
 ---
 import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 
 import portrait from "../assets/profile/zhuocheng-zhang.webp";
+
+/**
+ * The portrait is the first screen's largest element, so it is eager and
+ * high priority — but it was also going out at its full 1122 px to fill a
+ * plate measuring 204 px at 375, 287 at 768 and 393 from 82rem up. The ladder
+ * tops out at the source width, which covers the widest plate at 3x.
+ */
+const PORTRAIT_WIDTHS = [400, 600, 800, portrait.width];
+const PORTRAIT_SIZES =
+  "(max-width: 44.98rem) 56vw, (max-width: 63.98rem) 38vw, 28vw";
 import Card from "../components/Card.astro";
 import Icon, { type IconName } from "../components/Icon.astro";
 import KnowledgeMap from "../components/KnowledgeMap.astro";
@@ -91,11 +102,12 @@ const arcLabels = ["Where I came from", "Why I moved", "What I build now"];
         </div>
 
         <figure class="home-hero__figure frost-plate" {...nudge("figure", "Portrait")}>
-          <img
-            src={portrait.src}
-            width={portrait.width}
-            height={portrait.height}
+          <Image
+            src={portrait}
             alt="Portrait of Zhuocheng Zhang"
+            widths={PORTRAIT_WIDTHS}
+            sizes={PORTRAIT_SIZES}
+            loading="eager"
             fetchpriority="high"
           />
         </figure>
