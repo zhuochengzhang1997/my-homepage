@@ -9,17 +9,21 @@
  * meaning.
  *
  * These went out as raw `<img src={photo.src}>`, which hands the browser the
- * untouched source PNG: 1672x911 downloaded to fill a 385 px plate, 2.7 MB
+ * untouched source: 1672x911 PNGs downloaded to fill a 385 px plate, 2.7 MB
  * across the three, eager, and /research/ took 14 s to finish loading. Astro
  * only optimizes what goes through `<Image>` — an `ImageMetadata.src` is just
  * a copied file. Keep this on `<Image>`.
+ *
+ * The masters are lossless WebP, verified pixel-identical to the PNGs they
+ * replaced. Lossless, not quality-tuned: the delivered variants are re-encoded
+ * from these on every build, so a lossy master would compound.
  */
 import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
 
-import harnessRef from "../assets/research/agent-autonomy-ref.png";
-import loopRef from "../assets/research/learning-loop-ref.png";
-import graphRef from "../assets/research/domain-ontology-ref.png";
+import harnessRef from "../assets/research/agent-autonomy-ref.webp";
+import loopRef from "../assets/research/learning-loop-ref.webp";
+import graphRef from "../assets/research/domain-ontology-ref.webp";
 
 /**
  * Rendered widths to generate; anything wider than the source is dropped.
