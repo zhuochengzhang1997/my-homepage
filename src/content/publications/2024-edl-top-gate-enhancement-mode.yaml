@@ -1,0 +1,55 @@
+title: "First Demonstration of Top-Gate Enhancement-Mode ALD In₂O₃ FETs with High Thermal Budget of 600 °C for DRAM Applications"
+authors:
+  - displayName: J.-Y. Lin
+    isSiteOwner: false
+  - displayName: Z. Zhang
+    isSiteOwner: true
+  - displayName: Z. Lin
+    isSiteOwner: false
+  - displayName: C. Niu
+    isSiteOwner: false
+  - displayName: Y. Zhang
+    isSiteOwner: false
+  - displayName: Y. Zhang
+    isSiteOwner: false
+  - displayName: T. Kim
+    isSiteOwner: false
+  - displayName: H. Jang
+    isSiteOwner: false
+  - displayName: C. Sung
+    isSiteOwner: false
+  - displayName: M. Hong
+    isSiteOwner: false
+  - displayName: S. Lee
+    isSiteOwner: false
+  - displayName: T. Lee
+    isSiteOwner: false
+  - displayName: M. Cho
+    isSiteOwner: false
+  - displayName: D. Ha
+    isSiteOwner: false
+  - displayName: C. Jeong
+    isSiteOwner: false
+  - displayName: H. Wang
+    isSiteOwner: false
+  - displayName: M. A. Alam
+    isSiteOwner: false
+  - displayName: P. D. Ye
+    isSiteOwner: false
+year: 2024
+publishedAt: "2024-10"
+type: journal-article
+status: published
+doi: 10.1109/led.2024.3442729
+venue:
+  name: IEEE Electron Device Letters
+volume: "45"
+issue: "10"
+pages: 1851-1854
+verification:
+  status: user-confirmed
+  provenance: user-supplied
+  sourceId: site-owner-publication-list-2026-01-20
+  note: Bibliographic details come from the site owner's own publication list; the complete record is maintained on Google Scholar.
+  checkedAt: 2026-08-26
+  publishable: true

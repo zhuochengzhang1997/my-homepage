@@ -1,0 +1,213 @@
+---
+import { getCollection } from "astro:content";
+
+import portrait from "../assets/profile/zhuocheng-zhang.webp";
+import Card from "../components/Card.astro";
+import Icon, { type IconName } from "../components/Icon.astro";
+import KnowledgeMap from "../components/KnowledgeMap.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const [profileEntry] = await getCollection("profile");
+const profile = profileEntry.data;
+const positioning = profile.positioning;
+const proofPoints = profile.proofPoints ?? [];
+
+// One decorative Lucide mark per proof point, in the order the profile declares
+// them: the degree, the fab, the agent infrastructure. Positional on purpose —
+// the label and detail still carry every bit of the meaning. The fab point uses
+// `cpu` rather than `factory`: the claim is silicon that taped out, not a plant.
+const proofIcons: IconName[] = ["graduation-cap", "cpu", "bot"];
+
+// The map at the foot of the page. Its taxonomy is the field's own, not a
+// personal skill list — see KnowledgeMap.astro for the contract, and
+// Workspace/Study/knowledge-map/ for the source data and the grading tool.
+const [knowledgeMapEntry] = await getCollection("knowledgeMap");
+const knowledgeMap = knowledgeMapEntry.data;
+
+const essays = (await getCollection("essays"))
+  .filter((entry) => !entry.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
+const featured = essays[0];
+
+// The hero claim is authored line by line so neither sentence ever breaks
+// mid-phrase, whatever the viewport does.
+const claimLines = positioning?.statement ?? ["Zhuocheng Zhang"];
+
+const isDev = import.meta.env.DEV;
+const nudge = (id: string, label: string) =>
+  isDev ? { "data-nudge": id, "data-nudge-label": label } : {};
+
+// Background reads as an arc rather than three loose paragraphs: where the work
+// started, why it turned, what it is now. Labels are presentation, so they live
+// here; the prose itself stays in the profile content file.
+const biography = profile.biography.paragraphs ?? [profile.biography.sourceText];
+const arcLabels = ["Where I came from", "Why I moved", "What I build now"];
+
+// CV PDF download slot — enable once the 2026 CV is final. Drop the file at
+// public/cv/zhuocheng-zhang-cv.pdf and add it to the footer's action row
+// (SiteFooter.astro), beside the mail pill — contact lives there now, not here.
+---
+
+<BaseLayout
+  title="Zhuocheng Zhang"
+  description={positioning?.metaDescription ??
+    "Zhuocheng Zhang builds and evaluates agent systems for reliable semiconductor workflow automation."}
+>
+  <main id="main-content" tabindex="-1">
+    <section class="section-band section-band--canvas home-hero" aria-labelledby="home-title">
+      <div class="page-shell home-hero__grid">
+        <div class="home-hero__intro" {...nudge("intro", "Right column")}>
+          <p class="eyebrow" {...nudge("eyebrow", "Eyebrow")}>
+            {positioning?.eyebrow ?? "Semiconductors × AI agents"}
+          </p>
+          <h1 class="home-hero__claim" id="home-title" {...nudge("claim", "Title")}>
+            {claimLines.map((line) => <span class="home-hero__claim-line">{line}</span>)}
+          </h1>
+          <p class="home-hero__lead" {...nudge("lead", "Role")}>
+            <span>{profile.currentRole.title}</span>
+            <span>{profile.currentRole.institution}</span>
+          </p>
+
+          {
+            proofPoints.length > 0 && (
+              <ul
+                class="proof-grid"
+                aria-label="Background at a glance"
+                {...nudge("proof", "Proof row")}
+              >
+                {proofPoints.map((point, index) => (
+                  <li class="proof-grid__item">
+                    {proofIcons[index] && <Icon name={proofIcons[index]} size={28} />}
+                    <span class="proof-grid__text">
+                      <span class="proof-grid__value">{point.label}</span>
+                      <span class="proof-grid__label">{point.detail}</span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )
+          }
+        </div>
+
+        <figure class="home-hero__figure frost-plate" {...nudge("figure", "Portrait")}>
+          <img
+            src={portrait.src}
+            width={portrait.width}
+            height={portrait.height}
+            alt="Portrait of Zhuocheng Zhang"
+            fetchpriority="high"
+          />
+        </figure>
+      </div>
+    </section>
+
+    <div class="home-reading">
+      <section
+        class="section-band section-band--paper home-about-band"
+        aria-labelledby="home-about-title"
+      >
+        <div class="page-shell home-about">
+          <SectionHeader
+            level={2}
+            eyebrow="Background"
+            title="From semiconductor devices to agentic workflows"
+            id="home-about-title"
+          >
+            <Fragment slot="lede">
+              I am building systems to shorten semiconductor engineering cycles
+              <span class="lede-line">without weakening engineering judgment.</span>
+            </Fragment>
+          </SectionHeader>
+
+          <ol class="about-arc">
+            {
+              biography.map((paragraph, index) => (
+                <li class="about-arc__step">
+                  {arcLabels[index] && <p class="about-arc__label">{arcLabels[index]}</p>}
+                  <p>{paragraph}</p>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+      </section>
+
+      <section
+        class="section-band section-band--soft home-entry-band"
+        aria-labelledby="home-explore-title"
+      >
+        <div class="page-shell editorial-grid home-entry-grid">
+          <SectionHeader
+            level={2}
+            eyebrow="Where to start"
+            title="The argument, the work, and the record"
+            id="home-explore-title"
+            class="home-entry-grid__header"
+          />
+
+          <div class="home-entry-grid__cards card-grid">
+            {
+              featured && (
+                <Card
+                  eyebrow="Featured essay"
+                  title={featured.data.title}
+                  href={`/essays/${featured.id}/`}
+                  cta="Read the essay"
+                  icon="file-text"
+                >
+                  <p>{featured.data.subtitle ?? featured.data.description}</p>
+                </Card>
+              )
+            }
+
+            <Card
+              eyebrow="Research"
+              title="What it takes for an agent to touch a device model"
+              href="/research/"
+              cta="See the research"
+              icon="microscope"
+            >
+              <p>
+                How agents can perform device-modeling tasks within clear physical boundaries, leave
+                an auditable decision trail, and turn reviewed experience into reusable engineering
+                knowledge.
+              </p>
+            </Card>
+
+            <Card
+              eyebrow="Publications"
+              title="Device physics, fabrication, and reliability"
+              href="/publications/"
+              cta="Browse publications"
+              icon="library-big"
+            >
+              <p>
+                Experimental transistors for future logic and memory, from new device architectures
+                and record drain currents to the reliability physics that determines whether they
+                remain stable.
+              </p>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      <section
+        class="section-band section-band--canvas home-map-band"
+        aria-labelledby="home-map-title"
+      >
+        <div class="page-shell home-map">
+          <SectionHeader
+            level={2}
+            eyebrow="Knowledge map"
+            title={knowledgeMap.title}
+            id="home-map-title"
+            lede={knowledgeMap.lede}
+          />
+
+          <KnowledgeMap levels={knowledgeMap.levels} groups={knowledgeMap.groups} />
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLayout>

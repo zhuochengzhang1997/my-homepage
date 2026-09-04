@@ -1,0 +1,39 @@
+title: "Comprehensive Study of Low-Frequency Noise Origins in Scaled Atomic-Layer-Deposited IGZO TFTs"
+authors:
+  - displayName: S. Lee
+    isSiteOwner: false
+  - displayName: C. Niu
+    isSiteOwner: false
+  - displayName: "C.-A. Shih"
+    isSiteOwner: false
+  - displayName: "J.-Y. Lin"
+    isSiteOwner: false
+  - displayName: Z. Zhang
+    isSiteOwner: true
+  - displayName: Y. Zhang
+    isSiteOwner: false
+  - displayName: L. Long
+    isSiteOwner: false
+  - displayName: H. Wang
+    isSiteOwner: false
+  - displayName: M. A. Alam
+    isSiteOwner: false
+  - displayName: P. D. Ye
+    isSiteOwner: false
+year: 2025
+publishedAt: "2025-06"
+type: journal-article
+status: published
+doi: 10.1109/ted.2025.3562509
+venue:
+  name: IEEE Transactions on Electron Devices
+volume: "72"
+issue: "6"
+pages: "2993-2999"
+verification:
+  status: user-confirmed
+  provenance: external-source
+  sourceId: google-scholar-mela3NQAAAAJ-2026-08-31
+  note: Listed as a journal or conference paper on the site owner's Google Scholar profile. Authors, venue, and pagination completed from the Crossref/publisher record.
+  checkedAt: 2026-08-31
+  publishable: true

@@ -1,0 +1,34 @@
+title: The domain, compiled for agents
+order: 3
+thesis: >-
+  An agent can follow only a workflow that has been made explicit. Extending
+  this approach beyond compact modeling requires a versioned, machine-checkable
+  representation of domain concepts, quality rules, figures of merit, and
+  physical constraints.
+body:
+  - >-
+    Much of compact modeling is tacit. Engineers still have to judge what a
+    parameter means, which measurements support a claim, and what counts as an
+    acceptable fit. The ontology represents those judgments as a structured map
+    of domain concepts, relations, quality rules, and figures of merit. Its own
+    rules are checked automatically, each concept keeps a stable identity, and
+    every version is preserved.
+  - >-
+    A process design kit is a useful analogy. A PDK does not expose the full
+    manufacturing process. It compiles selected process knowledge, constraints,
+    models, and verification interfaces into a form design teams can use. This
+    work builds a comparable interface around the engineering work itself.
+  - >-
+    This layer may extend beyond compact modeling, but that claim still needs
+    evidence. Semiconductor engineering is a useful test case: much of its
+    expertise remains tacit, and its mistakes are expensive.
+tags:
+  - Compact-modeling ontology
+  - Machine-checkable rules
+  - Versioned domain knowledge
+verification:
+  status: user-confirmed
+  provenance: user-confirmed
+  sourceId: research-copy-review-2026-08-26
+  checkedAt: 2026-08-26
+  publishable: true

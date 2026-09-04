@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Zhuocheng Zhang">
+  <rect width="64" height="64" rx="18" fill="#f7f1ea"/>
+  <g opacity="0.9">
+    <path d="M0 46c11-9 20-10 28-4 7 5 13 5 20-2 6-5 11-7 16-6v30H0Z" fill="#ead9cc"/>
+    <path d="M0 53c12-8 21-8 29-3 7 5 13 5 19-1 6-5 11-6 16-5v20H0Z" fill="#d9b7a5"/>
+    <path d="M0 59c12-6 22-6 30-2 7 4 13 4 19 0 5-3 10-4 15-3v10H0Z" fill="#a9a0ae"/>
+  </g>
+  <g fill="#201b18">
+    <path d="M13 13h22v4.6L20.6 34.6H35V40H12.4v-4.6L26.8 18.4H13Z"/>
+    <path d="M36 22h16v3.4L41.5 39.6H52V44H35.4v-3.4L45.9 26.4H36Z" opacity="0.55"/>
+  </g>
+</svg>

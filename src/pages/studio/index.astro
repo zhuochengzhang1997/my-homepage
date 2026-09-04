@@ -1,0 +1,259 @@
+---
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+
+import PhotoWall from "../../components/PhotoWall.astro";
+import SectionHeader from "../../components/SectionHeader.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const lede = "Personal experiments in code and photography.";
+
+const pieces = (await getCollection("projects"))
+  .filter((entry) => !entry.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
+
+const photographs = pieces.filter((entry) => entry.data.kind === "photograph");
+const programs = pieces.filter((entry) => entry.data.kind === "program");
+---
+
+<BaseLayout title="Studio | Zhuocheng Zhang" description={lede}>
+  <main id="main-content">
+    <div class="section-band section-band--canvas page-lede-band">
+      <div class="page-shell editorial-grid">
+        <SectionHeader
+          class="page-lede-band__header"
+          eyebrow="Outside the lab"
+          title="Studio"
+          lede={lede}
+        />
+      </div>
+    </div>
+
+    <div class="section-band section-band--soft studio-hang-band">
+      <div class="page-shell studio-hang">
+        <section class="studio-row" aria-labelledby="studio-programs">
+          <h2 class="eyebrow studio-row__heading" id="studio-programs">Vibe coding projects</h2>
+          <div class="studio-row__body studio-row__body--programs">
+            {
+              programs.map((piece) => (
+                <article
+                  class="studio-piece studio-piece--program"
+                  aria-labelledby={`${piece.id}-title`}
+                >
+                  {piece.data.image ? (
+                    piece.data.href ? (
+                      <a
+                        class="studio-program__plate"
+                        href={piece.data.href}
+                        tabindex="-1"
+                        aria-hidden="true"
+                      >
+                        <Image
+                          class="studio-program__image"
+                          src={piece.data.image}
+                          alt=""
+                          widths={[512, 768, 1024]}
+                          sizes="(min-width: 45rem) 20vw, 80vw"
+                        />
+                      </a>
+                    ) : (
+                      <div class="studio-program__plate">
+                        <Image
+                          class="studio-program__image"
+                          src={piece.data.image}
+                          alt={piece.data.imageAlt ?? ""}
+                          widths={[512, 768, 1024]}
+                          sizes="(min-width: 45rem) 20vw, 80vw"
+                        />
+                      </div>
+                    )
+                  ) : (
+                    <div class="studio-program__plate" aria-hidden="true" />
+                  )}
+                  <div class="studio-program__note">
+                    <h3 id={`${piece.id}-title`}>
+                      {piece.data.href ? (
+                        <a href={piece.data.href}>{piece.data.name}</a>
+                      ) : (
+                        piece.data.name
+                      )}
+                    </h3>
+                    <p>{piece.data.description}</p>
+                  </div>
+                </article>
+              ))
+            }
+          </div>
+        </section>
+
+        <section class="studio-row" aria-labelledby="studio-photographs">
+          <h2 class="eyebrow studio-row__heading" id="studio-photographs">Photographs</h2>
+          <p class="studio-row__lede">
+            Cities, coastlines, and changing light, photographed along the way.
+          </p>
+          <PhotoWall />
+          {
+            photographs.length > 0 && (
+              <div class="studio-row__body studio-row__body--photographs">
+                {photographs.map((piece) => (
+                  <figure class="studio-piece studio-piece--photograph">
+                    <div class="studio-piece__frame" role="img" aria-label="Photograph to come" />
+                    <figcaption>
+                      {piece.data.tagline && <p class="eyebrow">{piece.data.tagline}</p>}
+                      <h3>{piece.data.name}</h3>
+                      <p>{piece.data.description}</p>
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            )
+          }
+        </section>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  /* Two rows, not two columns: the programs hang together on the top wall,
+     the photographs below. `.studio-hang` is a two-column grid in the shared
+     stylesheet; scoping raises specificity so this page stacks its rows
+     without touching that file. */
+  .studio-hang {
+    grid-template-columns: minmax(0, 1fr);
+    /* Global hang gap is `{space.7}` at desktop — tight once the program
+       plates sit above the next wall label rather than beside it. */
+    gap: var(--space-9);
+  }
+
+  .studio-row {
+    display: grid;
+    align-content: start;
+    gap: var(--space-5);
+  }
+
+  /* Row labels are wall labels, not a second heading rank: the eyebrow paint
+     already exists, so no new type size enters the page. */
+  .studio-row__heading {
+    margin-bottom: 0;
+  }
+
+  .studio-row__lede {
+    max-width: var(--measure-body);
+    color: var(--color-ink-soft);
+    font-size: var(--type-body-sm);
+    line-height: var(--type-body-sm-lh);
+  }
+
+  .studio-row__body {
+    display: grid;
+    align-items: start;
+    gap: var(--space-7);
+  }
+
+  @media (min-width: 45rem) {
+    .studio-row {
+      gap: var(--space-4);
+    }
+
+    /* Equal columns so neither project reads as the primary one. */
+    .studio-row__body--programs {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--space-7);
+    }
+  }
+
+  /* h3 replaces the former h2 now that each column carries its own heading.
+     Same paint as `.studio-piece h2` in the shared stylesheet. */
+  .studio-piece h3 {
+    font-size: var(--type-h3);
+    letter-spacing: var(--type-h3-ls);
+    line-height: var(--type-h3-lh);
+  }
+
+  /* 48% track = 60% of the previous 80% hang. Plate and caption share
+     a right edge, so the lede wraps there. */
+  .studio-piece--program {
+    display: grid;
+    grid-template-columns: minmax(0, 48%);
+    justify-content: start;
+    gap: var(--space-4);
+    max-width: none;
+  }
+
+  @media (max-width: 44.98rem) {
+    .studio-hang {
+      gap: var(--space-8);
+    }
+
+    .studio-row__body {
+      gap: var(--space-8);
+    }
+
+    .studio-piece--program {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .studio-program__note {
+      max-width: 28rem;
+    }
+  }
+
+  .studio-program__plate {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-figure);
+    background: var(--color-canvas);
+  }
+
+  a.studio-program__plate {
+    color: inherit;
+    text-decoration: none;
+    transition: border-color var(--duration-ui) var(--ease-out);
+  }
+
+  @media (hover: hover) {
+    a.studio-program__plate:hover {
+      border-color: var(--color-accent);
+    }
+  }
+
+  .studio-program__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .studio-program__note {
+    display: grid;
+    gap: var(--space-3);
+    max-width: none;
+  }
+
+  .studio-piece h3 a {
+    color: var(--color-display);
+    text-decoration: underline;
+    text-decoration-color: var(--color-hairline);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition:
+      color var(--duration-ui) var(--ease-out),
+      text-decoration-color var(--duration-ui) var(--ease-out);
+  }
+
+  .studio-piece h3 a:hover,
+  .studio-piece h3 a:focus-visible {
+    color: var(--color-accent);
+    text-decoration-color: var(--color-accent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .studio-piece h3 a,
+    a.studio-program__plate {
+      transition-duration: 0ms;
+    }
+  }
+</style>

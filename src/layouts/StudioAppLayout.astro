@@ -1,0 +1,164 @@
+---
+/**
+ * StudioAppLayout — the frame for a Studio exhibit.
+ *
+ * A Studio exhibit is a static snapshot of one of the owner's own programs,
+ * shown inside its own interface. The page keeps the site header, an intro
+ * block on the shared content rail, and nothing else of the design system:
+ * below the intro the exhibit runs in an isolated frame with its own look.
+ *
+ * No footer here — the exhibit is the page's subject. The Studio wash floor
+ * (GR-012, `wash-studio.webp`) stays, same as `/studio/`, so the intro rail
+ * does not drop onto a blank canvas.
+ */
+import SiteHeader from "../components/SiteHeader.astro";
+import globalStylesheet from "../styles/global.css?url";
+import tailwindStylesheet from "../styles/tailwind.css?url";
+
+interface Props {
+  title: string;
+  description: string;
+  appSrc: string;
+  appTitle: string;
+  image?: string;
+}
+
+const { title, description, appSrc, appTitle, image = "/og/default.png" } = Astro.props;
+
+const pageTitle = title.includes("Zhuocheng Zhang") ? title : `${title} | Zhuocheng Zhang`;
+const canonicalUrl = Astro.url;
+const imageUrl = new URL(image, Astro.site ?? Astro.url);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="author" content="Zhuocheng Zhang" />
+    <meta name="theme-color" content="#fffbfa" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href={globalStylesheet} />
+    <link rel="stylesheet" href={tailwindStylesheet} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Zhuocheng Zhang" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <title>{pageTitle}</title>
+    <slot name="head" />
+  </head>
+  <body id="top" data-wash="studio">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <SiteHeader currentPath="/studio/" />
+    <div class="page-main">
+      <main id="main-content" class="studio-app">
+        <header class="studio-app__intro page-lede-band">
+          <div class="page-shell editorial-grid">
+            <div class="studio-app__intro-body">
+              <slot name="intro" />
+            </div>
+          </div>
+        </header>
+
+        <iframe class="studio-app__frame" src={appSrc} title={appTitle} loading="lazy"></iframe>
+      </main>
+    </div>
+    <script>
+      import "../scripts/site-interactions";
+    </script>
+  </body>
+</html>
+
+<style>
+  .skip-link {
+    position: fixed;
+    z-index: 100;
+    top: 0.75rem;
+    left: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-control);
+    background: var(--color-body);
+    color: var(--color-canvas);
+    font-size: var(--type-control);
+    font-weight: 600;
+    text-decoration: none;
+    transform: translateY(-200%);
+  }
+
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+
+  .studio-app__intro-body {
+    display: grid;
+    grid-column: 1 / -1;
+    max-width: var(--measure-prose);
+  }
+
+  .studio-app__frame {
+    display: block;
+    width: 100%;
+    height: max(640px, calc(100vh - 12rem));
+    height: max(640px, calc(100dvh - 12rem));
+    border: 1px solid var(--color-line);
+    border-radius: 0;
+    background: #fff;
+  }
+</style>
+
+<style is:global>
+  /* Same eyebrow → title → lede rhythm as `.page-intro` on Studio / Research. */
+  .studio-app__intro-body h1 {
+    max-width: 22ch;
+    font-size: var(--type-h1);
+    letter-spacing: var(--type-h1-ls);
+    line-height: var(--type-h1-lh);
+    text-wrap: pretty;
+  }
+
+  .studio-app__intro-body h1 + p {
+    margin-top: var(--space-5);
+  }
+
+  .studio-app__intro-body p:not(.eyebrow) + p {
+    margin-top: var(--space-4);
+  }
+
+  .studio-app__intro-body p:not(.eyebrow) {
+    color: var(--color-ink-soft);
+    font-size: var(--type-body);
+    line-height: var(--type-body-lh);
+  }
+
+  .studio-app__intro-body .text-link {
+    justify-self: start;
+    margin-top: var(--space-4);
+    font-size: var(--type-body-sm);
+  }
+
+  @media (max-width: 44.98rem) {
+    .studio-app__intro {
+      padding-block: 2.5rem 2rem;
+    }
+
+    .studio-app__intro-body h1 + p {
+      margin-top: var(--space-4);
+    }
+
+    .studio-app__frame {
+      height: max(42rem, calc(100dvh - 3.5rem));
+    }
+  }
+</style>

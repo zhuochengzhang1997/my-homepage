@@ -1,0 +1,236 @@
+---
+import { getCollection } from "astro:content";
+
+import Icon from "./Icon.astro";
+
+/**
+ * SiteFooter — closes every page on the same canvas as the rest of the site,
+ * and is the site's only contact surface (DESIGN.md §6, "Site footer —
+ * composition"). Two tiers: the invitation with every channel on one row, then
+ * the colophon. Dark inversion is deferred (§11). No lift or scale (MOTION.md
+ * X6).
+ *
+ * The element carries `id="contact"`, so the mobile drawer's Contact action is
+ * a same-page `#contact` from any route rather than a trip back to Home.
+ */
+interface Props {
+  name?: string;
+}
+
+const { name = "Zhuocheng Zhang" } = Astro.props;
+const year = new Date().getFullYear();
+
+const [profileEntry] = await getCollection("profile");
+const email = profileEntry.data.email ?? "zhuochengzhang@foxmail.com";
+const identities = profileEntry.data.identities ?? {};
+
+// Channels that ship, in the order a reader deciding whether to write would
+// want them. GitHub, ORCID and RSS are deliberately absent (owner 2026-08-31);
+// see DESIGN.md §6 before adding one back.
+const channels = [
+  identities.linkedin ? { label: "LinkedIn", href: identities.linkedin } : null,
+  identities.scholar ? { label: "Google Scholar", href: identities.scholar } : null,
+].filter((channel) => channel !== null);
+---
+
+<footer class="site-footer" id="contact" tabindex="-1">
+  <div class="site-footer__inner page-shell">
+    <div class="site-footer__cta">
+      <p class="site-footer__invitation">
+        If you are bringing agents into semiconductor workflows, I would be glad to talk.
+      </p>
+      <div class="site-footer__actions">
+        <a class="site-footer__pill" href={`mailto:${email}`}>
+          <Icon name="mail" size={16} />
+          Email
+        </a>
+        {
+          channels.map((channel) => (
+            <a class="site-footer__more" href={channel.href} rel="me external">
+              {channel.label}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="site-footer__meta">
+      <p>&copy; {year} {name}</p>
+      <nav aria-label="Footer navigation">
+        <a href="/research/">Research</a>
+        <a href="/essays/">Essays</a>
+        <a href="/publications/">Publications</a>
+        <a href="/studio/">Studio</a>
+      </nav>
+      <a class="site-footer__top" href="#top">Back to top</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-block: 3rem max(3rem, env(safe-area-inset-bottom));
+    border-top: 1px solid var(--color-line);
+    background: transparent;
+    color: var(--color-mute);
+    font-size: var(--type-body-sm);
+  }
+
+  @media (min-width: 64rem) {
+    .site-footer {
+      padding-block: 4rem max(4rem, env(safe-area-inset-bottom));
+    }
+  }
+
+  .site-footer__cta {
+    display: grid;
+    gap: var(--space-5);
+    align-items: center;
+  }
+
+  .site-footer__invitation {
+    max-width: 30ch;
+    margin: 0;
+    color: var(--color-display);
+    font-family: var(--font-display);
+    font-size: var(--type-h3);
+    font-weight: 600;
+    letter-spacing: var(--type-h3-ls);
+    line-height: 1.28;
+    text-wrap: balance;
+  }
+
+  .site-footer__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4) var(--space-5);
+  }
+
+  .site-footer__pill {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    gap: var(--space-2);
+    border: var(--control-stroke) solid var(--color-accent);
+    border-radius: var(--radius-control);
+    padding-inline: var(--space-5);
+    background: var(--color-accent);
+    color: var(--color-canvas);
+    font-size: var(--type-control);
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    transition: background-color var(--duration-ui) var(--ease-out);
+  }
+
+  .site-footer__more {
+    min-height: 2.75rem;
+    align-content: center;
+    color: var(--color-accent);
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-color: var(--color-line);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition:
+      color var(--duration-ui) var(--ease-out),
+      text-decoration-color var(--duration-ui) var(--ease-out);
+  }
+
+  .site-footer__meta {
+    display: grid;
+    gap: var(--space-4);
+    border-top: 1px solid var(--color-line);
+    margin-top: var(--space-6);
+    padding-top: var(--space-6);
+    align-items: center;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+  }
+
+  .site-footer__meta a {
+    min-height: 2.75rem;
+    align-content: center;
+    color: var(--color-mute);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color var(--duration-ui) var(--ease-out);
+  }
+
+  .site-footer__top {
+    justify-self: start;
+  }
+
+  /* Focus target for the Contact action, not a control: no ring on arrival. */
+  .site-footer:focus {
+    outline: none;
+  }
+
+  @media (hover: hover) {
+    .site-footer__pill:hover {
+      background: var(--color-display);
+      border-color: var(--color-display);
+    }
+
+    .site-footer__more:hover {
+      text-decoration-color: var(--color-accent);
+    }
+
+    .site-footer__meta a:hover {
+      color: var(--color-accent);
+      text-decoration: underline;
+      text-decoration-color: var(--color-accent);
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .site-footer__cta {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-6);
+    }
+
+    .site-footer__actions {
+      justify-content: flex-end;
+    }
+
+    /* Column gap is deliberately wider than the nav's own 24px item gap. At
+       equal gaps "Back to top" reads as a fifth nav item — the arrow used to
+       mark it apart, and it no longer ships (owner 2026-08-31). Separation is
+       now spatial: nav is a group, the utility link is not in it. */
+    .site-footer__meta {
+      grid-template-columns: 1fr auto auto;
+      gap: var(--space-4) var(--space-7);
+    }
+
+    .site-footer__top {
+      justify-self: end;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .site-footer__invitation {
+      max-width: 34ch;
+    }
+
+    .site-footer__meta {
+      margin-top: var(--space-7);
+      padding-top: var(--space-6);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .site-footer__pill {
+      border: 1px solid CanvasText;
+    }
+  }
+</style>

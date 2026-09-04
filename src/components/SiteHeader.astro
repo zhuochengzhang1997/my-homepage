@@ -1,0 +1,179 @@
+---
+import MobileNav, { type NavItem } from "./MobileNav.astro";
+
+interface Props {
+  currentPath?: string;
+  name?: string;
+}
+
+const { currentPath = Astro.url.pathname, name = "Zhuocheng Zhang" } = Astro.props;
+
+// About and Experience were folded into Home and Research on 2026-08-26;
+// /about/ and /experience/ redirect. Studio is the off-hours page (photographs
+// and small programs) at /studio/; /projects/ redirects there.
+const items: NavItem[] = [
+  { href: "/", label: "Home" },
+  { href: "/research/", label: "Research" },
+  { href: "/essays/", label: "Essays" },
+  { href: "/publications/", label: "Publications" },
+  { href: "/studio/", label: "Studio" },
+];
+
+const isCurrent = (href: string) =>
+  href === "/" ? currentPath === "/" : currentPath.startsWith(href);
+
+// Contact is navigation to the footer, not a mail action. The mail link lives
+// inside that region, where the other channels are. It is never a primary IA
+// item and never carries aria-current.
+//
+// Same-page `#contact`, never `/#contact`: since 2026-08-31 the footer is the
+// contact surface on every route (DESIGN.md §6), so the drawer no longer sends
+// a reader on an inner page back to Home to find an email address.
+//
+// The desktop header carries no Contact button (removed 2026-08-26): the footer
+// closes every page with the same invitation, so a persistent header pill only
+// stated it twice. The mobile drawer keeps its Contact action — it is a menu
+// the reader opens, never on screen beside the footer.
+const contactHref = "#contact";
+---
+
+<header class="site-header" data-site-header>
+  <div class="site-header__inner page-shell">
+    <a class="site-header__brand" href="/" data-site-brand>{name}</a>
+
+    <nav class="site-header__desktop-nav" aria-label="Primary navigation">
+      <ul>
+        {
+          items.map((item) => (
+            <li>
+              <a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <MobileNav items={items} currentPath={currentPath} contactHref={contactHref} />
+  </div>
+</header>
+
+<script>
+  const syncHeaderState = () => {
+    const header = document.querySelector<HTMLElement>("[data-site-header]");
+    if (!header) return;
+    header.dataset.scrolled = window.scrollY > 8 ? "true" : "false";
+  };
+
+  window.addEventListener("scroll", syncHeaderState, { passive: true });
+  syncHeaderState();
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    z-index: 40;
+    top: 0;
+    border-bottom: 1px solid transparent;
+    /* Opaque canvas: GR-010. Transparent let body type show through the bar. */
+    background-color: var(--color-header);
+    transition: border-color var(--duration-ui) var(--ease-out);
+  }
+
+  .site-header[data-scrolled="true"] {
+    border-bottom-color: var(--color-line);
+  }
+
+  .site-header__inner {
+    display: flex;
+    height: 3.5rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .site-header__brand {
+    color: var(--color-display);
+    font-family: var(--font-body);
+    font-size: var(--text-brand);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: color var(--duration-ui) var(--ease-out);
+  }
+
+  .site-header__desktop-nav {
+    display: none;
+  }
+
+  @media (min-width: 54rem) {
+    .site-header__inner {
+      height: var(--header-height);
+    }
+
+    .site-header__desktop-nav {
+      display: block;
+      margin-left: auto;
+    }
+
+    .site-header__desktop-nav ul {
+      display: flex;
+      gap: 0;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .site-header__desktop-nav a {
+      position: relative;
+      display: flex;
+      min-height: 2.75rem;
+      align-items: center;
+      padding-inline: var(--space-4);
+      color: var(--color-mute);
+      font-size: var(--type-body);
+      font-weight: 500;
+      white-space: nowrap;
+      text-decoration: none;
+      text-underline-offset: 4px;
+      transition:
+        color var(--duration-ui) var(--ease-out),
+        text-decoration-color var(--duration-ui) var(--ease-out);
+    }
+
+    .site-header__desktop-nav a[aria-current="page"] {
+      color: var(--color-accent);
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-decoration-color: var(--color-accent);
+    }
+
+    .site-header__desktop-nav li:last-child a {
+      padding-right: 0;
+    }
+  }
+
+  @media (hover: hover) {
+    .site-header__brand:hover,
+    .site-header__desktop-nav a:hover {
+      color: var(--color-accent);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-decoration-color: var(--color-accent);
+    }
+
+    .site-header__desktop-nav a[aria-current="page"]:hover {
+      text-decoration-thickness: 2px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-header,
+    .site-header__brand,
+    .site-header__desktop-nav a {
+      transition-duration: 0ms;
+    }
+  }
+</style>

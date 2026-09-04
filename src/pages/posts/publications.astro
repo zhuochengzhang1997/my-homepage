@@ -1,0 +1,24 @@
+---
+const target = "/publications/";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Publications moved | Zhuocheng Zhang</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={new URL(target, Astro.site)} />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <script is:inline define:vars={{ target }}>
+      window.location.replace(target);
+    </script>
+  </head>
+  <body>
+    <main>
+      <h1>This publications page has moved</h1>
+      <p><a href={target}>Continue to the new Publications page</a>.</p>
+    </main>
+  </body>
+</html>

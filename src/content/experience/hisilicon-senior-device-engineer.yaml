@@ -1,0 +1,30 @@
+role: Senior Device Engineer
+institution: HiSilicon
+startDate: "2024"
+endDate: "2025"
+ongoing: false
+order: 2
+summary: >-
+  Advanced-logic vertical gate-all-around device development, from structure
+  design through tape-out in a 300-mm wafer fab.
+trajectoryNote: >-
+  Learned where expert hours go: test-data triage, experiment tracking, and
+  model recalibration as new silicon arrived.
+bullets:
+  - >-
+    Designed vertical gate-all-around silicon FET structures with full process
+    integration, and took a preliminary version through tape-out in a 300-mm
+    wafer fab, then analyzed its electrical performance.
+  - >-
+    Evaluated the electrical and thermal performance of FinFET and vertical FET
+    devices using TCAD and COMSOL, providing design guidance for device target
+    definition and process integration.
+verification:
+  status: user-confirmed
+  provenance: user-confirmed
+  sourceId: facts-yaml-2026-08-23
+  note: >-
+    Generic, CV-level description only. No process parameters, technology nodes,
+    customers, or internal program details.
+  checkedAt: 2026-08-23
+  publishable: true

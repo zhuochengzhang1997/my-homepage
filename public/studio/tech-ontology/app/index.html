@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--
+  Technology Atlas viewer, static snapshot from August 2026.
+
+  Two subtrees of a larger typed knowledge graph: the chip taxonomy (what gets
+  built) and the hardware engineering process (how it gets built). One ontology
+  node = one visual object; click it to open its children and the connections
+  between them.
+
+  Stack:
+    - Cytoscape.js 3.30.2 (native compound graphs)
+    - cytoscape-expand-collapse 4.1.1
+    - cytoscape-fcose 2.2.0 (compound-aware layout)
+    - one JSON file as the single source of truth (see SCHEMA_URL in viewer.js)
+
+  Behaviour:
+    - the parent field maps onto cytoscape compound parents
+    - desktop opens both roots one level deep; phone keeps the two roots collapsed
+    - double-click a compound to expand it in place; double-click again to collapse
+    - click a node for the detail panel and its grouped adjacency table
+    - hover for a tooltip
+    - the edge-type legend doubles as a filter: uncheck a type to hide it
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>Technology Atlas: Chips and the Processes That Make Them</title>
+<link rel="stylesheet" href="styles.css">
+<!-- Pinned library copies; nothing is fetched from the network at runtime. -->
+<script src="./vendor/cytoscape-3.30.2.min.js"></script>
+<!--
+  expand-collapse 4.1.1 ships its bundle at the package root, not under /dist/.
+  The UMD bundle exposes window.cytoscapeExpandCollapse but does not register
+  itself; viewer.js calls cytoscape.use(...) explicitly.
+-->
+<script src="./vendor/cytoscape-expand-collapse-4.1.1.js"></script>
+<!--
+  fcose is the compound-aware layout; it lists cose-base as an external
+  dependency rather than bundling it, so layout-base and cose-base must load
+  first to expose window.coseBase.
+-->
+<script src="./vendor/layout-base-2.0.1.js"></script>
+<script src="./vendor/cose-base-2.2.0.js"></script>
+<script src="./vendor/cytoscape-fcose-2.2.0.js"></script>
+</head>
+<body>
+
+<!-- Edge-type legend on the first line, interaction hint on the second;
+     both share the site's content-rail inset so they line up with the intro
+     copy above the iframe. The canvas below stays full-bleed. -->
+<header id="header">
+  <div class="header-rail">
+    <div class="legend">
+      <span class="legend-label" data-i18n="filter.edge.title"></span>
+      <div class="legend-chips" id="filter-edge"></div>
+    </div>
+    <p class="hint">
+      <span class="hint-desktop" data-i18n-html="header.hint.interactions"></span>
+      <span class="hint-mobile" data-i18n-html="header.hint.interactionsMobile"></span>
+    </p>
+  </div>
+</header>
+
+<!-- Transient load / error line, floating below the strip. -->
+<div id="status"></div>
+
+<div id="cy"></div>
+
+<div id="sidebar">
+  <button id="sidebar-close" type="button" data-i18n-title="sidebar.close.title" aria-label="Close">&#10005;</button>
+  <div id="sidebar-actions">
+    <button id="btn-pin" type="button" data-i18n-title="sidebar.pin.title">&#128204; <span data-i18n="sidebar.pin"></span></button>
+    <button id="btn-focus" type="button" data-i18n-title="sidebar.focus.title" data-i18n="sidebar.focus"></button>
+  </div>
+  <div id="sidebar-state"></div>
+  <h2 id="sb-title">&#8212;</h2>
+  <div id="sb-content"></div>
+</div>
+
+<div id="tooltip"></div>
+
+<script src="i18n.js"></script>
+<script src="viewer.js"></script>
+</body>
+</html>

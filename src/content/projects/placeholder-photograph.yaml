@@ -1,0 +1,7 @@
+name: Photograph
+tagline: Placeholder
+kind: photograph
+description: >-
+  A still will sit here. Title, place, and date to come.
+order: 1
+draft: true

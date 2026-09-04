@@ -1,0 +1,61 @@
+---
+import Badge from "./Badge.astro";
+import Icon, { type IconName } from "./Icon.astro";
+
+/**
+ * Card — the one card surface in the design system.
+ *
+ * A flat canvas surface: square corners, no resting shadow and no lift.
+ * Linked cards use `{color.control}` (SPEC-CHROME); decorative cards may keep
+ * `{color.line}`. Hierarchy comes from type and spacing, not elevation.
+ */
+interface Props {
+  title: string;
+  eyebrow?: string;
+  badge?: string;
+  href?: string;
+  cta?: string;
+  headingLevel?: 2 | 3;
+  icon?: IconName;
+  class?: string;
+}
+
+const {
+  title,
+  eyebrow,
+  badge,
+  href,
+  cta = "Read more",
+  headingLevel = 3,
+  icon,
+  class: className,
+} = Astro.props;
+const Heading = headingLevel === 2 ? "h2" : "h3";
+---
+
+<article class:list={["theme-card", className]}>
+  {
+    eyebrow ? (
+      <p class="theme-card__eyebrow">
+        {icon && <Icon name={icon} size={16} />}
+        {eyebrow}
+      </p>
+    ) : (
+      icon && <Icon class="theme-card__icon" name={icon} size={16} />
+    )
+  }
+  <Heading>{title}</Heading>
+  <div class="theme-card__body">
+    <slot />
+  </div>
+  {badge && <Badge class="theme-card__badge">{badge}</Badge>}
+  <slot name="footer" />
+  {
+    href && (
+      <a class="theme-card__cta" href={href}>
+        {cta}
+        <Icon name="arrow-right" size={14} />
+      </a>
+    )
+  }
+</article>

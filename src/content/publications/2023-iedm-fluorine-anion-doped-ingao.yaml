@@ -1,0 +1,35 @@
+title: "Fluorine Anion-Doped Ultra-Thin InGaO Transistors Overcoming Mobility-Stability Trade-off"
+authors:
+  - displayName: J. Zhang
+    isSiteOwner: false
+  - displayName: Z. Zhang
+    isSiteOwner: true
+  - displayName: H. Dou
+    isSiteOwner: false
+  - displayName: Z. Lin
+    isSiteOwner: false
+  - displayName: K. Xu
+    isSiteOwner: false
+  - displayName: W. Yang
+    isSiteOwner: false
+  - displayName: X. Zhang
+    isSiteOwner: false
+  - displayName: H. Wang
+    isSiteOwner: false
+  - displayName: P. D. Ye
+    isSiteOwner: false
+year: 2023
+publishedAt: "2023-12-09"
+type: conference-paper
+status: published
+doi: 10.1109/iedm45741.2023.10413810
+venue:
+  name: IEEE International Electron Devices Meeting
+  shortName: IEDM
+verification:
+  status: user-confirmed
+  provenance: user-supplied
+  sourceId: site-owner-publication-list-2026-01-20
+  note: Bibliographic details come from the site owner's own publication list; the complete record is maintained on Google Scholar.
+  checkedAt: 2026-08-26
+  publishable: true

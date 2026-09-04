@@ -1,0 +1,299 @@
+---
+/**
+ * The photo wall at /studio/.
+ *
+ * A hung wall rather than a grid: two rows deep, each photograph as wide as its
+ * own aspect ratio makes it, running off the right edge of the content rail.
+ * The order is dealt from a fixed seed and the packing is decided here, both at
+ * build time, in units of one row height, so a single set of numbers serves
+ * every viewport — the CSS custom property `--photo-row` is the only thing that
+ * changes with the screen.
+ *
+ * Nothing about the wall depends on JavaScript: it is a native horizontal
+ * scroller. `src/scripts/photo-wall.ts` adds the wheel, drag and arrow keys.
+ */
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+
+/** Gap between photographs, in row heights. */
+const GAP = 0.06;
+/** Height of a photograph that spans both rows, in row heights. */
+const DOUBLE_SPAN = 2 + GAP;
+/** Aspect ratio below which a photograph is upright enough to span both rows. */
+const PORTRAIT = 0.8;
+/**
+ * How level the two rows must be, in row heights, before a span is allowed.
+ * A spanning photograph starts at the further of the two cursors, so whatever
+ * the rows are out by is left as empty canvas beside it — this is the size of
+ * the largest notch the wall will accept. Of the five upright photographs in
+ * the present set, the deal below offers two at a moment level enough to
+ * span; raising this number would admit the others at the cost of a wider
+ * notch beside them.
+ */
+const ALIGNED = 0.5;
+/** Two tall photographs make a rhythm; more would make a pattern. */
+const MAX_DOUBLES = 2;
+const DOUBLE_SPACING = 8;
+
+/**
+ * Which deal of the photographs to hang.
+ *
+ * The yaml `order` is the order they were imported in, which is the order of
+ * the filenames, which groups them by trip: four views of one city, then three
+ * of one coast. Hung that way the wall reads as an album. A seeded shuffle
+ * scatters them instead, and because the seed is a constant the deal is the
+ * same on every build, so the wall a reader sees is the wall that was
+ * reviewed. Changing the number re-deals the wall; `0` hangs the photographs
+ * in source order. Re-importing never changes the deal, because the shuffle
+ * runs over `order`, which the importer rewrites identically each time.
+ *
+ * This particular number was picked by dealing several hundred thousand walls
+ * and keeping the ones where no two photographs of the same subject — the same
+ * tower at night, the same beach, the same aerial — end up side by side in a
+ * row or stacked in one column, and where the first screen of each row mixes
+ * day with night and city with landscape.
+ */
+const SHUFFLE_SEED = 172089;
+
+/** Rendered widths to generate. Values wider than the source are dropped. */
+const WIDTHS = [360, 540, 720, 1080];
+/** Row height in px at the desktop `--photo-row`, used to size the `sizes` hint. */
+const DESKTOP_ROW = 240;
+/** Photographs above the fold of the strip are worth fetching straight away. */
+const EAGER = 4;
+
+const photographs = (await getCollection("photographs"))
+  .filter((entry) => !entry.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
+
+/**
+ * mulberry32, a 32-bit generator small enough to read in one sitting. Its only
+ * job is to be the same on every machine and every build, which `Math.random`
+ * is not.
+ */
+const mulberry32 = (seed: number) => () => {
+  seed = (seed + 0x6d2b79f5) | 0;
+  let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+  t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+  return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+};
+
+/** Fisher-Yates: every deal equally likely, no photograph left behind. */
+const deal = (entries: typeof photographs, seed: number) => {
+  if (seed === 0) return entries;
+  const random = mulberry32(seed);
+  const deck = [...entries];
+
+  for (let index = deck.length - 1; index > 0; index -= 1) {
+    const swap = Math.floor(random() * (index + 1));
+    const held = deck[index]!;
+    deck[index] = deck[swap]!;
+    deck[swap] = held;
+  }
+
+  return deck;
+};
+
+const hung = deal(photographs, SHUFFLE_SEED);
+
+const round = (value: number) => Number(value.toFixed(4));
+
+const cursors = [0, 0];
+let doubles = 0;
+let lastDouble = Number.NEGATIVE_INFINITY;
+
+const placed = hung.map((entry, index) => {
+  const aspect =
+    (entry.data.width ?? entry.data.image.width) / (entry.data.height ?? entry.data.image.height);
+
+  // An upright photograph may claim both rows, but only where the rows are
+  // already level — otherwise it would leave a hole under the shorter one.
+  const spansBoth =
+    aspect < PORTRAIT &&
+    doubles < MAX_DOUBLES &&
+    index - lastDouble >= DOUBLE_SPACING &&
+    Math.abs(cursors[0] - cursors[1]) <= ALIGNED;
+
+  const span = spansBoth ? DOUBLE_SPAN : 1;
+  const width = aspect * span;
+  const row = spansBoth ? 0 : cursors[0] <= cursors[1] ? 0 : 1;
+  const x = spansBoth ? Math.max(cursors[0], cursors[1]) : cursors[row];
+
+  if (spansBoth) {
+    cursors[0] = x + width + GAP;
+    cursors[1] = cursors[0];
+    doubles += 1;
+    lastDouble = index;
+  } else {
+    cursors[row] = x + width + GAP;
+  }
+
+  return {
+    entry,
+    span,
+    eager: index < EAGER,
+    sizes: `${Math.round(DESKTOP_ROW * width)}px`,
+    widths: WIDTHS.filter((candidate) => candidate <= entry.data.image.width),
+    style: [
+      `left: calc(var(--photo-row) * ${round(x)})`,
+      `top: calc(var(--photo-row) * ${round(row * (1 + GAP))})`,
+      `width: calc(var(--photo-row) * ${round(width)})`,
+      `height: calc(var(--photo-row) * ${round(span)})`,
+    ].join("; "),
+  };
+});
+
+const trackWidth = round(Math.max(cursors[0], cursors[1]) - GAP);
+const trackHeight = round(DOUBLE_SPAN);
+---
+
+{
+  placed.length > 0 && (
+    <div class="photo-wall">
+      <div
+        class="photo-wall__strip"
+        data-photo-wall
+        tabindex="0"
+        role="region"
+        aria-label="Photographs"
+      >
+        <div
+          class="photo-wall__track"
+          style={`width: calc(var(--photo-row) * ${trackWidth}); height: calc(var(--photo-row) * ${trackHeight});`}
+        >
+          {placed.map((item) => (
+            <figure class="photo-wall__mat" data-photo-mat style={item.style}>
+              <Image
+                class="photo-wall__image"
+                src={item.entry.data.image}
+                alt={item.entry.data.alt}
+                widths={item.widths.length > 0 ? item.widths : [item.entry.data.image.width]}
+                sizes={item.sizes}
+                loading={item.eager ? "eager" : "lazy"}
+                decoding="async"
+              />
+            </figure>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+<style>
+  /* One row height drives the whole wall. Every offset, width and gap below is
+     a multiple of it, so the layout computed at build time fits any viewport. */
+  .photo-wall {
+    /* A grid item's min-width defaults to auto, which would let the 25-row-unit
+       track widen this box to the whole wall and push the page sideways. The
+       strip inside must be the thing that overflows, not the page. */
+    min-width: 0;
+    max-width: 100%;
+    --photo-row: clamp(9rem, 16vw, 15rem);
+    /* Room for the mat shadow, which `overflow` would otherwise cut off. */
+    --photo-wall-bleed: 1.25rem;
+  }
+
+  @media (min-width: 64rem) {
+    .photo-wall {
+      --photo-row: 15rem;
+    }
+  }
+
+  /* The strip starts on the content rail and, scrolled to the end, stops with
+     the same margin. It reaches past the rail to the page shell so the wall
+     reads as continuing rather than as a boxed component. */
+  .photo-wall__strip {
+    margin-inline: calc(-1 * var(--content-rail-inset));
+    padding-inline: var(--content-rail-inset);
+    padding-block: var(--photo-wall-bleed);
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-line) transparent;
+    cursor: grab;
+    /* A hint that the wall continues. Removed by script at the end. */
+    mask-image: linear-gradient(to right, #000 calc(100% - 4rem), transparent 100%);
+  }
+
+  .photo-wall__strip.is-at-end {
+    mask-image: none;
+  }
+
+  .photo-wall__strip.is-dragging {
+    cursor: grabbing;
+  }
+
+  .photo-wall__strip:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: -2px;
+  }
+
+  .photo-wall__track {
+    position: relative;
+  }
+
+  /* The frost plate of the Home portrait, without the backdrop filter: blurring
+     what is behind 37 moving elements buys nothing a reader can see. */
+  .photo-wall__mat {
+    position: absolute;
+    box-sizing: border-box;
+    margin: 0;
+    padding: var(--space-plate);
+    border-radius: var(--radius-figure);
+    background: var(--frost-fill-opaque);
+    box-shadow: var(--shadow-figure);
+    scroll-snap-align: start;
+    transition:
+      transform var(--duration-ui) var(--ease-out),
+      box-shadow var(--duration-ui) var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .photo-wall__mat:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px color-mix(in srgb, var(--color-display) 18%, transparent);
+    }
+  }
+
+  @media (pointer: coarse) {
+    .photo-wall__strip {
+      cursor: auto;
+    }
+  }
+
+  .photo-wall__mat:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  .photo-wall__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    object-fit: cover;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .photo-wall__mat {
+      transition-duration: 0ms;
+    }
+
+    .photo-wall__mat:hover {
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .photo-wall__strip {
+      scroll-behavior: smooth;
+    }
+  }
+</style>
+
+<script>
+  import "../scripts/photo-wall";
+</script>

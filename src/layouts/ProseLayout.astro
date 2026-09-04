@@ -1,0 +1,91 @@
+---
+import Icon from "../components/Icon.astro";
+import BaseLayout from "./BaseLayout.astro";
+import "katex/dist/katex.min.css";
+
+/**
+ * ProseLayout — the reading layout for long-form writing.
+ *
+ * The reading column sits on the page canvas: one measure, no second sheet,
+ * centered in the viewport (DESIGN.md §4 essay-article exception).
+ * See docs/DESIGN.md §4 (density) and design/round-9/SPEC-DENSITY.md.
+ */
+interface Props {
+  title: string;
+  /** Prefix of `title`. When set, the H1 breaks after this phrase. */
+  titleBreakAfter?: string;
+  subtitle?: string;
+  description: string;
+  date?: Date;
+  image?: string;
+  /** What kind of piece this is, shown above the title. Not every essay is a
+   * position paper, so the label travels with the entry rather than the layout. */
+  kind?: string;
+  /** Index URL for the exit row. Defaults to `/essays/`. Article routes pass
+   *  a fragment so a no-JS return still lands on this essay in the list. */
+  indexHref?: string;
+}
+
+const {
+  title,
+  titleBreakAfter,
+  subtitle,
+  description,
+  date,
+  image,
+  kind = "Essay",
+  indexHref = "/essays/",
+} = Astro.props;
+const titleRest =
+  titleBreakAfter && title.startsWith(titleBreakAfter)
+    ? title.slice(titleBreakAfter.length).trim()
+    : undefined;
+
+const formattedDate = date
+  ? new Intl.DateTimeFormat("en", { year: "numeric", month: "long" }).format(date)
+  : undefined;
+const isoDate = date ? date.toISOString().slice(0, 10) : undefined;
+---
+
+<BaseLayout title={title} description={description} image={image}>
+  <main id="main-content" class="section-band section-band--canvas prose-main">
+    <div class="prose-rail">
+      <article class="prose-article">
+        <header class="prose-article__header">
+          <p class="eyebrow">{kind}</p>
+          <h1 class:list={[titleRest && "prose-article__title--lined"]}>
+            {
+              titleRest ? (
+                <>
+                  {titleBreakAfter}
+                  <br class="prose-article__title-break" /> {titleRest}
+                </>
+              ) : (
+                title
+              )
+            }
+          </h1>
+          {subtitle && <p class="prose-article__standfirst">{subtitle}</p>}
+          {
+            formattedDate && (
+              <p class="prose-article__meta">
+                <time datetime={isoDate}>{formattedDate}</time>
+              </p>
+            )
+          }
+        </header>
+
+        <div class="prose">
+          <slot />
+        </div>
+      </article>
+
+      <nav class="related-navigation prose-related" aria-label="More essays">
+        <a class="related-navigation__back" href={indexHref} data-essays-back>
+          <Icon name="arrow-left" size={14} />
+          All essays
+        </a>
+      </nav>
+    </div>
+  </main>
+</BaseLayout>

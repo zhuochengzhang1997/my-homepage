@@ -1,0 +1,339 @@
+---
+import Icon from "./Icon.astro";
+
+export interface NavItem {
+  href: string;
+  label: string;
+}
+
+interface Props {
+  items: NavItem[];
+  currentPath: string;
+  contactHref: string;
+}
+
+const { items, currentPath, contactHref } = Astro.props;
+const isCurrent = (href: string) =>
+  href === "/" ? currentPath === "/" : currentPath.startsWith(href);
+---
+
+<div class="mobile-nav" data-mobile-nav data-state="closed">
+  <button
+    class="mobile-nav__toggle icon-button"
+    type="button"
+    aria-expanded="false"
+    aria-controls="mobile-nav-panel"
+    aria-label="Open navigation"
+    data-mobile-nav-toggle
+  >
+    <Icon class="mobile-nav__icon mobile-nav__icon--menu" name="menu" size={20} />
+    <Icon class="mobile-nav__icon mobile-nav__icon--close" name="x" size={20} />
+  </button>
+
+  <div
+    class="mobile-nav__panel"
+    id="mobile-nav-panel"
+    hidden
+    inert
+    aria-hidden="true"
+    data-mobile-nav-panel
+  >
+    <nav aria-label="Mobile navigation">
+      <ul>
+        {
+          items.map((item) => (
+            <li>
+              <a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    {
+      /* Contact sits after the four-page list as its own action, not as a fifth
+        item in the information architecture. */
+    }
+    <a class="mobile-nav__contact button button--primary" href={contactHref}> Contact </a>
+  </div>
+</div>
+
+<script>
+  type MobileNavController = {
+    close: (options?: { immediate?: boolean; restoreFocus?: boolean }) => void;
+    open: () => void;
+  };
+
+  const controllers = new WeakMap<HTMLElement, MobileNavController>();
+  const mobileBreakpoint = window.matchMedia("(min-width: 54rem)");
+
+  const setupMobileNav = () => {
+    document.querySelectorAll<HTMLElement>("[data-mobile-nav]").forEach((root) => {
+      if (root.dataset.ready === "true") return;
+
+      const toggle = root.querySelector<HTMLButtonElement>("[data-mobile-nav-toggle]");
+      const panel = root.querySelector<HTMLElement>("[data-mobile-nav-panel]");
+      if (!toggle || !panel) return;
+
+      root.dataset.ready = "true";
+      let closeTimer = 0;
+
+      const finishClose = (restoreFocus = false) => {
+        window.clearTimeout(closeTimer);
+        document.documentElement.removeAttribute("data-mobile-nav-open");
+        root.dataset.state = "closed";
+        panel.hidden = true;
+        panel.inert = true;
+        panel.setAttribute("aria-hidden", "true");
+        if (restoreFocus) toggle.focus();
+      };
+
+      const close: MobileNavController["close"] = ({
+        immediate = false,
+        restoreFocus = false,
+      } = {}) => {
+        if (root.dataset.state === "closed") return;
+
+        window.clearTimeout(closeTimer);
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.setAttribute("aria-label", "Open navigation");
+        panel.inert = true;
+        panel.setAttribute("aria-hidden", "true");
+
+        if (immediate || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          finishClose(restoreFocus);
+          return;
+        }
+
+        root.dataset.state = "closing";
+        closeTimer = window.setTimeout(() => finishClose(restoreFocus), 180);
+      };
+
+      const open = () => {
+        window.clearTimeout(closeTimer);
+        document.documentElement.setAttribute("data-mobile-nav-open", "true");
+        panel.hidden = false;
+        panel.inert = false;
+        panel.setAttribute("aria-hidden", "false");
+        toggle.setAttribute("aria-expanded", "true");
+        toggle.setAttribute("aria-label", "Close navigation");
+        root.dataset.state = "opening";
+
+        requestAnimationFrame(() => {
+          if (root.dataset.state === "opening") root.dataset.state = "open";
+          panel.querySelector<HTMLAnchorElement>("a")?.focus();
+        });
+      };
+
+      controllers.set(root, { close, open });
+
+      toggle.addEventListener("click", () => {
+        root.dataset.state === "open" || root.dataset.state === "opening" ? close() : open();
+      });
+
+      panel.addEventListener("click", (event) => {
+        if (event.target instanceof Element && event.target.closest("a")) {
+          close({ immediate: true });
+        }
+      });
+
+      // Focus containment: while the menu is open, Tab cycles through the
+      // toggle and the menu links and never reaches the page behind it.
+      root.addEventListener("keydown", (event) => {
+        if (event.key !== "Tab") return;
+        if (root.dataset.state !== "open" && root.dataset.state !== "opening") return;
+
+        const focusable = [toggle, ...Array.from(panel.querySelectorAll<HTMLElement>("a[href]"))];
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        const active = document.activeElement;
+
+        if (event.shiftKey && active === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && active === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      });
+    });
+  };
+
+  document.addEventListener("pointerdown", (event) => {
+    const openRoot = document.querySelector<HTMLElement>(
+      '[data-mobile-nav][data-state="open"], [data-mobile-nav][data-state="opening"]',
+    );
+    if (!openRoot || openRoot.contains(event.target as Node)) return;
+    controllers.get(openRoot)?.close();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    const openRoot = document.querySelector<HTMLElement>(
+      '[data-mobile-nav][data-state="open"], [data-mobile-nav][data-state="opening"]',
+    );
+    if (openRoot) controllers.get(openRoot)?.close({ restoreFocus: true });
+  });
+
+  mobileBreakpoint.addEventListener("change", (event) => {
+    if (!event.matches) return;
+    const openRoot = document.querySelector<HTMLElement>(
+      "[data-mobile-nav]:not([data-state='closed'])",
+    );
+    if (openRoot) controllers.get(openRoot)?.close({ immediate: true });
+  });
+
+  document.addEventListener("astro:before-swap", () => {
+    const openRoot = document.querySelector<HTMLElement>(
+      "[data-mobile-nav]:not([data-state='closed'])",
+    );
+    if (openRoot) controllers.get(openRoot)?.close({ immediate: true });
+  });
+  document.addEventListener("astro:page-load", setupMobileNav);
+  setupMobileNav();
+</script>
+
+<style>
+  .mobile-nav {
+    position: relative;
+  }
+
+  :global(html[data-mobile-nav-open]) {
+    overflow: hidden;
+  }
+
+  .mobile-nav::before {
+    position: fixed;
+    z-index: 18;
+    inset: 0;
+    background: rgba(45, 35, 34, 0.12);
+    content: "";
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--duration-ui) var(--ease-out);
+  }
+
+  .mobile-nav[data-state="opening"]::before,
+  .mobile-nav[data-state="open"]::before,
+  .mobile-nav[data-state="closing"]::before {
+    opacity: 1;
+  }
+
+  .mobile-nav__toggle {
+    position: relative;
+    z-index: 21;
+  }
+
+  /* The hand-built three-span glyph is replaced by the two Lucide marks. The
+     button stays icon-only and keeps the aria-label that changes with state, so
+     the swap is purely visual.
+
+     The marks are the root element of a child component and so carry no scope
+     attribute of their own; the selectors reach them through :global() from the
+     button, which is scoped to this component. */
+  .mobile-nav__toggle :global(.mobile-nav__icon--close) {
+    display: none;
+  }
+
+  .mobile-nav[data-state="opening"] .mobile-nav__toggle :global(.mobile-nav__icon--menu),
+  .mobile-nav[data-state="open"] .mobile-nav__toggle :global(.mobile-nav__icon--menu) {
+    display: none;
+  }
+
+  .mobile-nav[data-state="opening"] .mobile-nav__toggle :global(.mobile-nav__icon--close),
+  .mobile-nav[data-state="open"] .mobile-nav__toggle :global(.mobile-nav__icon--close) {
+    display: block;
+  }
+
+  .mobile-nav__panel {
+    position: fixed;
+    z-index: 20;
+    top: calc(3.5rem + var(--space-2));
+    right: max(var(--page-gutter), calc((100vw - var(--content-width)) / 2));
+    width: min(20rem, calc(100vw - 2 * var(--page-gutter)));
+    border: var(--control-stroke) solid var(--color-control);
+    border-radius: var(--radius-sheet);
+    padding: var(--space-2);
+    background: var(--color-surface);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity var(--duration-ui) var(--ease-out),
+      visibility 0s linear var(--duration-ui);
+  }
+
+  .mobile-nav__panel[hidden] {
+    display: none;
+  }
+
+  .mobile-nav[data-state="opening"] .mobile-nav__panel,
+  .mobile-nav[data-state="open"] .mobile-nav__panel {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+
+  .mobile-nav[data-state="closing"] .mobile-nav__panel {
+    opacity: 0;
+    visibility: visible;
+  }
+
+  ul {
+    display: grid;
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Scoped to the list: the Contact action below it keeps the filled pill from
+     the shared button grammar instead of the navigation link style. */
+  nav a {
+    display: flex;
+    min-height: 2.75rem;
+    align-items: center;
+    border-left: 2px solid transparent;
+    border-radius: var(--radius-control);
+    padding: 0 var(--space-3);
+    color: var(--color-ink-soft);
+    font-size: var(--type-control);
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      background-color var(--duration-ui) var(--ease-out),
+      color var(--duration-ui) var(--ease-out);
+  }
+
+  nav a[aria-current="page"] {
+    border-left-color: var(--color-accent);
+    background: var(--color-band);
+    color: var(--color-ink);
+  }
+
+  .mobile-nav__contact {
+    width: 100%;
+    margin-top: var(--space-2);
+  }
+
+  @media (hover: hover) {
+    nav a:hover {
+      background: var(--color-band);
+      color: var(--color-accent-strong);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-nav::before,
+    .mobile-nav__panel {
+      transition: none;
+    }
+  }
+
+  @media (min-width: 54rem) {
+    .mobile-nav {
+      display: none;
+    }
+  }
+</style>

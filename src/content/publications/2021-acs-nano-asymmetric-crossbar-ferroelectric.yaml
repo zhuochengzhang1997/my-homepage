@@ -1,0 +1,35 @@
+title: "Asymmetric Metal/a-In₂Se₃/Si Crossbar Ferroelectric Semiconductor Junction"
+authors:
+  - displayName: M. Si
+    isSiteOwner: false
+  - displayName: Z. Zhang
+    isSiteOwner: true
+  - displayName: S.-C. Chang
+    isSiteOwner: false
+  - displayName: N. Haratipour
+    isSiteOwner: false
+  - displayName: D. Zheng
+    isSiteOwner: false
+  - displayName: J. Li
+    isSiteOwner: false
+  - displayName: U. E. Avci
+    isSiteOwner: false
+  - displayName: P. D. Ye
+    isSiteOwner: false
+year: 2021
+publishedAt: "2021-03"
+type: journal-article
+status: published
+doi: 10.1021/acsnano.1c00968
+venue:
+  name: ACS Nano
+volume: "15"
+issue: "3"
+pages: 5689-5695
+verification:
+  status: user-confirmed
+  provenance: user-supplied
+  sourceId: site-owner-publication-list-2026-01-20
+  note: Bibliographic details come from the site owner's own publication list; the complete record is maintained on Google Scholar.
+  checkedAt: 2026-08-26
+  publishable: true

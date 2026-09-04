@@ -1,0 +1,43 @@
+title: "Surface Accumulation Induced Negative Schottky Barrier and Ultralow Contact Resistance in Atomic-Layer-Deposited In₂O₃ Thin-Film Transistors"
+authors:
+  - displayName: C. Niu
+    isSiteOwner: false
+  - displayName: Z. Lin
+    isSiteOwner: false
+  - displayName: V. Askarpour
+    isSiteOwner: false
+  - displayName: Z. Zhang
+    isSiteOwner: true
+  - displayName: P. Tan
+    isSiteOwner: false
+  - displayName: M. Si
+    isSiteOwner: false
+  - displayName: Z. Shang
+    isSiteOwner: false
+  - displayName: Y. Zhang
+    isSiteOwner: false
+  - displayName: H. Wang
+    isSiteOwner: false
+  - displayName: M. S. Lundstrom
+    isSiteOwner: false
+  - displayName: J. Maassen
+    isSiteOwner: false
+  - displayName: P. D. Ye
+    isSiteOwner: false
+year: 2024
+publishedAt: "2024-05"
+type: journal-article
+status: published
+doi: 10.1109/ted.2024.3367312
+venue:
+  name: IEEE Transactions on Electron Devices
+volume: "71"
+issue: "5"
+pages: "3403-3410"
+verification:
+  status: user-confirmed
+  provenance: external-source
+  sourceId: google-scholar-mela3NQAAAAJ-2026-08-31
+  note: Listed as a journal or conference paper on the site owner's Google Scholar profile. Authors, venue, and pagination completed from the Crossref/publisher record.
+  checkedAt: 2026-08-31
+  publishable: true

@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Page not found | Zhuocheng Zhang"
+  description="The requested page could not be found. Continue to Research, Essays, or Publications."
+  noindex
+>
+  <main id="main-content" class="section-band section-band--canvas page-lede-band">
+    <div class="page-shell editorial-grid">
+      <section class="not-found page-intro" aria-labelledby="not-found-title">
+        <p class="eyebrow">404</p>
+        <h1 id="not-found-title">This page could not be found</h1>
+        <p class="page-intro__lede">The requested page does not exist.</p>
+        <nav class="not-found__actions button-row" aria-label="Recovery links">
+          <a class="button button--primary" href="/">Return home</a>
+          <a class="button button--secondary" href="/research/">Explore research</a>
+          <a class="button button--secondary" href="/essays/">Read the essays</a>
+          <a class="button button--secondary" href="/publications/">View publications</a>
+        </nav>
+      </section>
+    </div>
+  </main>
+</BaseLayout>

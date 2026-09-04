@@ -1,0 +1,46 @@
+{
+  "name": "zhuochengzhang-com",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "npm@11.6.2",
+  "engines": {
+    "node": ">=24.11.1 <25",
+    "npm": ">=11.6.2 <12"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "og": "node scripts/generate-og.mjs"
+  },
+  "dependencies": {
+    "@astrojs/markdown-remark": "7.2.0",
+    "@astrojs/react": "6.0.4",
+    "@astrojs/sitemap": "3.7.4",
+    "@tailwindcss/vite": "4.3.3",
+    "astro": "6.4.6",
+    "katex": "0.18.5",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "rehype-katex": "7.0.1",
+    "remark-math": "6.0.0",
+    "tailwindcss": "4.3.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.6",
+    "@fontsource-variable/archivo": "5.2.8",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.5",
+    "prettier": "3.8.4",
+    "prettier-plugin-astro": "0.14.1",
+    "typescript": "5.9.3"
+  },
+  "overrides": {
+    "yaml": "2.8.3"
+  }
+}

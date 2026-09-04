@@ -1,0 +1,47 @@
+title: "A Gate-All-Around In₂O₃ Nanoribbon FET with Near 20 mA/µm Drain Current"
+authors:
+  - displayName: Z. Zhang
+    isSiteOwner: true
+  - displayName: Z. Lin
+    isSiteOwner: false
+  - displayName: P.-Y. Liao
+    isSiteOwner: false
+  - displayName: V. Askarpour
+    isSiteOwner: false
+  - displayName: H. Dou
+    isSiteOwner: false
+  - displayName: Z. Shang
+    isSiteOwner: false
+  - displayName: A. Charnas
+    isSiteOwner: false
+  - displayName: M. Si
+    isSiteOwner: false
+  - displayName: S. Alajlouni
+    isSiteOwner: false
+  - displayName: A. Shakouri
+    isSiteOwner: false
+  - displayName: H. Wang
+    isSiteOwner: false
+  - displayName: M. Lundstrom
+    isSiteOwner: false
+  - displayName: J. Maassen
+    isSiteOwner: false
+  - displayName: P. D. Ye
+    isSiteOwner: false
+year: 2022
+publishedAt: "2022-11"
+type: journal-article
+status: published
+doi: 10.1109/led.2022.3210005
+venue:
+  name: IEEE Electron Device Letters
+volume: "43"
+issue: "11"
+pages: 1905-1908
+verification:
+  status: user-confirmed
+  provenance: user-supplied
+  sourceId: site-owner-publication-list-2026-01-20
+  note: Bibliographic details come from the site owner's own publication list; the complete record is maintained on Google Scholar.
+  checkedAt: 2026-08-26
+  publishable: true

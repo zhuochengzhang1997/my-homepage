@@ -1,0 +1,10 @@
+name: Future Thesis
+description: Turns scattered signals into testable views of technology and industry.
+kind: program
+href: /studio/future-thesis-os/
+image: ../../assets/studio/future-thesis-os.webp
+imageAlt: >-
+  Schematic of a layered world model: a gauge above three rows of connected
+  nodes, with a vertical scale on the right.
+order: 2
+draft: false

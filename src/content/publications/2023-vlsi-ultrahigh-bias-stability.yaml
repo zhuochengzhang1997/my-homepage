@@ -1,0 +1,29 @@
+title: "Ultrahigh Bias Stability of ALD In₂O₃ FETs Enabled by High Temperature O₂ Annealing"
+authors:
+  - displayName: Z. Zhang
+    isSiteOwner: true
+  - displayName: Z. Lin
+    isSiteOwner: false
+  - displayName: C. Niu
+    isSiteOwner: false
+  - displayName: M. Si
+    isSiteOwner: false
+  - displayName: M. A. Alam
+    isSiteOwner: false
+  - displayName: P. D. Ye
+    isSiteOwner: false
+year: 2023
+publishedAt: "2023-06-11"
+type: conference-paper
+status: published
+doi: 10.23919/vlsitechnologyandcir57934.2023.10185292
+venue:
+  name: IEEE Symposium on VLSI Technology and Circuits
+  shortName: VLSI
+verification:
+  status: user-confirmed
+  provenance: user-supplied
+  sourceId: site-owner-publication-list-2026-01-20
+  note: Bibliographic details come from the site owner's own publication list; the complete record is maintained on Google Scholar.
+  checkedAt: 2026-08-26
+  publishable: true

@@ -1,0 +1,49 @@
+title: "Nanometer-Thick Oxide Semiconductor Transistor with Ultra-High Drain Current"
+authors:
+  - displayName: Z. Lin
+    isSiteOwner: false
+  - displayName: M. Si
+    isSiteOwner: false
+  - displayName: V. Askarpour
+    isSiteOwner: false
+  - displayName: C. Niu
+    isSiteOwner: false
+  - displayName: A. Charnas
+    isSiteOwner: false
+  - displayName: Z. Shang
+    isSiteOwner: false
+  - displayName: Y. Zhang
+    isSiteOwner: false
+  - displayName: Y. Hu
+    isSiteOwner: false
+  - displayName: Z. Zhang
+    isSiteOwner: true
+  - displayName: "P.-Y. Liao"
+    isSiteOwner: false
+  - displayName: K. Cho
+    isSiteOwner: false
+  - displayName: H. Wang
+    isSiteOwner: false
+  - displayName: M. Lundstrom
+    isSiteOwner: false
+  - displayName: J. Maassen
+    isSiteOwner: false
+  - displayName: P. D. Ye
+    isSiteOwner: false
+year: 2022
+publishedAt: "2022-11-29"
+type: journal-article
+status: published
+doi: 10.1021/acsnano.2c10383
+venue:
+  name: ACS Nano
+volume: "16"
+issue: "12"
+pages: "21536-21545"
+verification:
+  status: user-confirmed
+  provenance: external-source
+  sourceId: google-scholar-mela3NQAAAAJ-2026-08-31
+  note: Listed as a journal or conference paper on the site owner's Google Scholar profile. Authors, venue, and pagination completed from the Crossref/publisher record.
+  checkedAt: 2026-08-31
+  publishable: true

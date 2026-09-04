@@ -1,0 +1,16 @@
+name: logic-compiler
+tagline: Long documents compiled into navigable narrative trees.
+description: >-
+  A local-first desktop application that turns long documents into
+  source-grounded, drill-down narrative trees, so every node can be traced back
+  to the text that produced it. Exposes both a REST API and an MCP interface so
+  coding agents can operate it end to end.
+stack:
+  - TypeScript
+  - Node / Fastify
+  - React
+  - Electron
+  - MCP
+status: Shipped, v0.2.x
+order: 2
+draft: true

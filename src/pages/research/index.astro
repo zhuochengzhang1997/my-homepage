@@ -1,0 +1,206 @@
+---
+import { getCollection } from "astro:content";
+
+import ResearchDiagram from "../../components/ResearchDiagram.astro";
+import SectionHeader from "../../components/SectionHeader.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const lines = (await getCollection("researchThemes")).sort((a, b) => a.data.order - b.data.order);
+
+const formatPartialDate = (value?: string): string => {
+  if (!value) return "";
+  const [year, month] = value.split("-");
+  if (!month) return year;
+  return new Intl.DateTimeFormat("en", { year: "numeric", month: "short" }).format(
+    new Date(Number(year), Number(month) - 1, 1),
+  );
+};
+
+// The trajectory timeline replaces the old /experience/ page: the same record,
+// read as the evidence chain behind the research above. Oldest first, because
+// the point is how one stage produced the next.
+const trajectory = (await getCollection("experience"))
+  .sort((a, b) => b.data.order - a.data.order)
+  .map((entry) => {
+    const start = formatPartialDate(entry.data.startDate);
+    const end = entry.data.ongoing ? "Present" : formatPartialDate(entry.data.endDate);
+
+    return {
+      id: entry.id,
+      role: entry.data.role,
+      institution: entry.data.institution,
+      context: [entry.data.department, entry.data.advisor].filter(Boolean).join(" · "),
+      period: [start, end].filter(Boolean).join(" to "),
+      summary: entry.data.summary,
+      note: entry.data.trajectoryNote,
+    };
+  });
+
+const education = (await getCollection("education")).sort((a, b) => a.data.order - b.data.order);
+
+const institutionWithKeep = (text: string, keep?: string) => {
+  if (!keep) return { before: text, keep: "", after: "" };
+  const index = text.indexOf(keep);
+  if (index < 0) return { before: text, keep: "", after: "" };
+  return {
+    before: text.slice(0, index),
+    keep,
+    after: text.slice(index + keep.length),
+  };
+};
+
+const isDev = import.meta.env.DEV;
+const nudge = (id: string, label: string) =>
+  isDev ? { "data-nudge": id, "data-nudge-label": label } : {};
+---
+
+<BaseLayout
+  title="Research | Zhuocheng Zhang"
+  description="Zhuocheng Zhang researches agentic workflows for semiconductor engineering, including the tools, physical constraints, and evidence trails engineers need to verify an agent’s work."
+  image="/og/research.png"
+>
+  <main id="main-content">
+    <div class="section-band section-band--canvas page-lede-band">
+      <div class="page-shell editorial-grid">
+        <SectionHeader
+          class="page-lede-band__header"
+          eyebrow="Current work"
+          title="Agentic workflows for semiconductor engineering"
+          {...nudge("intro", "Page intro")}
+        >
+          <Fragment slot="heading">
+            Agentic workflows for <span class="page-lede-band__glue">semiconductor engineering</span
+            >
+          </Fragment>
+          <Fragment slot="lede">
+            Experts make the judgment calls.
+            <span class="lede-line">Agents handle the repeatable work around them.</span>
+          </Fragment>
+        </SectionHeader>
+      </div>
+    </div>
+
+    <div class="section-band section-band--soft">
+      <ol class="research-theme-list page-shell">
+        {
+          lines.map((line, index) => (
+            <li class="research-line" id={line.id}>
+              <article class="editorial-grid" aria-labelledby={`${line.id}-title`}>
+                <p
+                  class="research-line__number"
+                  {...nudge(`${line.id}-num`, `${String(index + 1).padStart(2, "0")} number`)}
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </p>
+
+                <div
+                  class="research-line__lead"
+                  {...nudge(`${line.id}-lead`, `${String(index + 1).padStart(2, "0")} lead`)}
+                >
+                  <h2 id={`${line.id}-title`}>{line.data.title}</h2>
+                  {line.data.thesis && <p class="research-line__thesis">{line.data.thesis}</p>}
+                  <ResearchDiagram theme={line.id} />
+                </div>
+
+                <div
+                  class="research-line__body"
+                  {...nudge(`${line.id}-body`, `${String(index + 1).padStart(2, "0")} body`)}
+                >
+                  {line.data.body &&
+                    line.data.body.length > 0 &&
+                    line.data.body.map((paragraph) => <p>{paragraph}</p>)}
+                  {line.data.tags && line.data.tags.length > 0 && (
+                    <ul class="tag-list" aria-label="Topics">
+                      {line.data.tags.map((tag) => (
+                        <li>{tag}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </article>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+
+    <div class="section-band section-band--canvas">
+      <section class="page-shell editorial-grid trajectory" aria-labelledby="trajectory-title">
+        <SectionHeader
+          level={2}
+          eyebrow="How I got here"
+          title="Trajectory"
+          id="trajectory-title"
+          class="trajectory__header"
+          lede="I ran these engineering workflows before I began building systems to automate their repeatable parts. Each stage below shaped what I build now."
+          {...nudge("trajectory-header", "Trajectory header")}
+        />
+
+        <div class="trajectory__body" {...nudge("trajectory-body", "Trajectory body")}>
+          <ol class="timeline">
+            {
+              trajectory.map((stop) => (
+                <li class="timeline__item">
+                  <article aria-labelledby={`${stop.id}-title`}>
+                    <p class="timeline__period">{stop.period}</p>
+                    <h3 id={`${stop.id}-title`}>
+                      {stop.role}, {stop.institution}
+                    </h3>
+                    {stop.context && <p class="timeline__institution">{stop.context}</p>}
+                    {stop.summary && <p class="timeline__summary">{stop.summary}</p>}
+                    {stop.note && <p class="timeline__note">{stop.note}</p>}
+                  </article>
+                </li>
+              ))
+            }
+          </ol>
+
+          <ul class="education-list" aria-label="Education">
+            {
+              education.map((degree) => {
+                const schoolUnderDegree = degree.data.schoolWith === "degree";
+                const institution = institutionWithKeep(
+                  degree.data.institution,
+                  degree.data.keepTogether,
+                );
+
+                return (
+                  <li>
+                    <span class="education-list__degree">
+                      <span class="education-list__line">
+                        {degree.data.degree}, {degree.data.field}
+                      </span>
+                      {degree.data.program && (
+                        <span class="education-list__line">{degree.data.program}</span>
+                      )}
+                      {schoolUnderDegree && degree.data.school && (
+                        <span class="education-list__line education-list__school">
+                          {degree.data.school}
+                        </span>
+                      )}
+                    </span>
+                    <span class="education-list__institution">
+                      <span class="education-list__line">
+                        {institution.before}
+                        {institution.keep && (
+                          <span class="education-list__keep">{institution.keep}</span>
+                        )}
+                        {institution.after}
+                      </span>
+                      {!schoolUnderDegree && degree.data.school && (
+                        <span class="education-list__line education-list__school">
+                          {degree.data.school}
+                        </span>
+                      )}
+                    </span>
+                    <span class="education-list__year">{degree.data.graduationYear}</span>
+                  </li>
+                );
+              })
+            }
+          </ul>
+        </div>
+      </section>
+    </div>
+  </main>
+</BaseLayout>

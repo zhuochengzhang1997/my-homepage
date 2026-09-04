@@ -1,0 +1,12 @@
+name: Technology Atlas
+description: >-
+  A navigable map of how technologies depend on, replace, and reshape one
+  another.
+kind: program
+href: /studio/tech-ontology/
+image: ../../assets/studio/tech-ontology.webp
+imageAlt: >-
+  Schematic of a technology graph: a tree of nodes above a five-step process
+  chain, with arrows linking the chain to the tree.
+order: 1
+draft: false

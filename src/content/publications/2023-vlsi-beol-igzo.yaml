@@ -1,0 +1,36 @@
+title: "First Demonstration of BEOL-Compatible Atomic-Layer-Deposited InGaZnO TFTs with 1.5 nm Channel Thickness and 60 nm Channel Length Achieving ON/OFF Ratio Exceeding 10¹¹, SS of 68 mV/dec, Normal-off Operation and High Positive Gate Bias Stability"
+authors:
+  - displayName: J. Zhang
+    isSiteOwner: false
+  - displayName: Z. Zhang
+    isSiteOwner: true
+  - displayName: Z. Lin
+    isSiteOwner: false
+  - displayName: K. Xu
+    isSiteOwner: false
+  - displayName: H. Dou
+    isSiteOwner: false
+  - displayName: B. Yang
+    isSiteOwner: false
+  - displayName: X. Zhang
+    isSiteOwner: false
+  - displayName: H. Wang
+    isSiteOwner: false
+  - displayName: P. D. Ye
+    isSiteOwner: false
+year: 2023
+publishedAt: "2023-06-11"
+type: conference-paper
+status: published
+doi: 10.23919/vlsitechnologyandcir57934.2023.10185312
+venue:
+  name: IEEE Symposium on VLSI Technology and Circuits
+  shortName: VLSI
+pages: "1-2"
+verification:
+  status: user-confirmed
+  provenance: external-source
+  sourceId: google-scholar-mela3NQAAAAJ-2026-08-31
+  note: Listed as a journal or conference paper on the site owner's Google Scholar profile. Authors, venue, and pagination completed from the Crossref/publisher record.
+  checkedAt: 2026-08-31
+  publishable: true

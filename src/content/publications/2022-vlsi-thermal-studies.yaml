@@ -1,0 +1,36 @@
+title: "Thermal Studies of BEOL-compatible Top-Gated Atomically Thin ALD In₂O₃ FETs"
+authors:
+  - displayName: "P.-Y. Liao"
+    isSiteOwner: false
+  - displayName: S. Alajlouni
+    isSiteOwner: false
+  - displayName: M. Si
+    isSiteOwner: false
+  - displayName: Z. Zhang
+    isSiteOwner: true
+  - displayName: Z. Lin
+    isSiteOwner: false
+  - displayName: J. Noh
+    isSiteOwner: false
+  - displayName: C. Wilk
+    isSiteOwner: false
+  - displayName: A. Shakouri
+    isSiteOwner: false
+  - displayName: P. D. Ye
+    isSiteOwner: false
+year: 2022
+publishedAt: "2022-06-12"
+type: conference-paper
+status: published
+doi: 10.1109/vlsitechnologyandcir46769.2022.9830279
+venue:
+  name: IEEE Symposium on VLSI Technology and Circuits
+  shortName: VLSI
+pages: "322-323"
+verification:
+  status: user-confirmed
+  provenance: external-source
+  sourceId: google-scholar-mela3NQAAAAJ-2026-08-31
+  note: Listed as a journal or conference paper on the site owner's Google Scholar profile. Authors, venue, and pagination completed from the Crossref/publisher record.
+  checkedAt: 2026-08-31
+  publishable: true

@@ -1,0 +1,33 @@
+title: "First Determination of Thermal Resistance and Thermal Capacitance of Atomic-Layer-Deposited In₂O₃ Transistors"
+authors:
+  - displayName: J.-Y. Lin
+    isSiteOwner: false
+  - displayName: Z. Zhang
+    isSiteOwner: true
+  - displayName: S. Alajlouni
+    isSiteOwner: false
+  - displayName: P.-Y. Liao
+    isSiteOwner: false
+  - displayName: Z. Lin
+    isSiteOwner: false
+  - displayName: C. Niu
+    isSiteOwner: false
+  - displayName: A. Shakouri
+    isSiteOwner: false
+  - displayName: P. D. Ye
+    isSiteOwner: false
+year: 2023
+publishedAt: "2023-12-09"
+type: conference-paper
+status: published
+doi: 10.1109/iedm45741.2023.10413835
+venue:
+  name: IEEE International Electron Devices Meeting
+  shortName: IEDM
+verification:
+  status: user-confirmed
+  provenance: user-supplied
+  sourceId: site-owner-publication-list-2026-01-20
+  note: Bibliographic details come from the site owner's own publication list; the complete record is maintained on Google Scholar.
+  checkedAt: 2026-08-26
+  publishable: true

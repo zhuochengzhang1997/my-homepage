@@ -1,0 +1,38 @@
+role: Postdoctoral Researcher
+institution: The Chinese University of Hong Kong
+department: Department of Computer Science and Engineering
+advisor: Prof. Bei Yu
+startDate: 2026-04
+ongoing: true
+order: 1
+summary: >-
+  AI agents for semiconductor compact modeling and design-technology
+  co-optimization, with the evidence infrastructure needed to verify their
+  output.
+trajectoryNote: >-
+  Now building the tools, guardrails, and evidence layer that let an agent do
+  that modeling work with its decisions and actions on the record.
+bullets:
+  - >-
+    Built the harness that lets a general-purpose LLM agent run SPICE
+    compact-model calibration as engineering work rather than a demo: a typed
+    tool layer over an open-source simulator, physics-aware guardrails on every
+    parameter move, and a per-run audit trail. Evaluated as a controlled study
+    on tasks with known ground truth, including measured SKY130 silicon data
+    associated with an open process design kit. First-author manuscript under
+    peer review.
+  - >-
+    Extended that work into a learning loop: an append-only evidence layer,
+    reviewed distillation into governed knowledge with declared scope and
+    mandatory counterexamples, and feedback into subsequent tasks. This lets
+    engineering experience accumulate without changing model weights.
+  - >-
+    Built the domain ontology this depends on: concepts, typed relations,
+    quality rules, and figures of merit as versioned, machine-checkable
+    structure that an agent can read.
+verification:
+  status: user-confirmed
+  provenance: user-confirmed
+  sourceId: facts-yaml-2026-08-23
+  checkedAt: 2026-08-23
+  publishable: true

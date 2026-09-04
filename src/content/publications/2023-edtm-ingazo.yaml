@@ -1,0 +1,28 @@
+title: "Ultra-thin atomic-layer-deposited InGaZnO thin film transistors with Back-End-of-Line Compatibility"
+authors:
+  - displayName: J. Zhang
+    isSiteOwner: false
+  - displayName: Z. Zhang
+    isSiteOwner: true
+  - displayName: Z. Lin
+    isSiteOwner: false
+  - displayName: D. Zheng
+    isSiteOwner: false
+  - displayName: P. D. Ye
+    isSiteOwner: false
+year: 2023
+publishedAt: "2023-03-07"
+type: conference-paper
+status: published
+doi: 10.1109/edtm55494.2023.10103069
+venue:
+  name: "IEEE Electron Devices Technology & Manufacturing Conference"
+  shortName: EDTM
+pages: "1-3"
+verification:
+  status: user-confirmed
+  provenance: external-source
+  sourceId: google-scholar-mela3NQAAAAJ-2026-08-31
+  note: Listed as a journal or conference paper on the site owner's Google Scholar profile. Authors, venue, and pagination completed from the Crossref/publisher record.
+  checkedAt: 2026-08-31
+  publishable: true

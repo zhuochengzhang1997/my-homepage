@@ -1,0 +1,37 @@
+title: "Reliability of Atomic-Layer-Deposited Gate-All-Around In₂O₃ Nano-Ribbon Transistors with Ultra-High Drain Currents"
+authors:
+  - displayName: Z. Zhang
+    isSiteOwner: true
+  - displayName: Z. Lin
+    isSiteOwner: false
+  - displayName: A. Charnas
+    isSiteOwner: false
+  - displayName: H. Dou
+    isSiteOwner: false
+  - displayName: Z. Shang
+    isSiteOwner: false
+  - displayName: J. Zhang
+    isSiteOwner: false
+  - displayName: M. Si
+    isSiteOwner: false
+  - displayName: H. Wang
+    isSiteOwner: false
+  - displayName: M. A. Alam
+    isSiteOwner: false
+  - displayName: P. D. Ye
+    isSiteOwner: false
+year: 2022
+publishedAt: "2022-12-03"
+type: conference-paper
+status: published
+doi: 10.1109/iedm45625.2022.10019494
+venue:
+  name: IEEE International Electron Devices Meeting
+  shortName: IEDM
+verification:
+  status: user-confirmed
+  provenance: user-supplied
+  sourceId: site-owner-publication-list-2026-01-20
+  note: Bibliographic details come from the site owner's own publication list; the complete record is maintained on Google Scholar.
+  checkedAt: 2026-08-26
+  publishable: true

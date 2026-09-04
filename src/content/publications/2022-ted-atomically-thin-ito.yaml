@@ -1,0 +1,33 @@
+title: "Atomically Thin Indium-Tin-Oxide Transistors Enabled by Atomic Layer Deposition"
+authors:
+  - displayName: Z. Zhang
+    isSiteOwner: true
+  - displayName: Y. Hu
+    isSiteOwner: false
+  - displayName: Z. Lin
+    isSiteOwner: false
+  - displayName: M. Si
+    isSiteOwner: false
+  - displayName: A. Charnas
+    isSiteOwner: false
+  - displayName: K. Cho
+    isSiteOwner: false
+  - displayName: P. D. Ye
+    isSiteOwner: false
+year: 2022
+publishedAt: "2022-01"
+type: journal-article
+status: published
+doi: 10.1109/ted.2021.3129707
+venue:
+  name: IEEE Transactions on Electron Devices
+volume: "69"
+issue: "1"
+pages: 231-236
+verification:
+  status: user-confirmed
+  provenance: user-supplied
+  sourceId: site-owner-publication-list-2026-01-20
+  note: Bibliographic details come from the site owner's own publication list; the complete record is maintained on Google Scholar.
+  checkedAt: 2026-08-26
+  publishable: true

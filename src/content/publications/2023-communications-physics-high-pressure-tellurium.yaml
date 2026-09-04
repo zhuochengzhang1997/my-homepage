@@ -1,0 +1,35 @@
+title: "High-pressure Induced Weyl Semimetal Phase in 2D Tellurium"
+authors:
+  - displayName: C. Niu
+    isSiteOwner: false
+  - displayName: Z. Zhang
+    isSiteOwner: true
+  - displayName: D. Graf
+    isSiteOwner: false
+  - displayName: S. Lee
+    isSiteOwner: false
+  - displayName: M. Wang
+    isSiteOwner: false
+  - displayName: W. Wu
+    isSiteOwner: false
+  - displayName: T. Low
+    isSiteOwner: false
+  - displayName: P. D. Ye
+    isSiteOwner: false
+year: 2023
+publishedAt: "2023-11-28"
+type: journal-article
+status: published
+doi: 10.1038/s42005-023-01460-1
+venue:
+  name: Communications Physics
+volume: "6"
+issue: "1"
+articleNumber: "345"
+verification:
+  status: user-confirmed
+  provenance: user-supplied
+  sourceId: site-owner-publication-list-2026-01-20
+  note: Bibliographic details come from the site owner's own publication list; the complete record is maintained on Google Scholar.
+  checkedAt: 2026-08-26
+  publishable: true

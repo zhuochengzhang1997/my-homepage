@@ -1,0 +1,32 @@
+---
+import { getEntry } from "astro:content";
+
+import StudioAppLayout from "../../layouts/StudioAppLayout.astro";
+
+const piece = await getEntry("projects", "tech-ontology");
+if (!piece) throw new Error("Missing content entry: projects/tech-ontology");
+---
+
+<StudioAppLayout
+  title={piece.data.name}
+  description={piece.data.description}
+  appSrc="/studio/tech-ontology/app/index.html"
+  appTitle="Technology Atlas showing chip families and the processes that make them"
+>
+  <Fragment slot="intro">
+    <p class="eyebrow">Studio</p>
+    <h1>{piece.data.name}</h1>
+    <p>
+      Technical knowledge is plentiful but fragmented across papers, patents, product documentation,
+      and industry shorthand. What is hard to see is how a principle becomes a process, component,
+      system, and product, or where one technology depends on, replaces, or constrains another.
+    </p>
+    <p>
+      Technology Atlas models those relationships directly. It organizes each kind of object in its
+      own hierarchy, then connects them with typed links for composition, dependency,
+      implementation, succession, and substitution. The result is an explorable map of where a
+      technology comes from, what it relies on, and where it may lead.
+    </p>
+    <a class="text-link" href="/studio/">Back to Studio</a>
+  </Fragment>
+</StudioAppLayout>

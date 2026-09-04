@@ -1,0 +1,50 @@
+---
+/**
+ * SectionHeader — the shared eyebrow / title / lede block.
+ *
+ * Used as the page header on every inner page (`level: 1`) and as a section
+ * header inside a page (`level: 2`). Keeps eyebrow casing, title face, and lede
+ * measure identical everywhere instead of re-declaring the markup per page.
+ */
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lede?: string;
+  level?: 1 | 2;
+  id?: string;
+  class?: string;
+  "data-nudge"?: string;
+  "data-nudge-label"?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  lede,
+  level = 1,
+  id,
+  class: className,
+  "data-nudge": dataNudge,
+  "data-nudge-label": dataNudgeLabel,
+} = Astro.props;
+const Heading = level === 1 ? "h1" : "h2";
+---
+
+<header
+  class:list={["page-intro", { "page-intro--section": level === 2 }, className]}
+  data-nudge={dataNudge}
+  data-nudge-label={dataNudgeLabel}
+>
+  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+  <Heading id={id}><slot name="heading">{title}</slot></Heading>
+  {
+    Astro.slots.has("lede") ? (
+      <p class="page-intro__lede">
+        <slot name="lede" />
+      </p>
+    ) : (
+      lede && <p class="page-intro__lede">{lede}</p>
+    )
+  }
+  <slot />
+</header>

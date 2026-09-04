@@ -1,0 +1,40 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection, render } from "astro:content";
+
+import ProseLayout from "../../layouts/ProseLayout.astro";
+import { OG_CARD_FILES } from "../../../scripts/og-cards.mjs";
+
+export const getStaticPaths = (async () => {
+  const entries = await getCollection("essays");
+
+  return entries
+    .filter((entry) => !entry.data.draft)
+    .map((entry) => ({
+      params: { slug: entry.id },
+      props: { entry },
+    }));
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+// Per-essay cards are declared in scripts/og-cards.mjs, rendered by `npm run og`
+// and committed under public/og/. If an essay has no card declared yet, fall
+// back to the section card rather than pointing og:image at a URL that 404s.
+const cardStem = `essay-${entry.data.ogSlug ?? entry.id}`;
+const ogImage = OG_CARD_FILES.includes(cardStem) ? `/og/${cardStem}.png` : "/og/essays.png";
+---
+
+<ProseLayout
+  title={entry.data.title}
+  titleBreakAfter={entry.data.titleBreakAfter}
+  subtitle={entry.data.subtitle}
+  description={entry.data.description}
+  kind={entry.data.kind}
+  date={entry.data.date}
+  image={ogImage}
+  indexHref={`/essays/#${entry.id}-title`}
+>
+  <Content />
+</ProseLayout>

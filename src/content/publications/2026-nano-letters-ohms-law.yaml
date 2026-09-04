@@ -1,0 +1,33 @@
+title: "Breakdown of Ohm’s Law by Disorders in Low-Dimensional Transistors"
+authors:
+  - displayName: C. Niu
+    isSiteOwner: false
+  - displayName: A. Charnas
+    isSiteOwner: false
+  - displayName: "J.-Y. Lin"
+    isSiteOwner: false
+  - displayName: L. Long
+    isSiteOwner: false
+  - displayName: Z. Lin
+    isSiteOwner: false
+  - displayName: Z. Zhang
+    isSiteOwner: true
+  - displayName: P. D. Ye
+    isSiteOwner: false
+year: 2026
+publishedAt: "2026-04-02"
+type: journal-article
+status: published
+doi: 10.1021/acs.nanolett.6c00645
+venue:
+  name: Nano Letters
+volume: "26"
+issue: "14"
+pages: "4839-4846"
+verification:
+  status: user-confirmed
+  provenance: external-source
+  sourceId: google-scholar-mela3NQAAAAJ-2026-08-31
+  note: Listed as a journal or conference paper on the site owner's Google Scholar profile. Authors, venue, and pagination completed from the Crossref/publisher record.
+  checkedAt: 2026-08-31
+  publishable: true

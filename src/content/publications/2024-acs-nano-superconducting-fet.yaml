@@ -1,0 +1,37 @@
+title: "Superconducting Field-Effect Transistors with PdₓTe–Te Intimate Contacts"
+authors:
+  - displayName: C. Niu
+    isSiteOwner: false
+  - displayName: M. Wang
+    isSiteOwner: false
+  - displayName: Z. Zhang
+    isSiteOwner: true
+  - displayName: G. Qiu
+    isSiteOwner: false
+  - displayName: Y. Wang
+    isSiteOwner: false
+  - displayName: D. Zheng
+    isSiteOwner: false
+  - displayName: "P.-Y. Liao"
+    isSiteOwner: false
+  - displayName: W. Wu
+    isSiteOwner: false
+  - displayName: P. D. Ye
+    isSiteOwner: false
+year: 2024
+publishedAt: "2024-05-31"
+type: journal-article
+status: published
+doi: 10.1021/acsnano.4c02352
+venue:
+  name: ACS Nano
+volume: "18"
+issue: "23"
+pages: "15107-15113"
+verification:
+  status: user-confirmed
+  provenance: external-source
+  sourceId: google-scholar-mela3NQAAAAJ-2026-08-31
+  note: Listed as a journal or conference paper on the site owner's Google Scholar profile. Authors, venue, and pagination completed from the Crossref/publisher record.
+  checkedAt: 2026-08-31
+  publishable: true

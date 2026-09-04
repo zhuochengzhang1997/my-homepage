@@ -1,0 +1,2256 @@
+{
+ "@context": {
+  "@vocab": "https://tech-ontology.example/v0.3#",
+  "label": {
+   "@container": "@language"
+  },
+  "description": {
+   "@container": "@language"
+  },
+  "parent": {
+   "@type": "@id"
+  },
+  "deprecated_by": {
+   "@type": "@id"
+  },
+  "composes": {
+   "@type": "@id",
+   "@container": "@set"
+  },
+  "depends_on": {
+   "@type": "@id",
+   "@container": "@set"
+  },
+  "produces": {
+   "@type": "@id",
+   "@container": "@set"
+  },
+  "constrains": {
+   "@type": "@id",
+   "@container": "@set"
+  },
+  "implements": {
+   "@type": "@id",
+   "@container": "@set"
+  },
+  "co_evolves_with": {
+   "@type": "@id",
+   "@container": "@set"
+  },
+  "alternative_to": {
+   "@type": "@id",
+   "@container": "@set"
+  },
+  "succeeds": {
+   "@type": "@id",
+   "@container": "@set"
+  },
+  "subprocess_of": {
+   "@type": "@id",
+   "@container": "@set"
+  },
+  "uses_tool": {
+   "@type": "@id",
+   "@container": "@set"
+  },
+  "consumes_input": {
+   "@type": "@id",
+   "@container": "@set"
+  },
+  "precedes": {
+   "@type": "@id",
+   "@container": "@set"
+  },
+  "layering": {
+   "@id": "https://tech-ontology.example/v0.3#layering"
+  },
+  "fabric_domain": {
+   "@id": "https://tech-ontology.example/v0.3#fabric_domain"
+  },
+  "applies_to": {
+   "@type": "@id",
+   "@container": "@set"
+  },
+  "metric": {
+   "@type": "@id"
+  },
+  "subject": {
+   "@type": "@id"
+  },
+  "references": {
+   "@container": "@set"
+  }
+ },
+ "@graph": [
+  {
+   "@id": "ontology:meta",
+   "@type": "OntologyMeta",
+   "version": "1.21.0",
+   "name": {
+    "en": "Tech Knowledge Ontology"
+   },
+   "last_updated": "2026-08-13",
+   "edge_types": [
+    "produces",
+    "co_evolves_with",
+    "alternative_to",
+    "succeeds",
+    "precedes"
+   ],
+   "top_modules": [
+    {
+     "id": "concept:chip",
+     "label": {
+      "en": "Chip"
+     }
+    }
+   ],
+   "stratum_roots": [
+    {
+     "id": "activity:hardware-engineering-process",
+     "label": {
+      "en": "Hardware Engineering Process"
+     },
+     "stratum": "Activity"
+    }
+   ],
+   "edge_type_definitions": {
+    "produces": {
+     "label": {
+      "en": "Produces"
+     },
+     "symmetric": false
+    },
+    "co_evolves_with": {
+     "label": {
+      "en": "Co-Evolves With"
+     },
+     "symmetric": true
+    },
+    "alternative_to": {
+     "label": {
+      "en": "Alternative To"
+     },
+     "symmetric": true
+    },
+    "succeeds": {
+     "label": {
+      "en": "Succeeds"
+     },
+     "symmetric": false
+    },
+    "precedes": {
+     "label": {
+      "en": "Precedes"
+     },
+     "symmetric": false
+    }
+   }
+  },
+  {
+   "@id": "concept:chip",
+   "@type": "Concept",
+   "label": {
+    "en": "Chip"
+   },
+   "description": {
+    "en": "An electronic circuit functional unit integrated on a single semiconductor substrate via micro/nano fabrication processes, packaged as a discrete artifact that can circulate and be assembled independently."
+   },
+   "level": 1,
+   "last_updated": "2026-07-15"
+  },
+  {
+   "@id": "concept:logic-chip",
+   "@type": "Concept",
+   "label": {
+    "en": "Logic Chip"
+   },
+   "description": {
+    "en": "A class of chip that executes Boolean logic operations and instruction-stream processing. Essentially encapsulates combinational and sequential digital logic into programmable or fixed-function processing devices."
+   },
+   "level": 2,
+   "parent": "concept:chip",
+   "last_updated": "2026-05-08"
+  },
+  {
+   "@id": "concept:memory-chip",
+   "@type": "Concept",
+   "label": {
+    "en": "Memory Chip"
+   },
+   "description": {
+    "en": "A class of chip that stores binary data and supports read/write access. Essentially formalizes information retention mechanisms (charge, magnetic moments, phase change, and other physical states) into addressable arrays of electronic cells."
+   },
+   "level": 2,
+   "parent": "concept:chip",
+   "last_updated": "2026-05-08"
+  },
+  {
+   "@id": "concept:analog-chip",
+   "@type": "Concept",
+   "label": {
+    "en": "Analog / Mixed-Signal Chip"
+   },
+   "description": {
+    "en": "A class of chip that processes continuous physical quantities (voltage, current, frequency, phase) or converts between continuous and discrete signal domains. Essentially electronic circuits that directly manipulate analog-domain physical signals."
+   },
+   "level": 2,
+   "parent": "concept:chip",
+   "last_updated": "2026-05-08"
+  },
+  {
+   "@id": "concept:sensor-chip",
+   "@type": "Concept",
+   "label": {
+    "en": "Sensor Chip"
+   },
+   "description": {
+    "en": "A class of chip that converts physical or chemical quantities into electrical signals with integrated processing circuitry. Essentially combines physical sensing with electronic measurement on the same silicon die."
+   },
+   "level": 2,
+   "parent": "concept:chip",
+   "last_updated": "2026-05-08"
+  },
+  {
+   "@id": "concept:cpu",
+   "@type": "Concept",
+   "label": {
+    "en": "CPU (Central Processing Unit)"
+   },
+   "description": {
+    "en": "A processor optimized for low-latency execution of serial instruction streams. Essentially shortens end-to-end single-thread instruction execution time through deep pipelining, out-of-order execution, branch prediction, and multi-level cache hierarchy."
+   },
+   "level": 3,
+   "parent": "concept:logic-chip",
+   "last_updated": "2026-05-08"
+  },
+  {
+   "@id": "concept:gpu",
+   "@type": "Concept",
+   "label": {
+    "en": "GPU (Graphics Processing Unit)"
+   },
+   "description": {
+    "en": "A processor optimized for high-throughput parallel computation. Essentially processes thousands to tens of thousands of concurrent threads through many simplified execution cores, SIMD/SIMT execution models, and high-bandwidth memory."
+   },
+   "level": 3,
+   "parent": "concept:logic-chip",
+   "co_evolves_with": [
+    "concept:hbm",
+    "concept:interconnect-ic"
+   ],
+   "references": [
+    {
+     "type": "webpage",
+     "title": "GB200 NVL72 (72 Blackwell GPUs interconnected by fifth-generation NVLink at 1.8 TB/s per GPU, shipping rack-scale system) — product page",
+     "url": "https://www.nvidia.com/en-us/data-center/gb200-nvl72/",
+     "publisher": "NVIDIA"
+    },
+    {
+     "type": "webpage",
+     "title": "NVLink & NVLink Switch: Fastest HPC Data Center Platform — product page",
+     "url": "https://www.nvidia.com/en-us/data-center/nvlink/",
+     "publisher": "NVIDIA"
+    },
+    {
+     "type": "news",
+     "title": "Leveraging high-speed, rack-scale GPU interconnect with NVIDIA GB200 NVL72 (deployed GB200 NVL72 clusters)",
+     "url": "https://nebius.com/blog/posts/leveraging-nvidia-gb200-nvl72-gpu-interconnect",
+     "publisher": "Nebius"
+    }
+   ],
+   "last_updated": "2026-07-17"
+  },
+  {
+   "@id": "concept:fpga",
+   "@type": "Concept",
+   "label": {
+    "en": "FPGA (Field-Programmable Gate Array)"
+   },
+   "description": {
+    "en": "A chip composed of programmable logic blocks, programmable interconnects, and programmable I/O, configurable by users post-fabrication to implement arbitrary digital circuits. Essentially shifts hardware configuration from a manufacturing-time fixed decision to a deployment-time reconfigurable decision."
+   },
+   "level": 3,
+   "parent": "concept:logic-chip",
+   "last_updated": "2026-05-08"
+  },
+  {
+   "@id": "concept:asic",
+   "@type": "Concept",
+   "label": {
+    "en": "ASIC (Application-Specific Integrated Circuit)"
+   },
+   "description": {
+    "en": "An integrated circuit custom-designed for a specific application or workload, with functionality fixed at fabrication. Essentially trades generality for specialized design tuned to the target scenario in terms of power efficiency, die area, and performance."
+   },
+   "level": 3,
+   "parent": "concept:logic-chip",
+   "last_updated": "2026-05-08"
+  },
+  {
+   "@id": "concept:mcu",
+   "@type": "Concept",
+   "label": {
+    "en": "MCU (Microcontroller Unit)"
+   },
+   "description": {
+    "en": "A logic chip that integrates a processor core, on-chip memory (program and data storage), and peripheral interfaces (timers, serial communication, analog-to-digital conversion, general-purpose I/O, and others) on a single die, targeting embedded real-time control scenarios. Essentially compresses a complete minimal runnable computing system onto a single die, trading the instruction throughput of a general-purpose processor for low power consumption, deterministic timing, and peripheral richness."
+   },
+   "level": 3,
+   "parent": "concept:logic-chip",
+   "last_updated": "2026-06-02"
+  },
+  {
+   "@id": "concept:dram",
+   "@type": "Concept",
+   "label": {
+    "en": "DRAM (Dynamic Random-Access Memory)"
+   },
+   "description": {
+    "en": "A random-access memory in which each bit is represented by the charge state of a capacitor, requiring periodic refresh to retain data. Essentially simplifies the storage cell to a \"one-transistor-one-capacitor\" structure to achieve high storage density and low cost-per-bit."
+   },
+   "level": 3,
+   "parent": "concept:memory-chip",
+   "last_updated": "2026-05-08"
+  },
+  {
+   "@id": "concept:sram",
+   "@type": "Concept",
+   "label": {
+    "en": "SRAM (Static Random-Access Memory)"
+   },
+   "description": {
+    "en": "A random-access memory in which each bit is stored by a cross-coupled inverter latch, requiring no refresh. Essentially trades a more complex multi-transistor cell for shorter access latency and refresh-free operation."
+   },
+   "level": 3,
+   "parent": "concept:memory-chip",
+   "last_updated": "2026-05-08"
+  },
+  {
+   "@id": "concept:nand-flash",
+   "@type": "Concept",
+   "label": {
+    "en": "NAND Flash"
+   },
+   "description": {
+    "en": "A non-volatile memory that stores charge in floating gates or charge traps, organized in pages and blocks, retaining data when powered off. Essentially trades a series-connected cell array structure for large capacity, low cost-per-bit, and a block-erase write model."
+   },
+   "level": 3,
+   "parent": "concept:memory-chip",
+   "references": [
+    {
+     "type": "webpage",
+     "title": "Micron G9 NAND — ninth-generation NAND with industry ONFI transfer rate of 3.6 GB/s (3600 MT/s)",
+     "url": "https://www.micron.com/products/storage/nand-flash/g9-nand",
+     "publisher": "Micron Technology"
+    },
+    {
+     "type": "webpage",
+     "title": "Samsung Electronics Begins Mass Production of 8th-Gen Vertical NAND — Toggle DDR 5.0 interface at 2.4 Gbps I/O",
+     "url": "https://semiconductor.samsung.com/news-events/news/samsung-electronics-begins-mass-production-of-8th-gen-vertical-nand-with-industrys-highest-bit-density/",
+     "publisher": "Samsung Semiconductor",
+     "year": 2022
+    },
+    {
+     "type": "webpage",
+     "title": "Samsung and Toshiba to Support New Standardized NAND Specification for High-performance Applications (Toggle DDR)",
+     "url": "https://www.kioxia.com/en-jp/about/news/2010/20100722-1.html",
+     "publisher": "Kioxia (Toshiba)",
+     "year": 2010
+    },
+    {
+     "type": "standard",
+     "title": "JESD230 NAND Flash Interface Interoperability — interoperability across Asynchronous SDR, Synchronous DDR (ONFI) and Toggle DDR NAND devices",
+     "author": "JEDEC Solid State Technology Association / ONFI Workgroup",
+     "url": "https://www.jedec.org/news/pressreleases/jedec-and-open-nand-flash-interface-workgroup-publish-nand-flash-interface-intero"
+    }
+   ],
+   "last_updated": "2026-07-16"
+  },
+  {
+   "@id": "concept:pmic",
+   "@type": "Concept",
+   "label": {
+    "en": "PMIC (Power Management Integrated Circuit)"
+   },
+   "description": {
+    "en": "An integrated circuit that converts, distributes, monitors, and manages power within an electronic system. Essentially integrates discrete power topologies (DC-DC conversion, low-dropout regulation, battery charge/discharge control, and others) onto a single chip to meet the multi-voltage-domain needs of modern devices."
+   },
+   "level": 3,
+   "parent": "concept:analog-chip",
+   "last_updated": "2026-05-08"
+  },
+  {
+   "@id": "concept:integrated-voltage-regulator",
+   "@type": "Concept",
+   "label": {
+    "en": "Integrated Voltage Regulator (IVR)"
+   },
+   "description": {
+    "en": "A category of analog/mixed-signal chip that integrates voltage-regulation conversion circuitry (including control, power switches, and inductor elements) into the processor package or onto the die, shortening the final low-voltage, high-current power-delivery path. Essentially relocates voltage regulation from the board into the package to reduce transmission loss and impedance along the delivery path. As of 2026 the category is in an early commercialization stage, with in-package power-delivery solutions for AI and high-performance processors being deployed incrementally."
+   },
+   "level": 3,
+   "parent": "concept:analog-chip",
+   "status": "confirmed",
+   "references": [
+    {
+     "type": "news",
+     "title": "Ferric Launches New Integrated Voltage Regulator for AI and High-Performance Processors (Fe1766, in-package IVR)",
+     "url": "https://www.businesswire.com/news/home/20250825729793/en/Ferric-Launches-New-Integrated-Voltage-Regulator-for-AI-and-High-Performance-Processors",
+     "publisher": "Business Wire",
+     "year": 2025
+    },
+    {
+     "type": "webpage",
+     "title": "Marvell Introduces Package Integrated Voltage Regulator (PIVR) power solutions for accelerated infrastructure",
+     "url": "https://www.marvell.com/company/newsroom/marvell-pivr-package-integrated-voltage-regulator-power-solution.html",
+     "publisher": "Marvell",
+     "year": 2025
+    },
+    {
+     "type": "article",
+     "title": "Integrated voltage regulator (IVR) for the AI era",
+     "url": "https://www.edn.com/integrated-voltage-regulator-ivr-for-the-ai-era/",
+     "publisher": "EDN",
+     "year": 2025
+    }
+   ],
+   "last_updated": "2026-08-06"
+  },
+  {
+   "@id": "concept:data-converter",
+   "@type": "Concept",
+   "label": {
+    "en": "Data Converter (Analog-to-Digital / Digital-to-Analog)"
+   },
+   "description": {
+    "en": "An integrated circuit that converts between analog signals and digital codes, comprising analog-to-digital converters (ADCs) and digital-to-analog converters (DACs). Essentially establishes a mapping between continuous physical quantities and discrete digital representations with controllable precision and sampling rate."
+   },
+   "level": 3,
+   "parent": "concept:analog-chip",
+   "last_updated": "2026-05-08"
+  },
+  {
+   "@id": "concept:rf-transceiver",
+   "@type": "Concept",
+   "label": {
+    "en": "Radio-Frequency Transceiver"
+   },
+   "description": {
+    "en": "An integrated circuit that performs modulation, demodulation, amplification, and frequency conversion between digital baseband signals and radio-frequency electromagnetic wave signals. Essentially the physical-layer interface that up-converts signals to RF carriers for transmission and down-converts received RF signals back to baseband."
+   },
+   "level": 3,
+   "parent": "concept:analog-chip",
+   "last_updated": "2026-05-08"
+  },
+  {
+   "@id": "concept:baseband-modem",
+   "@type": "Concept",
+   "label": {
+    "en": "Baseband Modem"
+   },
+   "description": {
+    "en": "A mixed-signal integrated circuit that handles the physical-layer and protocol-stack termination of wireless communication protocols such as cellular (LTE / 5G NR), Wi-Fi, Bluetooth, and satellite. Essentially crystallizes the physical-layer algorithms defined by wireless standards (e.g., 3GPP, IEEE 802.11)—including coding/decoding, modulation/demodulation, channel estimation, equalization, and forward error correction—together with MAC-sublayer processing into hardware assets, embedding a digital signal-processing unit and data-converter interfaces to the radio-frequency front end."
+   },
+   "level": 3,
+   "parent": "concept:analog-chip",
+   "last_updated": "2026-08-06"
+  },
+  {
+   "@id": "concept:rf-front-end",
+   "@type": "Concept",
+   "label": {
+    "en": "Radio-Frequency Front-End"
+   },
+   "description": {
+    "en": "A category of integrated circuit that sits between the antenna and the baseband to handle radio-frequency signal-chain processing. Essentially amplifies transmit signals, performs frequency-selective reception, and carries out TX/RX switching and multi-path selection within the RF carrier band, primarily covering amplification and frequency selection across the sub-6 GHz and mmWave bands. Industry mainstream partitions members by RF signal-chain functional position into four sub-categories — power amplifier, low-noise amplifier, RF switch, and RF filter — see sub-types."
+   },
+   "level": 3,
+   "parent": "concept:analog-chip",
+   "last_updated": "2026-06-10"
+  },
+  {
+   "@id": "concept:power-amplifier",
+   "@type": "Concept",
+   "label": {
+    "en": "Power Amplifier (PA)"
+   },
+   "description": {
+    "en": "A category of RF integrated circuit within the RF front end that performs power amplification on the transmit signal chain. Essentially boosts the small signal after baseband generation and up-conversion to the power level required for antenna emission within the RF carrier band, while constraining linearity, efficiency, and harmonic metrics. Industry mainstream sub-types diverge by substrate-material-system and device-structure coupling into the gallium-arsenide HBT route and the gallium-nitride HEMT route — see sub-types."
+   },
+   "level": 4,
+   "parent": "concept:rf-front-end",
+   "last_updated": "2026-06-11"
+  },
+  {
+   "@id": "concept:pa-gaas-hbt",
+   "@type": "Concept",
+   "label": {
+    "en": "Gallium Arsenide HBT (Heterojunction Bipolar Transistor) Power Amplifier"
+   },
+   "description": {
+    "en": "An RF power amplifier sub-type built on heterojunction bipolar transistors (HBT) over a GaAs substrate, industrially deployed in smartphone cellular sub-6 GHz transmit chains and providing approximately 26-32 dBm output power with high linearity at milliampere-level bias. Essentially a radio-frequency front-end sub-type diverging from the PA category along the GaAs-HBT substrate-plus-device-structure physical-process dimension."
+   },
+   "level": 5,
+   "parent": "concept:power-amplifier",
+   "references": [
+    {
+     "type": "webpage",
+     "url": "https://www.skyworksinc.com/Products/Amplifiers/Power-Amplifiers",
+     "title": "Skyworks Solutions — Power Amplifiers",
+     "accessed_date": "2026-06-11"
+    },
+    {
+     "type": "webpage",
+     "url": "https://en.wikipedia.org/wiki/Heterojunction_bipolar_transistor",
+     "title": "Heterojunction bipolar transistor — Wikipedia",
+     "accessed_date": "2026-06-11"
+    }
+   ],
+   "last_updated": "2026-08-06"
+  },
+  {
+   "@id": "concept:pa-gan-hemt",
+   "@type": "Concept",
+   "label": {
+    "en": "Gallium Nitride HEMT (High-Electron-Mobility Transistor) Power Amplifier"
+   },
+   "description": {
+    "en": "An RF power amplifier sub-type built on high-electron-mobility transistors (HEMT) over a GaN substrate, industrially deployed in 5G base-station macro-cell and millimeter-wave transmit chains and providing watt- to hundred-watt-level output power with high efficiency. Essentially a radio-frequency front-end sub-type diverging from the PA category along the GaN-HEMT substrate-plus-device-structure physical-process dimension."
+   },
+   "level": 5,
+   "parent": "concept:power-amplifier",
+   "references": [
+    {
+     "type": "webpage",
+     "url": "https://www.wolfspeed.com/products/rf/",
+     "title": "Wolfspeed — RF Products (GaN HEMT)",
+     "accessed_date": "2026-06-11"
+    },
+    {
+     "type": "webpage",
+     "url": "https://en.wikipedia.org/wiki/High-electron-mobility_transistor",
+     "title": "High-electron-mobility transistor — Wikipedia",
+     "accessed_date": "2026-06-11"
+    }
+   ],
+   "last_updated": "2026-08-06"
+  },
+  {
+   "@id": "concept:low-noise-amplifier",
+   "@type": "Concept",
+   "label": {
+    "en": "Low-Noise Amplifier (LNA)"
+   },
+   "description": {
+    "en": "A category of RF integrated circuit within the RF front end that performs low-noise pre-amplification on the receive signal chain. Essentially amplifies the weak received signal at the very front of the receive chain with the lowest possible device noise contribution, while constraining noise figure, gain, and linearity. Industry mainstream fabrication uses silicon substrate (concept:silicon-wafer) with SiGe BiCMOS and RF-CMOS processes as the mainstream LNA form for cellular and Wi-Fi, with GaAs pHEMT as a secondary form for high-performance scenarios."
+   },
+   "level": 4,
+   "parent": "concept:rf-front-end",
+   "last_updated": "2026-08-06"
+  },
+  {
+   "@id": "concept:rf-switch",
+   "@type": "Concept",
+   "label": {
+    "en": "Radio-Frequency Switch"
+   },
+   "description": {
+    "en": "A category of RF integrated circuit within the RF front end that performs multi-path RF signal-routing switching. Essentially selects the corresponding path among groups of transmit, receive, and band links between the antenna and the rest of the chain under a control signal, while constraining insertion loss, isolation, and switching time. Industry mainstream fabrication uses SOI CMOS (silicon-on-insulator CMOS) processes as the mainstream RF switch form for cellular handsets and Wi-Fi, with GaAs pHEMT as a low-loss high-cost alternative."
+   },
+   "level": 4,
+   "parent": "concept:rf-front-end",
+   "last_updated": "2026-08-06"
+  },
+  {
+   "@id": "concept:rf-filter",
+   "@type": "Concept",
+   "label": {
+    "en": "Radio-Frequency Filter"
+   },
+   "description": {
+    "en": "A category of RF integrated device within the RF front end that performs RF band selection and out-of-band suppression. Essentially shapes the passband and stopband in the frequency domain through resonant or coupled-resonator structures within the RF carrier band, while constraining insertion loss, out-of-band rejection, and temperature drift. Mainly deployed in cellular handset and Wi-Fi RF FEM sub-trees; overlaps with concept:mems in the piezoelectric micro-machining scope but falls on the signal-chain frequency-selection functional position rather than the sensing position along the hardware partition axis, so it is placed as an independent rf-front-end sub-category and not attached under the mems sub-tree. Mainstream industry sub-types diverge along acoustic-wave mode and process platform into bulk acoustic wave (BAW) and surface acoustic wave (SAW) routes, see child nodes."
+   },
+   "level": 4,
+   "parent": "concept:rf-front-end",
+   "last_updated": "2026-06-12"
+  },
+  {
+   "@id": "concept:baw-filter",
+   "@type": "Concept",
+   "label": {
+    "en": "Bulk Acoustic Wave (BAW) Filter"
+   },
+   "description": {
+    "en": "An RF filter sub-type that achieves resonance via bulk acoustic waves (thickness-mode longitudinal waves) within a piezoelectric thin-film cavity, industrially deployed in cellular bands above 2 GHz (n77/n79/Wi-Fi 6/7) with high Q-factor and low temperature drift. Essentially a radio-frequency front-end sub-type diverging from the RF filter category along the acoustic-wave-mode physical-process dimension; internally encompasses both FBAR (Film Bulk Acoustic Resonator, isolating acoustic energy via an air cavity) and SMR (Solidly Mounted Resonator, isolating via a Bragg reflector) structural variants."
+   },
+   "level": 5,
+   "parent": "concept:rf-filter",
+   "last_updated": "2026-08-06"
+  },
+  {
+   "@id": "concept:saw-filter",
+   "@type": "Concept",
+   "label": {
+    "en": "Surface Acoustic Wave (SAW) Filter"
+   },
+   "description": {
+    "en": "An RF filter sub-type that achieves resonance via surface acoustic waves (Rayleigh waves propagating along a piezoelectric single-crystal substrate surface) excited and picked up by interdigital transducers, industrially deployed in cellular bands below 2 GHz with low cost and mature process advantages. Essentially a radio-frequency front-end sub-type diverging from the RF filter category along the acoustic-wave-mode physical-process dimension; the process platform is based on lithium tantalate (LiTaO3) and lithium niobate (LiNbO3) single-crystal piezoelectric substrates, with TC-SAW (temperature-compensated) and IHP-SAW (improved high-Q) evolution variants."
+   },
+   "level": 5,
+   "parent": "concept:rf-filter",
+   "last_updated": "2026-08-06"
+  },
+  {
+   "@id": "concept:image-sensor",
+   "@type": "Concept",
+   "label": {
+    "en": "Image Sensor"
+   },
+   "description": {
+    "en": "A sensor chip that converts the spatial distribution of incident light into an array of electrical signals. Essentially samples the light field through spatial discretization and photo-to-electrical conversion via an array of photosensitive elements. Industry mainstream fabrication uses silicon substrate (concept:silicon-wafer) via CMOS image sensor processes."
+   },
+   "level": 3,
+   "parent": "concept:sensor-chip",
+   "last_updated": "2026-06-10"
+  },
+  {
+   "@id": "concept:mems",
+   "@type": "Concept",
+   "label": {
+    "en": "MEMS Sensor (Micro-Electro-Mechanical System)"
+   },
+   "description": {
+    "en": "A sensor chip integrating miniature mechanical structures fabricated by micro-machining processes together with electronic circuitry. Essentially shrinks macroscopic mechanical sensing principles (motion, pressure, vibration, acoustics, and others) to micron scale and co-integrates them with electronic readout circuits on the same die. Industry mainstream fabrication uses silicon substrate (concept:silicon-wafer) via silicon micro-machining processes."
+   },
+   "level": 3,
+   "parent": "concept:sensor-chip",
+   "last_updated": "2026-06-10"
+  },
+  {
+   "@id": "concept:ai-accelerator",
+   "@type": "Concept",
+   "label": {
+    "en": "AI Accelerator"
+   },
+   "description": {
+    "en": "An application-specific integrated circuit custom-designed for artificial intelligence (particularly deep learning) workloads, optimized for tensor operations, low-precision arithmetic, and high-bandwidth dataflow. Essentially trades instruction-stream generality for power efficiency and throughput density in neural network training or inference tasks."
+   },
+   "level": 4,
+   "parent": "concept:asic",
+   "co_evolves_with": [
+    "concept:hbm",
+    "concept:interconnect-ic"
+   ],
+   "last_updated": "2026-05-09"
+  },
+  {
+   "@id": "concept:systolic-array-accelerator",
+   "@type": "Concept",
+   "label": {
+    "en": "Systolic Array Accelerator"
+   },
+   "description": {
+    "en": "An AI accelerator architecture centered on a two-dimensional grid of processing elements (PEs), in which matrix multiplication is spatially unrolled across the array and operands are passed and reused cycle-by-cycle between adjacent PEs, avoiding repeated memory access per multiply-accumulate. Essentially trades fixed-topology array-level data reuse for energy efficiency and compute density in tensor operations."
+   },
+   "level": 5,
+   "parent": "concept:ai-accelerator",
+   "alternative_to": [
+    "concept:dataflow-accelerator"
+   ],
+   "last_updated": "2026-05-30"
+  },
+  {
+   "@id": "concept:dataflow-accelerator",
+   "@type": "Concept",
+   "label": {
+    "en": "Dataflow Accelerator"
+   },
+   "description": {
+    "en": "An AI accelerator architecture in which computation is driven by a data dependency graph and neural-network operators are mapped onto spatially arranged compute resources through reconfigurable interconnect, with computation triggered by operand readiness rather than a central instruction-stream program counter. Essentially uses a reconfigurable spatial dataflow layout to adapt to differing network structures and to reduce reliance on fixed instruction scheduling and memory round-trips."
+   },
+   "level": 5,
+   "parent": "concept:ai-accelerator",
+   "last_updated": "2026-05-30"
+  },
+  {
+   "@id": "concept:near-memory-accelerator",
+   "@type": "Concept",
+   "label": {
+    "en": "Near-Memory Accelerator"
+   },
+   "description": {
+    "en": "An AI accelerator architecture that places compute units physically adjacent to the storage medium while still keeping them outside the storage array, with compute logic and memory dies co-located within the same package (typically as a logic layer within a memory stack) to shorten data movement distance. Essentially reduces memory access energy and raises available bandwidth by shrinking the physical distance between compute and storage, without altering the function of storage cells themselves."
+   },
+   "level": 5,
+   "parent": "concept:ai-accelerator",
+   "co_evolves_with": [
+    "concept:hbm"
+   ],
+   "alternative_to": [
+    "concept:in-memory-accelerator"
+   ],
+   "last_updated": "2026-06-01"
+  },
+  {
+   "@id": "concept:in-memory-accelerator",
+   "@type": "Concept",
+   "label": {
+    "en": "In-Memory Accelerator"
+   },
+   "description": {
+    "en": "An AI accelerator architecture that performs computation directly inside the storage cell array (typically by executing vector-matrix multiply-accumulate in place on bit lines, in analog or digital form), so that data participate in computation without being read out of the storage array. Essentially uses the storage array itself as the compute structure, eliminating data movement between storage and compute units and carrying out operations through the physical characteristics of the storage medium."
+   },
+   "level": 5,
+   "parent": "concept:ai-accelerator",
+   "last_updated": "2026-06-01"
+  },
+  {
+   "@id": "concept:interconnect-ic",
+   "@type": "Concept",
+   "label": {
+    "en": "Interconnect Chip"
+   },
+   "description": {
+    "en": "A class of chip whose primary function is moving data at high speed between devices or between systems. Essentially circuitizes the routing, conditioning, serialization/deserialization, and protocol termination of signals, enabling discrete compute and storage devices to exchange data over physically bandwidth- and distance-limited channels."
+   },
+   "level": 2,
+   "parent": "concept:chip",
+   "last_updated": "2026-05-30"
+  },
+  {
+   "@id": "concept:switch-fabric-chip",
+   "@type": "Concept",
+   "label": {
+    "en": "Switch / Fabric Chip"
+   },
+   "description": {
+    "en": "An interconnect chip that makes forwarding decisions for data units across multiple ports according to address or flow identifiers. Essentially integrates a switching matrix (crossbar), buffering, and forwarding logic onto a single chip to enable concurrent many-to-many data exchange among ports."
+   },
+   "level": 3,
+   "parent": "concept:interconnect-ic",
+   "references": [
+    {
+     "type": "press-release",
+     "title": "Broadcom Ships Tomahawk Ultra: Reimagining the Ethernet Switch for HPC and AI Scale-up — 'compliant with the UEC standard', 'Now Shipping'",
+     "url": "https://investors.broadcom.com/news-releases/news-release-details/broadcom-ships-tomahawk-ultra-reimagining-ethernet-switch-hpc",
+     "publisher": "Broadcom",
+     "year": 2025
+    },
+    {
+     "type": "webpage",
+     "title": "NVLink & NVLink Switch (NVLink Switch chip: 144-port non-blocking NVLink switching, deployed in GB200 NVL72 rack switch trays) — product page",
+     "url": "https://www.nvidia.com/en-us/data-center/nvlink/",
+     "publisher": "NVIDIA"
+    },
+    {
+     "type": "webpage",
+     "title": "GB200 NVL72 (9 NVLink switch trays per rack interconnecting 72 Blackwell GPUs, shipping rack-scale system) — product page",
+     "url": "https://www.nvidia.com/en-us/data-center/gb200-nvl72/",
+     "publisher": "NVIDIA"
+    },
+    {
+     "type": "webpage",
+     "title": "BCM78900 Series: 51.2 Tb/s StrataXGS Tomahawk 5 Ethernet Switch (512 x 100G PAM4 SerDes)",
+     "url": "https://www.broadcom.com/products/ethernet-connectivity/switching/strataxgs/bcm78900-series",
+     "publisher": "Broadcom"
+    },
+    {
+     "type": "product-brief",
+     "title": "Marvell Teralynx 10 Data Center Ethernet Switch Product Brief (512 x 112G LR SerDes)",
+     "url": "https://www.marvell.com/content/dam/marvell/en/public-collateral/switching/marvell-teralynx-10-data-center-ethernet-switch-product-brief.pdf",
+     "publisher": "Marvell"
+    },
+    {
+     "type": "article",
+     "title": "NVIDIA NVLink: The Scale-Up Network for AI Factories — NVIDIA technical blog stating that NVIDIA NVLink is the purpose-built scale-up networking fabric for AI factories, and that scale-out fabrics such as NVIDIA Quantum InfiniBand and NVIDIA Spectrum-X Ethernet enable large clusters spanning thousands to hundreds of thousands of GPUs",
+     "url": "https://developer.nvidia.com/blog/nvidia-nvlink-the-scale-up-network-for-ai-factories/",
+     "publisher": "NVIDIA",
+     "year": 2026,
+     "source": "primary",
+     "supports": [
+      "implements spec:nvlink {fabric_domain: scale-up}",
+      "implements spec:infiniband {fabric_domain: scale-out}"
+     ]
+    },
+    {
+     "type": "webpage",
+     "title": "Networking for AI: Ethernet Scale-Up and Scale-Out — Broadcom newsroom media kit recording that Tomahawk 6 combines adaptive routing features for scale-up and scale-out networks into one platform, and that Scale Up Ethernet (SUE), Tomahawk Ultra, Tomahawk 6 and Jericho4 span within a rack, across racks, and across data centers",
+     "url": "https://news.broadcom.com/networking-for-ai-ethernet-scale-up-scale-out-2025-media-kit",
+     "publisher": "Broadcom",
+     "source": "primary",
+     "supports": [
+      "implements spec:ethernet"
+     ]
+    }
+   ],
+   "last_updated": "2026-08-01"
+  },
+  {
+   "@id": "concept:serdes",
+   "@type": "Concept",
+   "label": {
+    "en": "SerDes (Serializer/Deserializer)"
+   },
+   "description": {
+    "en": "An interconnect chip that converts between parallel digital data and a high-speed serial bit stream. Essentially replaces many parallel pins with a few high-speed differential serial lanes to carry data, reducing pin count and signal-synchronization constraints while extending reach."
+   },
+   "level": 3,
+   "parent": "concept:interconnect-ic",
+   "last_updated": "2026-06-04"
+  },
+  {
+   "@id": "concept:nic",
+   "@type": "Concept",
+   "label": {
+    "en": "Network Interface Controller (NIC)"
+   },
+   "description": {
+    "en": "An interconnect chip that handles data transmission/reception, packet (de)encapsulation, and protocol termination between a host computing system and a network. Essentially offloads the movement and protocol processing between host memory data and on-network packet flows from the main processor to a dedicated chip."
+   },
+   "level": 3,
+   "parent": "concept:interconnect-ic",
+   "references": [
+    {
+     "type": "product-brief",
+     "title": "AMD Pensando Pollara 400 AI NIC Product Brief (UEC-ready RDMA transport, 400 Gbps AI NIC)",
+     "url": "https://www.amd.com/content/dam/amd/en/documents/pensando-technical-docs/product-briefs/pollara-product-brief.pdf",
+     "publisher": "AMD"
+    },
+    {
+     "type": "news",
+     "title": "AMD rolls out first Ultra Ethernet-compliant NIC (Pensando Pollara 400 generally available and shipping)",
+     "url": "https://www.networkworld.com/article/4011095/amd-rolls-out-first-ultra-ethernet-compliant-nic.html",
+     "publisher": "Network World",
+     "year": 2025
+    },
+    {
+     "type": "datasheet",
+     "title": "NVIDIA ConnectX-7 Adapter Cards — Specifications: PCIe x16 Gen 5.0 SERDES @ 16/32GT/s, up to 400Gb/s Ethernet/InfiniBand ports",
+     "url": "https://networking-docs.nvidia.com/connectx7hw/specifications",
+     "publisher": "NVIDIA"
+    },
+    {
+     "type": "datasheet",
+     "title": "Intel Ethernet Controller E810 Datasheet — 100GbE controller with 50Gb PAM4 / 25Gb NRZ SerDes, PCI Express v4.0 x16 host interface",
+     "url": "https://www.intel.com/content/www/us/en/content-details/613875/intel-ethernet-controller-e810-datasheet.html",
+     "publisher": "Intel"
+    },
+    {
+     "type": "webpage",
+     "title": "PCIe Card Guide for Beginners: classification and mainstream NIC form factor as PCIe adapter",
+     "url": "https://www.fs.com/blog/pcie-network-card-guide-5447.html",
+     "publisher": "FS.com"
+    }
+   ],
+   "last_updated": "2026-07-17"
+  },
+  {
+   "@id": "concept:memory-interconnect-controller",
+   "@type": "Concept",
+   "label": {
+    "en": "Memory Interconnect Controller"
+   },
+   "description": {
+    "en": "A class of dedicated controller chip that performs protocol termination and data movement between the host side and the memory-media side, without itself retaining data state. Essentially it bridges and converts, on-chip, between the host-side memory-semantic access protocol and the memory-side media control (such as the DDR interface), moving data across the two — decoupling the controller from any specific memory media. This distinguishes it from memory chips, whose essence is retaining data via charge or physical state; it is structurally analogous to a network interface controller, except the channel it terminates carries memory semantics rather than network traffic. In deployment contexts such as memory expansion, such a controller can let a processor reach attached memory capacity over an interconnect channel."
+   },
+   "level": 3,
+   "parent": "concept:interconnect-ic",
+   "references": [
+    {
+     "type": "webpage",
+     "title": "CXL Memory eXpander Controller (MXC) — CXL/PCIe host interface + integrated dual-channel DDR5 memory controller",
+     "url": "https://www.montage-tech.com/MXC",
+     "publisher": "Montage Technology"
+    },
+    {
+     "type": "product-brief",
+     "title": "SMC 2000 Smart Memory Controllers — CXL 1.1/2.0 controllers with two channels of DDR4/DDR5",
+     "url": "https://ww1.microchip.com/downloads/aemDocuments/documents/DCS/ProductDocuments/Brochures/SMC-2000-Smart-Memory-Controllers-00004551.pdf",
+     "publisher": "Microchip Technology"
+    },
+    {
+     "type": "product-brief",
+     "title": "Structera X 2504 Memory-Expansion Controller Product Brief — CXL host end + DDR5 DRAM interfaces with enhanced RAS",
+     "url": "https://www.marvell.com/content/dam/marvell/en/public-collateral/assets/marvell-structera-x-2504-memory-expansion-controller-product-brief.pdf",
+     "publisher": "Marvell"
+    }
+   ],
+   "last_updated": "2026-07-16"
+  },
+  {
+   "@id": "concept:retimer",
+   "@type": "Concept",
+   "label": {
+    "en": "Retimer"
+   },
+   "description": {
+    "en": "An interconnect chip deployed on high-speed differential serial links that regenerates signals: the SerDes receiver takes in an input degraded by physical-channel attenuation and accumulated jitter, clock data recovery (CDR) rebuilds the clock, equalization (EQ) compensates channel loss, and the SerDes transmitter re-serializes the output, thereby re-timing the signal in the physical medium. Essentially circuitizes serial-link physical-layer signal-integrity restoration into a standalone circulating device, extending the reach of PCB traces, copper cables, and interconnect distances. The same retimer design can terminate multiple high-speed serial protocol families (PCIe Gen5/Gen6, CXL, Ethernet, and others) and does not bind to any single protocol specification. Distinct from the on-die IP-block-form concept:serdes-ip node and from the concept:serdes chip-form node that does not necessarily include re-timing functionality."
+   },
+   "level": 3,
+   "parent": "concept:interconnect-ic",
+   "last_updated": "2026-08-06"
+  },
+  {
+   "@id": "concept:storage-controller",
+   "@type": "Concept",
+   "label": {
+    "en": "Storage Controller"
+   },
+   "description": {
+    "en": "A class of dedicated controller chip that performs protocol termination and data movement between the host side and the non-volatile storage medium side, without itself retaining data state. Essentially it bridges and converts, on-chip, between the host-side block- or object-access storage protocol and the medium-side control operations (erase/program, addressing, wear leveling, error correction, and others), moving data across the two — decoupling the controller from any specific storage medium. This distinguishes it from memory chips, whose essence is retaining data via charge or physical state; it is structurally analogous to a memory interconnect controller, except the channel it terminates carries block/object semantics rather than byte-level memory semantics, and the target medium is non-volatile storage rather than dynamic/static memory. Mainstream industry sub-types diverge by target storage medium and application form into SSD / HDD / UFS / eMMC controllers, see child nodes."
+   },
+   "level": 3,
+   "parent": "concept:interconnect-ic",
+   "last_updated": "2026-06-12"
+  },
+  {
+   "@id": "concept:ssd-controller",
+   "@type": "Concept",
+   "label": {
+    "en": "Solid-State Drive (SSD) Controller"
+   },
+   "description": {
+    "en": "A storage controller sub-type targeting solid-state drives that integrates host-side interfaces (NVMe over PCIe or SATA) with NAND flash interfaces (ONFI / Toggle Mode) on a single chip, embedding NAND-media management logic including the flash translation layer (FTL), garbage collection, wear leveling, and ECC. Essentially a NAND-flash-dedicated controller form diverging from the storage controller category along the target-storage-medium dimension. Mainstream industry suppliers include Phison, Silicon Motion, Marvell Bravera SC5, Realtek, Maxio, and InnoGrit, totaling at least six active merchant vendors."
+   },
+   "level": 4,
+   "parent": "concept:storage-controller",
+   "references": [
+    {
+     "type": "product-brief",
+     "title": "Marvell 88SS1321 SSD Controller Product Brief — integrated DDR Controller block (up to 8GB DDR4 / LPDDR3 / LPDDR4(x))",
+     "url": "https://www.marvell.com/content/dam/marvell/en/public-collateral/storage/marvell-storage-88ss1321-product-brief.pdf",
+     "publisher": "Marvell"
+    },
+    {
+     "type": "webpage",
+     "title": "Meet the Phison E26 SSD Controller",
+     "url": "https://phisonblog.com/meet-the-phison-e26-ssd-controller/",
+     "publisher": "Phison"
+    },
+    {
+     "type": "product-brief",
+     "title": "SM2508 PCIe Gen5 SSD Controller Product Brief",
+     "url": "https://www.siliconmotion.com/download/DWjq/a/SM2508_PB_EN.pdf",
+     "publisher": "Silicon Motion"
+    },
+    {
+     "type": "article",
+     "title": "A Preview of Phison's Second Generation PCIe 4.0 NVMe SSD Controller",
+     "url": "https://www.tomshardware.com/news/phison-ps5018-e18-controller-tested",
+     "publisher": "Tom's Hardware",
+     "year": 2020
+    },
+    {
+     "type": "product-brief",
+     "title": "PS5026-E26 Product Brochure — supports ONFI 5.x and Toggle 5.x NAND interfaces at up to 2400 MT/s",
+     "url": "https://www.phison.com/phocadownload/Brochure/ProductBrochure_Consumer_PS5026-E26_12192022.pdf",
+     "publisher": "Phison",
+     "year": 2022
+    },
+    {
+     "type": "product-brief",
+     "title": "Marvell Bravera SC5 SSD Controllers (MV-SS1331 / MV-SS1333) — PCIe Gen5 host interface, NVMe 1.4b, up to 4 PCIe lanes",
+     "url": "https://www.marvell.com/content/dam/marvell/en/public-collateral/storage/marvell-ssd-mv-ss1331-1333-product-brief.pdf",
+     "publisher": "Marvell"
+    }
+   ],
+   "last_updated": "2026-07-17"
+  },
+  {
+   "@id": "concept:hdd-controller",
+   "@type": "Concept",
+   "label": {
+    "en": "Hard Disk Drive (HDD) Controller"
+   },
+   "description": {
+    "en": "A storage controller sub-type targeting hard disk drives that integrates servo control, read/write channel, SAS/SATA host interface, and preamp driver on a single chip, handling head positioning, signal detection, and block-level protocol termination over magnetic-recording media. Essentially a magnetic-recording-dedicated controller form diverging from the storage controller category along the target-storage-medium dimension. In supply structure, the number of active independent (merchant) suppliers in this category falls below the usual vendor threshold; HDD OEMs source this device from an external supply base rather than designing it in-house, their own design and manufacture being concentrated on recording heads and magnetic media, with controllers and preamplifiers among externally sourced components."
+   },
+   "level": 4,
+   "parent": "concept:storage-controller",
+   "references": [
+    {
+     "type": "report",
+     "title": "Marvell Technology, Inc. Form 10-K, FY2026 (period ended 2026-01-31 / SEC EDGAR CIK 0001835632)",
+     "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+     "publisher": "U.S. Securities and Exchange Commission (EDGAR)",
+     "year": 2026,
+     "source": "primary"
+    },
+    {
+     "type": "report",
+     "title": "Western Digital Corporation Form 10-K, FY2025 (period ended 2025-06-27 / SEC EDGAR CIK 0000106040)",
+     "url": "https://www.sec.gov/Archives/edgar/data/106040/000010604025000038/wdc-20250627.htm",
+     "publisher": "U.S. Securities and Exchange Commission (EDGAR)",
+     "year": 2025,
+     "source": "primary"
+    },
+    {
+     "type": "report",
+     "title": "Seagate Technology Holdings plc Form 10-K, FY2025 (period ended 2025-06-27 / SEC EDGAR CIK 0001137789)",
+     "url": "https://www.sec.gov/Archives/edgar/data/1137789/000113778925000157/stx-20250627.htm",
+     "publisher": "U.S. Securities and Exchange Commission (EDGAR)",
+     "year": 2025,
+     "source": "primary"
+    }
+   ],
+   "last_updated": "2026-08-01"
+  },
+  {
+   "@id": "concept:ufs-controller",
+   "@type": "Concept",
+   "label": {
+    "en": "UFS (Universal Flash Storage) Controller"
+   },
+   "description": {
+    "en": "A storage controller sub-type targeting Universal Flash Storage embedded-storage media that integrates a host-side MIPI M-PHY high-speed serial interface with a NAND flash interface on a single chip, handling block-level protocol termination, command-queue management, and media-level FTL/ECC management. Essentially a high-speed-serial embedded-storage dedicated controller form diverging from the storage controller category along the target-application-form dimension (embedded storage for mobile devices). Mainstream industry suppliers include Silicon Motion, Phison (PS8313), Samsung and SK Hynix captive in-house, and several overseas IDMs, totaling at least five active merchants."
+   },
+   "level": 4,
+   "parent": "concept:storage-controller",
+   "references": [
+    {
+     "type": "webpage",
+     "title": "Silicon Motion Unveils 6nm SM2756 UFS 4.0 Controller — 2-channel NAND flash controller supporting Toggle DDR 5.1 / ONFI 5.1 NAND",
+     "url": "https://siliconmotiontechnologycorporation.gcs-web.com/news-releases/news-release-details/silicon-motion-unveils-6nm-ufs-40-controller-ai-smartphones-edge/",
+     "publisher": "Silicon Motion",
+     "year": 2024
+    },
+    {
+     "type": "webpage",
+     "title": "Phison Technology — NAND controller IP developed and validated compatible with the newest ONFI and Toggle interface specifications (PS8313 UFS controller product line)",
+     "url": "https://www.phison.com/en/technology",
+     "publisher": "Phison"
+    }
+   ],
+   "last_updated": "2026-07-16"
+  },
+  {
+   "@id": "concept:emmc-controller",
+   "@type": "Concept",
+   "label": {
+    "en": "eMMC (Embedded MultiMediaCard) Controller"
+   },
+   "description": {
+    "en": "A storage controller sub-type targeting Embedded MultiMediaCard embedded-storage media that integrates a host-side parallel-bus interface (the predecessor form to UFS) with a NAND flash interface on a single chip, handling block-level protocol termination and media-level FTL/ECC management. Essentially a parallel-interface embedded-storage dedicated controller form diverging from the storage controller category along the target-application-form dimension (low- to mid-tier embedded storage), industrially deployed in IoT, automotive infotainment, and entry-level mobile devices. Mainstream industry suppliers include Silicon Motion, Phison, Samsung captive in-house, Maxio, and Realtek, totaling at least five active vendors."
+   },
+   "level": 4,
+   "parent": "concept:storage-controller",
+   "last_updated": "2026-06-12"
+  },
+  {
+   "@id": "concept:power-device",
+   "@type": "Concept",
+   "label": {
+    "en": "Power Device"
+   },
+   "description": {
+    "en": "A class of semiconductor devices designed to carry and switch power-level currents and voltages, spanning forms from discrete transistors to integrated modules. Essentially semiconductor devices whose primary figures of merit are blocking voltage, on-state loss, switching speed, and thermal handling capacity — distinct from small-signal integrated circuits oriented to signal processing or logic computation, with device design, fabrication processes, and packaging all targeted at power conversion and regulation scenarios."
+   },
+   "level": 2,
+   "parent": "concept:chip",
+   "last_updated": "2026-06-02"
+  },
+  {
+   "@id": "concept:power-mosfet",
+   "@type": "Concept",
+   "label": {
+    "en": "Power MOSFET (Metal-Oxide-Semiconductor Field-Effect Transistor)"
+   },
+   "description": {
+    "en": "A unipolar power device using a metal-oxide-semiconductor field-effect transistor structure to carry power-level currents and voltages. Essentially modulates source-drain channel conduction via gate-electrode electric fields without relying on minority-carrier injection for power switching, trading bipolar conduction for majority-carrier unipolar operation to gain higher switching frequency and low gate-drive power, suited to medium-to-low voltage and medium-to-high frequency power conversion scenarios. Industry mainstream fabrication uses silicon substrate (concept:silicon-wafer)."
+   },
+   "level": 3,
+   "parent": "concept:power-device",
+   "alternative_to": [
+    "concept:igbt",
+    "concept:sic-mosfet"
+   ],
+   "last_updated": "2026-06-10"
+  },
+  {
+   "@id": "concept:igbt",
+   "@type": "Concept",
+   "label": {
+    "en": "IGBT (Insulated-Gate Bipolar Transistor)"
+   },
+   "description": {
+    "en": "A power device that combines a metal-oxide-semiconductor insulated-gate control structure with a bipolar-junction conduction mechanism, where the MOS gate controls carrier injection and the bipolar-junction structure carries the main current. Essentially uses an insulated gate to simplify drive while leveraging minority-carrier conductivity modulation to reduce high-voltage on-state loss, trading the lower switching speed of bipolar recombination for low on-state voltage drop at high voltages and currents, suited to high-voltage, high-current, medium-to-low frequency power conversion scenarios. Industry fabrication is invariably on silicon substrate (concept:silicon-wafer)."
+   },
+   "level": 3,
+   "parent": "concept:power-device",
+   "alternative_to": [
+    "concept:sic-mosfet"
+   ],
+   "last_updated": "2026-06-10"
+  },
+  {
+   "@id": "concept:sic-mosfet",
+   "@type": "Concept",
+   "label": {
+    "en": "Silicon Carbide (SiC) Power MOSFET"
+   },
+   "description": {
+    "en": "A power metal-oxide-semiconductor field-effect transistor built on a wide-bandgap semiconductor material. Essentially leverages the wide-bandgap substrate material's high critical breakdown electric field, high thermal conductivity, and high saturation drift velocity to maintain low on-resistance at high blocking voltages within the same device structure, while supporting higher operating junction temperatures and switching frequencies than silicon-based devices, thereby substituting for silicon-based solutions in high-voltage, high-frequency, high-efficiency power conversion scenarios. Industry fabrication is invariably on silicon-carbide substrate (concept:sic-wafer)."
+   },
+   "level": 3,
+   "parent": "concept:power-device",
+   "alternative_to": [
+    "concept:gan-hemt"
+   ],
+   "last_updated": "2026-06-10"
+  },
+  {
+   "@id": "concept:gan-hemt",
+   "@type": "Concept",
+   "label": {
+    "en": "Gallium Nitride HEMT (High-Electron-Mobility Transistor)"
+   },
+   "description": {
+    "en": "A high-electron-mobility-transistor-type power device that forms a two-dimensional electron gas channel via polarization effects at a gallium-nitride wide-bandgap semiconductor heterojunction. Essentially carries current through the high mobility and high electron density of the wide-bandgap heterojunction two-dimensional electron gas channel, combined with the wide-bandgap material's high critical breakdown electric field, yielding output charges and switching losses significantly below silicon and silicon-carbide-based solutions in medium-to-low voltage segments, thereby suiting medium-to-low voltage, high-frequency, high-power-density scenarios. Industry mainstream fabrication uses gallium-nitride substrate (concept:gan-wafer), with the typical GaN-on-Si form epitaxially growing the gallium-nitride layer on a silicon substrate (concept:silicon-wafer)."
+   },
+   "level": 3,
+   "parent": "concept:power-device",
+   "last_updated": "2026-06-10"
+  },
+  {
+   "@id": "activity:hardware-engineering-process",
+   "@type": "Activity",
+   "label": {
+    "en": "Hardware Engineering Process"
+   },
+   "description": {
+    "en": "Top-level abstraction encompassing the end-to-end engineering process from chip design through fabrication to packaging."
+   },
+   "level": 1,
+   "last_updated": "2026-06-04"
+  },
+  {
+   "@id": "activity:chip-design",
+   "@type": "Activity",
+   "label": {
+    "en": "Chip Design"
+   },
+   "description": {
+    "en": "An engineering process that transforms functional requirements into manufacturable design specifications through stages such as architecture design, RTL coding, synthesis, place-and-route, and signoff. Essentially refines high-level abstract functional descriptions into low-level physical structure specifications ready for manufacturing."
+   },
+   "level": 2,
+   "parent": "activity:hardware-engineering-process",
+   "produces": [
+    "concept:chip"
+   ],
+   "precedes": [
+    "activity:chip-fabrication"
+   ],
+   "last_updated": "2026-06-04"
+  },
+  {
+   "@id": "activity:chip-fabrication",
+   "@type": "Activity",
+   "label": {
+    "en": "Chip Fabrication"
+   },
+   "description": {
+    "en": "A process that transforms manufacturable design specifications into physical chip artifacts through semiconductor manufacturing processes, including wafer preparation, lithography, etching, deposition, ion implantation, CMP, and other steps. These unit operations are executed iteratively across the chip's multiple structural layers (the same class of operation recurs on different layers), and their ordering is determined by the specific process recipe rather than by a fixed type-level sequence. Essentially instantiates information-form designs into matter-form electronic devices through controlled physical and chemical operations. Mainstream industry process flows use inspection and metrology equipment for process control between steps to maintain yield, while legitimate process forms not relying on it also exist. Mainstream volume-production process flows also employ manufacturing analytics software to perform yield analysis and root-cause identification over cross-step manufacturing and test data, while legitimate process forms that omit it in mature processes also exist."
+   },
+   "level": 2,
+   "parent": "activity:hardware-engineering-process",
+   "produces": [
+    "concept:chip"
+   ],
+   "precedes": [
+    "activity:packaging-process"
+   ],
+   "last_updated": "2026-07-20"
+  },
+  {
+   "@id": "activity:packaging-process",
+   "@type": "Activity",
+   "label": {
+    "en": "Packaging Process"
+   },
+   "description": {
+    "en": "A process that transforms manufactured chip dies into assembly-ready packaged artifacts through packaging operations, including die singulation, bonding, encapsulation, or substrate assembly. Essentially physically reinforces micro/nano-scale dies and establishes reliable electrical, mechanical, and thermal connections with the external world. Mainstream industry packaging-process forms use molding-compound encapsulation and underfill reinforcement materials, while legitimate process forms that do not use the corresponding materials also exist. The interconnect-bonding step adopts mainstream equipment forms such as wire bonding, die bonding, or hybrid bonding according to interconnect density, and uses inspection and metrology equipment for process control between steps, with legitimate process forms not using the corresponding equipment also existing. Metallization of bumps, redistribution layers, and through-silicon vias deposits its metal by wet plating chemistry, and legitimate process forms containing no plating step also exist."
+   },
+   "level": 2,
+   "parent": "activity:hardware-engineering-process",
+   "precedes": [
+    "activity:final-test"
+   ],
+   "references": [
+    {
+     "type": "webpage",
+     "title": "ASMPT Semiconductor Solutions — Advanced Packaging: die bonding, thermo-compression bonding and assembly equipment for packaging processes",
+     "url": "https://semi.asmpt.com/en/products/ap/",
+     "publisher": "ASMPT"
+    },
+    {
+     "type": "webpage",
+     "title": "Global Semiconductor Packaging Materials Outlook — packaging materials segmentation incl. encapsulation (mold compound) and underfill materials",
+     "url": "https://www.semi.org/en/products-services/market-data/packaging-materials-outlook",
+     "publisher": "SEMI / TechSearch International"
+    }
+   ],
+   "last_updated": "2026-08-06"
+  },
+  {
+   "@id": "activity:chip-testing",
+   "@type": "Activity",
+   "label": {
+    "en": "Chip Testing"
+   },
+   "description": {
+    "en": "A process that applies electrical stimuli to fabricated dies or packaged devices, captures responses, and screens them against specification, serving as a ship-out judgment step in chip production (contributing to the finally delivered chip through screening and binning rather than creating an independent artifact). Essentially translates design specifications into executable electrical judgment programs and removes failing units from the delivery flow in volume production."
+   },
+   "level": 2,
+   "parent": "activity:hardware-engineering-process",
+   "produces": [
+    "concept:chip"
+   ],
+   "status": "confirmed",
+   "references": [
+    {
+     "type": "webpage",
+     "title": "V93000 SoC Test Systems — scalable platform for testing advanced digital, analog and mixed-signal semiconductor devices",
+     "url": "https://www.advantest.com/en/products/semiconductor-test-system/soc/v93000/",
+     "publisher": "Advantest"
+    },
+    {
+     "type": "webpage",
+     "title": "UltraFLEXplus SoC Tester — semiconductor test platform for complex digital devices",
+     "url": "https://www.teradyne.com/products/ultraflexplus/",
+     "publisher": "Teradyne"
+    },
+    {
+     "type": "webpage",
+     "title": "Automatic test equipment — industry overview of semiconductor device testing",
+     "url": "https://en.wikipedia.org/wiki/Automatic_test_equipment",
+     "publisher": "Wikipedia"
+    }
+   ],
+   "last_updated": "2026-07-16"
+  },
+  {
+   "@id": "activity:architecture-design",
+   "@type": "Activity",
+   "label": {
+    "en": "Architecture Design"
+   },
+   "description": {
+    "en": "A design stage that transforms functional requirements and specifications into a microarchitecture definition, establishing structural decisions such as module partitioning, data paths, pipeline organization, and interface protocols. Essentially maps abstract functional intent onto a realizable structural blueprint under performance, power, and area constraints, yielding an architecture specification as an information-form design document rather than any physical artifact."
+   },
+   "level": 3,
+   "parent": "activity:chip-design",
+   "produces": [
+    "concept:chip"
+   ],
+   "precedes": [
+    "activity:rtl-design"
+   ],
+   "last_updated": "2026-06-04",
+   "references": [
+    {
+     "type": "book",
+     "title": "CMOS VLSI Design: A Circuits and Systems Perspective",
+     "author": "Weste, N. H. E.; Harris, D. M.",
+     "edition": "4th",
+     "venue": "Addison-Wesley"
+    }
+   ]
+  },
+  {
+   "@id": "activity:rtl-design",
+   "@type": "Activity",
+   "label": {
+    "en": "RTL Design (Register-Transfer Level)"
+   },
+   "description": {
+    "en": "A design stage that describes a microarchitecture definition as register-transfer-level behavior using a hardware description language (Verilog, VHDL, etc.), expressing the circuit's state evolution each clock cycle through data flow between registers and combinational-logic transformations. Essentially refines the structural blueprint into simulatable and synthesizable behavioral-level code, yielding RTL code as an information-form design description."
+   },
+   "level": 3,
+   "parent": "activity:chip-design",
+   "produces": [
+    "concept:chip"
+   ],
+   "precedes": [
+    "activity:logic-synthesis"
+   ],
+   "last_updated": "2026-06-04",
+   "references": [
+    {
+     "type": "book",
+     "title": "CMOS VLSI Design: A Circuits and Systems Perspective",
+     "author": "Weste, N. H. E.; Harris, D. M.",
+     "edition": "4th",
+     "venue": "Addison-Wesley"
+    }
+   ]
+  },
+  {
+   "@id": "activity:logic-synthesis",
+   "@type": "Activity",
+   "label": {
+    "en": "Logic Synthesis"
+   },
+   "description": {
+    "en": "A design stage that maps an RTL description onto a gate-level netlist targeting a process library under timing, area, and power constraints, converting abstract register-transfer behavior into an interconnected structure of concrete logic gates and flip-flops through logic optimization and technology mapping. Essentially performs automated logic realization from behavioral to structural level, yielding a gate-level netlist as an information-form design description."
+   },
+   "level": 3,
+   "parent": "activity:chip-design",
+   "produces": [
+    "concept:chip"
+   ],
+   "precedes": [
+    "activity:physical-design"
+   ],
+   "last_updated": "2026-06-04",
+   "references": [
+    {
+     "type": "book",
+     "title": "Electronic Design Automation for IC Implementation, Circuit Design, and Process Technology",
+     "author": "Lavagno, L.; Markov, I. L.; Martin, G. E.; Scheffer, L. K. (eds.)",
+     "venue": "CRC Press"
+    }
+   ]
+  },
+  {
+   "@id": "activity:physical-design",
+   "@type": "Activity",
+   "label": {
+    "en": "Physical Design"
+   },
+   "description": {
+    "en": "A design stage that determines the geometric positions of a gate-level netlist's logic cells on the chip layout and connects their pins, encompassing floorplanning, placement, clock-tree synthesis, and routing. Essentially maps logical structure onto a two-dimensional geometric realization under design rules and timing and power constraints, yielding a placed-and-routed layout as an information-form design description."
+   },
+   "level": 3,
+   "parent": "activity:chip-design",
+   "produces": [
+    "concept:chip"
+   ],
+   "precedes": [
+    "activity:verification-signoff"
+   ],
+   "last_updated": "2026-06-04",
+   "references": [
+    {
+     "type": "book",
+     "title": "VLSI Physical Design: From Graph Partitioning to Timing Closure",
+     "author": "Kahng, A. B.; Lienig, J.; Markov, I. L.; Hu, J.",
+     "venue": "Springer"
+    }
+   ]
+  },
+  {
+   "@id": "activity:verification-signoff",
+   "@type": "Activity",
+   "label": {
+    "en": "Verification and Signoff"
+   },
+   "description": {
+    "en": "A design stage that confirms a design conforms to both its functional specification and manufacturing rules through functional verification, static timing analysis (STA), design-rule checking (DRC), and layout-versus-schematic checking (LVS), and accordingly yields tapeout-ready layout data (GDSII). Essentially performs a systematic confirmation of design correctness and manufacturability before handoff to manufacturing, yielding signed-off layout data as an information-form design description."
+   },
+   "level": 3,
+   "parent": "activity:chip-design",
+   "produces": [
+    "concept:chip"
+   ],
+   "last_updated": "2026-06-04",
+   "references": [
+    {
+     "type": "book",
+     "title": "CMOS VLSI Design: A Circuits and Systems Perspective",
+     "author": "Weste, N. H. E.; Harris, D. M.",
+     "edition": "4th",
+     "venue": "Addison-Wesley"
+    }
+   ]
+  },
+  {
+   "@id": "concept:hbm",
+   "@type": "Concept",
+   "label": {
+    "en": "HBM (High Bandwidth Memory)"
+   },
+   "description": {
+    "en": "A memory product that stacks multiple DRAM dies via through-silicon vias and connects to the processor through a wide parallel interface. Essentially uses 3D packaging to vertically integrate multiple DRAM dies and expand usable data bus width. Industry die stacking is invariably realized via stacked-die packaging (concept:stacked-die-packaging), and industry mainstream co-packages with the processor via interposer-based packaging (concept:interposer-based-packaging)."
+   },
+   "level": 4,
+   "parent": "concept:dram",
+   "references": [
+    {
+     "type": "standard",
+     "title": "JESD235: High Bandwidth Memory (HBM) DRAM — TSV-stacked DRAM with wide parallel interface",
+     "url": "https://www.jedec.org/standards-documents/docs/jesd235a",
+     "publisher": "JEDEC"
+    },
+    {
+     "type": "webpage",
+     "title": "CoWoS — chip-on-wafer-on-substrate 2.5D interposer integration of logic and HBM",
+     "url": "https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm",
+     "publisher": "TSMC"
+    },
+    {
+     "type": "webpage",
+     "title": "Samsung I-Cube: 2.5D silicon-interposer integration of logic dies and HBM",
+     "url": "https://semiconductor.samsung.com/news-events/news/samsung-electronics-announces-availability-of-its-next-generation-2-5d-integration-solution-i-cube4-for-high-performance-application/",
+     "publisher": "Samsung Semiconductor"
+    }
+   ],
+   "last_updated": "2026-07-30"
+  },
+  {
+   "@id": "concept:hbm3",
+   "@type": "Concept",
+   "label": {
+    "en": "High Bandwidth Memory 3 (HBM3)"
+   },
+   "description": {
+    "en": "The third-generation specification of HBM (standardized by JEDEC 2022), providing higher per-pin data rate, deeper stack layers, and larger per-stack capacity relative to the previous generation."
+   },
+   "level": 5,
+   "parent": "concept:hbm",
+   "last_updated": "2026-06-10"
+  },
+  {
+   "@id": "concept:hbm3e",
+   "@type": "Concept",
+   "label": {
+    "en": "High Bandwidth Memory 3E (HBM3e)"
+   },
+   "description": {
+    "en": "An extended version of HBM3 that further increases per-pin data rate and per-stack capacity. Essentially extends the product lifecycle of the HBM3 generation through speed and capacity uplift without changing the underlying HBM3 physical spec."
+   },
+   "level": 5,
+   "parent": "concept:hbm",
+   "succeeds": [
+    "concept:hbm3"
+   ],
+   "last_updated": "2026-06-10"
+  },
+  {
+   "@id": "concept:hbm4",
+   "@type": "Concept",
+   "label": {
+    "en": "High Bandwidth Memory 4 (HBM4)"
+   },
+   "description": {
+    "en": "The chip-form product of the fourth-generation HBM specification (standardized by JEDEC in 2025), which widens the per-stack data bus from 1024 to 2048 bits relative to HBM3e and, at a moderate per-pin signaling rate, advances per-stack peak bandwidth to roughly the 2 TB/s class, with a typical per-stack capacity of 48 GB (16-Hi stack)."
+   },
+   "level": 5,
+   "parent": "concept:hbm",
+   "succeeds": [
+    "concept:hbm3e"
+   ],
+   "last_updated": "2026-07-30"
+  },
+  {
+   "@id": "concept:x86-cpu",
+   "@type": "Concept",
+   "label": {
+    "en": "x86 Processor"
+   },
+   "description": {
+    "en": "A central processing unit implementing the x86 instruction set architecture (CISC-style, backward compatible across many generations). Essentially treats the instruction encoding and register model originating from the 8086 in 1978 as a hardware contract."
+   },
+   "level": 4,
+   "parent": "concept:cpu",
+   "alternative_to": [
+    "concept:arm-cpu",
+    "concept:risc-v-cpu"
+   ],
+   "last_updated": "2026-05-09"
+  },
+  {
+   "@id": "concept:arm-cpu",
+   "@type": "Concept",
+   "label": {
+    "en": "Arm Processor"
+   },
+   "description": {
+    "en": "A central processing unit implementing the ARM instruction set architecture (RISC-style). Essentially combines reduced instruction set design with an IP-licensing business model as a processor implementation path."
+   },
+   "level": 4,
+   "parent": "concept:cpu",
+   "alternative_to": [
+    "concept:risc-v-cpu"
+   ],
+   "last_updated": "2026-05-09"
+  },
+  {
+   "@id": "concept:risc-v-cpu",
+   "@type": "Concept",
+   "label": {
+    "en": "RISC-V Processor"
+   },
+   "description": {
+    "en": "A central processing unit implementing the open RISC-V instruction set architecture. Essentially uses a freely usable standardized RISC ISA as a hardware contract, allowing any vendor to implement processors without licensing."
+   },
+   "level": 4,
+   "parent": "concept:cpu",
+   "last_updated": "2026-05-09"
+  },
+  {
+   "@id": "concept:3d-nand",
+   "@type": "Concept",
+   "label": {
+    "en": "3D (Stacked) NAND"
+   },
+   "description": {
+    "en": "A NAND flash structure that stacks memory cells in the vertical direction. Essentially shifts the storage-density growth path from in-plane cell shrinkage (which has approached physical limits) to vertical layer stacking."
+   },
+   "level": 4,
+   "parent": "concept:nand-flash",
+   "succeeds": [
+    "concept:2d-nand"
+   ],
+   "last_updated": "2026-05-09"
+  },
+  {
+   "@id": "concept:2d-nand",
+   "@type": "Concept",
+   "label": {
+    "en": "2D (Planar) NAND"
+   },
+   "description": {
+    "en": "A NAND flash structure with memory cells densely arranged in a two-dimensional plane, where storage-density growth depends on shrinking cell size within the plane."
+   },
+   "level": 4,
+   "parent": "concept:nand-flash",
+   "last_updated": "2026-05-09"
+  },
+  {
+   "@id": "activity:photolithography",
+   "@type": "Activity",
+   "label": {
+    "en": "Photolithography"
+   },
+   "description": {
+    "en": "A process that transfers the geometric patterns on a photomask onto photoresist on a substrate via optical exposure, then develops the resist to form a patterned masking layer. Essentially instantiates circuit layout as geometric masking on the substrate through photochemical reactions between controlled-wavelength light and the photoresist."
+   },
+   "level": 3,
+   "parent": "activity:chip-fabrication",
+   "produces": [
+    "concept:chip"
+   ],
+   "precedes": [
+    "activity:etching",
+    "activity:ion-implantation"
+   ],
+   "last_updated": "2026-06-04",
+   "references": [
+    {
+     "type": "book",
+     "title": "Silicon VLSI Technology: Fundamentals, Practice, and Modeling",
+     "author": "Plummer, J. D.; Deal, M. D.; Griffin, P. B.",
+     "edition": "2nd",
+     "year": 2000,
+     "venue": "Prentice Hall"
+    }
+   ]
+  },
+  {
+   "@id": "activity:etching",
+   "@type": "Activity",
+   "label": {
+    "en": "Etching"
+   },
+   "description": {
+    "en": "A process that selectively removes exposed substrate or thin-film material under a patterned masking layer via chemical or physical means. Essentially uses reactive gases or plasma interacting chemically/physically with the material to achieve anisotropic micro/nano-scale pattern transfer."
+   },
+   "level": 3,
+   "parent": "activity:chip-fabrication",
+   "produces": [
+    "concept:chip"
+   ],
+   "last_updated": "2026-06-04",
+   "references": [
+    {
+     "type": "book",
+     "title": "Silicon VLSI Technology: Fundamentals, Practice, and Modeling",
+     "author": "Plummer, J. D.; Deal, M. D.; Griffin, P. B.",
+     "edition": "2nd",
+     "year": 2000,
+     "venue": "Prentice Hall"
+    }
+   ]
+  },
+  {
+   "@id": "activity:thin-film-deposition",
+   "@type": "Activity",
+   "label": {
+    "en": "Thin-Film Deposition"
+   },
+   "description": {
+    "en": "A process that grows a thin-film material on a substrate surface with atomic or molecular-scale precision, encompassing mechanisms such as chemical vapor deposition (CVD), physical vapor deposition (PVD), and atomic layer deposition (ALD). Essentially adds precursor materials onto the substrate layer by layer through controlled gas-solid or plasma-solid reactions to build device structural layers."
+   },
+   "level": 3,
+   "parent": "activity:chip-fabrication",
+   "produces": [
+    "concept:chip"
+   ],
+   "last_updated": "2026-06-04",
+   "references": [
+    {
+     "type": "book",
+     "title": "Silicon VLSI Technology: Fundamentals, Practice, and Modeling",
+     "author": "Plummer, J. D.; Deal, M. D.; Griffin, P. B.",
+     "edition": "2nd",
+     "year": 2000,
+     "venue": "Prentice Hall"
+    }
+   ]
+  },
+  {
+   "@id": "activity:ion-implantation",
+   "@type": "Activity",
+   "label": {
+    "en": "Ion Implantation"
+   },
+   "description": {
+    "en": "A process that ionizes dopant elements, accelerates them into ion beams, and bombards a substrate at controlled energy and dose so that dopant atoms embed into the near-surface lattice. Essentially uses kinetic-energy-controlled ion beams to precisely introduce impurity atoms into the semiconductor lattice, altering carrier type and concentration."
+   },
+   "level": 3,
+   "parent": "activity:chip-fabrication",
+   "produces": [
+    "concept:chip"
+   ],
+   "precedes": [
+    "activity:annealing"
+   ],
+   "last_updated": "2026-06-04",
+   "references": [
+    {
+     "type": "book",
+     "title": "Silicon VLSI Technology: Fundamentals, Practice, and Modeling",
+     "author": "Plummer, J. D.; Deal, M. D.; Griffin, P. B.",
+     "edition": "2nd",
+     "year": 2000,
+     "venue": "Prentice Hall"
+    }
+   ]
+  },
+  {
+   "@id": "activity:annealing",
+   "@type": "Activity",
+   "label": {
+    "en": "Annealing"
+   },
+   "description": {
+    "en": "A process that applies controlled high-temperature heat treatment to a substrate to repair lattice damage, electrically activate dopant atoms, or rearrange thin-film microstructure. Essentially uses elevated thermal energy of atoms to overcome the energy barrier of lattice defects, allowing dopant ions to occupy substitutional sites and restoring crystal periodicity."
+   },
+   "level": 3,
+   "parent": "activity:chip-fabrication",
+   "produces": [
+    "concept:chip"
+   ],
+   "last_updated": "2026-06-04",
+   "references": [
+    {
+     "type": "book",
+     "title": "Silicon VLSI Technology: Fundamentals, Practice, and Modeling",
+     "author": "Plummer, J. D.; Deal, M. D.; Griffin, P. B.",
+     "edition": "2nd",
+     "year": 2000,
+     "venue": "Prentice Hall"
+    }
+   ]
+  },
+  {
+   "@id": "activity:cmp",
+   "@type": "Activity",
+   "label": {
+    "en": "Chemical Mechanical Polishing (CMP)"
+   },
+   "description": {
+    "en": "A process that planarizes a substrate surface through the simultaneous action of chemical etching by a slurry and mechanical abrasion by a polishing pad. Essentially uses the synergy of chemical softening and mechanical removal to achieve the global planarity required for multilayer interconnect processes at sub-nanometer precision."
+   },
+   "level": 3,
+   "parent": "activity:chip-fabrication",
+   "produces": [
+    "concept:chip"
+   ],
+   "last_updated": "2026-08-06",
+   "references": [
+    {
+     "type": "book",
+     "title": "Silicon VLSI Technology: Fundamentals, Practice, and Modeling",
+     "author": "Plummer, J. D.; Deal, M. D.; Griffin, P. B.",
+     "edition": "2nd",
+     "year": 2000,
+     "venue": "Prentice Hall"
+    }
+   ]
+  },
+  {
+   "@id": "activity:mask-making",
+   "@type": "Activity",
+   "label": {
+    "en": "Photomask Making"
+   },
+   "description": {
+    "en": "A process that inscribes circuit patterns into the opaque metal layer on a mask blank via electron-beam or laser direct writing, producing a patterned photomask that can be reused in lithography. Essentially solidifies layout data into an optical master through one-time high-precision writing, so the master can be projected repeatedly onto subsequent wafer lots."
+   },
+   "level": 2,
+   "parent": "activity:hardware-engineering-process",
+   "precedes": [
+    "activity:photolithography"
+   ],
+   "last_updated": "2026-06-04",
+   "references": [
+    {
+     "type": "book",
+     "title": "Silicon VLSI Technology: Fundamentals, Practice, and Modeling",
+     "author": "Plummer, J. D.; Deal, M. D.; Griffin, P. B.",
+     "edition": "2nd",
+     "year": 2000,
+     "venue": "Prentice Hall"
+    }
+   ]
+  },
+  {
+   "@id": "concept:photonic-ic",
+   "@type": "Concept",
+   "label": {
+    "en": "Photonic Integrated Circuit (PIC)"
+   },
+   "description": {
+    "en": "A class of integrated circuits that combine functions such as light sources, optical waveguides, modulation, and photodetection of optoelectronic devices on a single semiconductor substrate. Essentially implements the generation, propagation, modulation, and detection of optical signals in monolithically integrated form, coupling optical and electrical functions on the same chip — distinct from electronic integrated-circuit classes that carry information through currents and voltages, this class uses optical fields as information carriers. The industry segments by substrate system into the silicon-photonics (concept:silicon-photonic-ic) and indium-phosphide (concept:inp-photonic-ic) platform routes — see sub-type nodes."
+   },
+   "level": 2,
+   "parent": "concept:chip",
+   "last_updated": "2026-06-10"
+  },
+  {
+   "@id": "concept:silicon-photonic-ic",
+   "@type": "Concept",
+   "label": {
+    "en": "Silicon Photonic Integrated Circuit (SiPh)"
+   },
+   "description": {
+    "en": "A class of photonic ICs that the industry mainstream fabricates on silicon-on-insulator substrate (concept:silicon-on-insulator-wafer), typically integrating silicon-based waveguides, modulators, Ge-on-Si photodetectors, and externally coupled III-V light sources on an SOI platform (220nm top-silicon and buried-oxide baseline). Essentially co-locates photonic device integration on a CMOS-compatible SOI silicon process platform, reusing mature silicon volume manufacturing and packaging infrastructure — distinct from the InP route that monolithically integrates light sources on a compound-semiconductor substrate, this class of circuits covers data-center high-speed optical interconnects, coherent optical-communication transceivers, and optical computing through the silicon-photonics platform, accounting for roughly one third of PIC chip count (2025)."
+   },
+   "level": 3,
+   "parent": "concept:photonic-ic",
+   "last_updated": "2026-08-06"
+  },
+  {
+   "@id": "concept:inp-photonic-ic",
+   "@type": "Concept",
+   "label": {
+    "en": "Indium Phosphide Photonic Integrated Circuit (InP PIC)"
+   },
+   "description": {
+    "en": "A class of photonic ICs that the industry mainstream fabricates on indium-phosphide substrate (concept:inp-wafer), monolithically integrating laser, modulator, and photodetector functions. Essentially leverages the indium-phosphide direct-bandgap energy system to monolithically integrate long-wavelength laser sources, electro-absorption / electro-optic modulators, and photodetectors on a single compound-semiconductor substrate — distinct from the silicon-photonics route, which requires externally coupled III-V laser sources, this class of circuits covers long-haul coherent optical communication, metro and data-center high-speed transceiver devices through monolithically integrated coherent light sources and high-speed modulators."
+   },
+   "level": 3,
+   "parent": "concept:photonic-ic",
+   "last_updated": "2026-08-01"
+  },
+  {
+   "@id": "concept:tfln-photonic-ic",
+   "@type": "Concept",
+   "label": {
+    "en": "Thin-Film Lithium Niobate (TFLN) Photonic Integrated Circuit"
+   },
+   "description": {
+    "en": "A photonic integrated circuit sub-type integrating modulators, waveguides, and passive devices on a lithium-niobate-on-insulator (LNOI) wafer substrate, industrially produced by Smart Cut bonding of a thin LN film above a SiO₂/Si carrier wafer, exploiting the strong electro-optic effect of lithium niobate to realize sub-1V Vπ CMOS-driven modulation and to support high-bandwidth-density optical interconnects. Essentially the third major PIC platform diverging from silicon photonics and InP photonic ICs along the LNOI substrate-material dimension, stabilizing as an industry consensus during 2025-2026."
+   },
+   "level": 3,
+   "parent": "concept:photonic-ic",
+   "references": [
+    {
+     "type": "report",
+     "title": "Silicon Photonics 2025 - Focus on SOI, SiN, LNOI & InP Platforms",
+     "url": "https://www.yolegroup.com/product/report/silicon-photonics-2025---focus-on-soi-sin-and-lnoi-platforms",
+     "publisher": "Yole Group",
+     "year": 2025
+    },
+    {
+     "type": "encyclopedia",
+     "title": "Lithium niobate on insulator",
+     "url": "https://en.wikipedia.org/wiki/Lithium_niobate_on_insulator"
+    }
+   ],
+   "last_updated": "2026-08-06"
+  },
+  {
+   "@id": "concept:laser-diode-chip",
+   "@type": "Concept",
+   "label": {
+    "en": "Laser Diode Chip"
+   },
+   "description": {
+    "en": "A class of photonic ICs that achieves stimulated emission and outputs coherent light through carrier-current injection in a semiconductor PN junction. Essentially converts electrical energy into narrow-linewidth optical fields with spatial and temporal coherence — distinct from light-emitting diodes, which output incoherent light via spontaneous emission, this class of devices relies on cavity feedback and population inversion to reach the lasing condition, serving as coherent light sources in optical communication and sensing systems. This parent abstraction serves as the light-source category within photonic integrated circuits; mainstream industry sub-types differentiate by cavity geometry and substrate coordination — see child nodes."
+   },
+   "level": 3,
+   "parent": "concept:photonic-ic",
+   "last_updated": "2026-06-10"
+  },
+  {
+   "@id": "concept:vcsel",
+   "@type": "Concept",
+   "label": {
+    "en": "Vertical-Cavity Surface-Emitting Laser (VCSEL)"
+   },
+   "description": {
+    "en": "A class of vertical-cavity surface-emitting laser diodes that the industry mainstream fabricates on gallium-arsenide substrate (concept:gaas-wafer), with cavity geometry oriented perpendicular to the substrate and distributed Bragg reflectors above and below forming the resonator so that light emits from the wafer surface. Essentially couples current injection and cavity feedback along the substrate normal to obtain low threshold, circularly symmetric optical spots, and wafer-level test feasibility — distinct from edge-emitting lasers that emit in-plane to the substrate, this class of devices is dominated by the 850nm short-wavelength regime and applied to 100G/400G PAM4 short-reach optical interconnects in data centers and to 3D sensing (e.g. handset face recognition)."
+   },
+   "level": 4,
+   "parent": "concept:laser-diode-chip",
+   "last_updated": "2026-08-06"
+  },
+  {
+   "@id": "concept:dfb-laser",
+   "@type": "Concept",
+   "label": {
+    "en": "Distributed Feedback (DFB) Laser Diode"
+   },
+   "description": {
+    "en": "A class of distributed feedback laser diodes that the industry mainstream fabricates on indium-phosphide substrate (concept:inp-wafer), with the resonant feedback mechanism relying on a periodic Bragg grating integrated along the waveguide rather than end-facet mirrors. Essentially achieves narrow-linewidth single-longitudinal-mode lasing through distributed grating feedback and covers the 1310nm and 1550nm long-wavelength regimes via the indium-phosphide material system — distinct from Fabry-Perot lasers that rely on cleaved end-facet reflection and from vertical-cavity surface-emitting lasers, this class of devices serves as coherent transmission light sources for long-reach optical communication and as continuous-wave DFB (CW-DFB) pump sources for silicon-photonics platforms."
+   },
+   "level": 4,
+   "parent": "concept:laser-diode-chip",
+   "last_updated": "2026-08-01"
+  },
+  {
+   "@id": "concept:eml",
+   "@type": "Concept",
+   "label": {
+    "en": "Electro-absorption Modulated Laser (EML)"
+   },
+   "description": {
+    "en": "A class of electro-absorption modulated lasers that the industry mainstream fabricates on indium-phosphide substrate (concept:inp-wafer), monolithically integrating a distributed-feedback (DFB) laser and an electro-absorption modulator (EAM) on the same indium-phosphide wafer. Essentially co-locates a narrow-linewidth coherent light source and a high-speed electro-absorption modulator stage on a shared material system through monolithic integration — distinct from solutions that splice together a discrete DFB and a discrete modulator, this class of devices delivers low chirp, compact packaging, and high-speed modulation to serve as the mainstream light source for 50G/100G/200G short-reach optical interconnects in data centers."
+   },
+   "level": 4,
+   "parent": "concept:laser-diode-chip",
+   "succeeds": [
+    "concept:dfb-laser"
+   ],
+   "last_updated": "2026-08-01"
+  },
+  {
+   "@id": "concept:photodetector",
+   "@type": "Concept",
+   "label": {
+    "en": "Photodetector"
+   },
+   "description": {
+    "en": "A class of photonic ICs that excites charge carriers via photon absorption to produce measurable electrical signals. Essentially converts optical signals into electrical signals — distinct from sensor chip classes that use electrons as information carriers, this class of devices relies on the absorption properties of semiconductor materials at target wavelengths and on the electrical transport of photogenerated carriers, serving the optical-signal reception function on the receive side of optical communication links and within optical sensing systems. Industry mainstream splits by substrate-material route into two co-equal lines: the Ge-on-Si route with germanium epitaxy on silicon substrate (concept:silicon-wafer) and the InGaAs route on indium-phosphide substrate (concept:inp-wafer)."
+   },
+   "level": 3,
+   "parent": "concept:photonic-ic",
+   "references": [
+    {
+     "type": "webpage",
+     "title": "InGaAs Photodiodes for High-Speed Optical Communication (1.3/1.55 um band fiber receivers)",
+     "url": "https://www.hamamatsu.com/eu/en/news/featured-products_and_technologies/2024/meeting-optical-communication-demands.html",
+     "publisher": "Hamamatsu Photonics"
+    },
+    {
+     "type": "webpage",
+     "title": "GlobalFoundries Announces Next Generation in Silicon Photonics Solutions (GF Fotonix platform with monolithic germanium photodetectors)",
+     "url": "https://www.prnewswire.com/news-releases/globalfoundries-announces-next-generation-in-silicon-photonics-solutions-and-collaborates-with-industry-leaders-to-advance-a-new-era-of-more-in-the-data-center-301496360.html",
+     "publisher": "GlobalFoundries"
+    },
+    {
+     "type": "article",
+     "title": "Modelling and optimization of Ge/GaAs uni-travelling carrier photodiodes (Ge-based vs InP/InGaAs UTC-PD performance comparison)",
+     "url": "https://www.nature.com/articles/s41598-025-93960-z",
+     "venue": "Scientific Reports",
+     "year": 2025
+    }
+   ],
+   "last_updated": "2026-07-15"
+  },
+  {
+   "@id": "concept:modulator",
+   "@type": "Concept",
+   "label": {
+    "en": "Electro-Optic Modulator"
+   },
+   "description": {
+    "en": "A class of photonic ICs that controls properties of an optical field such as intensity, phase, or polarization by applying an electrical signal. Essentially encodes information carried by an electrical signal onto an optical field — distinct from laser diodes, which generate optical fields, and photodetectors, which receive optical fields, this class of devices does not itself generate or consume the optical carrier; it relies on electro-optic, electro-absorption, or carrier-related effects in semiconductor materials to modulate an existing optical carrier, serving as the key stage on the transmit side of optical communication that loads electrical-domain information onto the optical carrier."
+   },
+   "level": 3,
+   "parent": "concept:photonic-ic",
+   "last_updated": "2026-06-02"
+  },
+  {
+   "@id": "concept:dpu",
+   "@type": "Concept",
+   "label": {
+    "en": "Data Processing Unit (DPU)"
+   },
+   "description": {
+    "en": "A composite system-level chip designed to offload data-center infrastructure tasks (networking, storage, security, etc.) from the host CPU, industrially built by integrating a 64-bit ARM core array, high-speed network interfaces, accelerator engines, and an independent software stack, attached alongside the host CPU as a PCIe endpoint to complete the infrastructure offload. Essentially the chip functional class diverging from general-purpose processors and single-purpose NICs along the data-center infrastructure offload functional dimension."
+   },
+   "level": 2,
+   "parent": "concept:chip",
+   "references": [
+    {
+     "type": "datasheet",
+     "title": "NVIDIA BlueField-3 DPU",
+     "url": "https://www.nvidia.com/en-us/networking/products/data-processing-unit/",
+     "publisher": "NVIDIA"
+    },
+    {
+     "type": "product-brief",
+     "title": "Marvell OCTEON 10 DPU Platform Product Brief",
+     "url": "https://www.marvell.com/content/dam/marvell/en/public-collateral/embedded-processors/marvell-octeon-10-dpu-platform-product-brief.pdf",
+     "publisher": "Marvell"
+    },
+    {
+     "type": "article",
+     "title": "What is a data processing unit (DPU)?",
+     "url": "https://www.computerweekly.com/feature/What-is-a-data-processing-unit-DPU",
+     "publisher": "Computer Weekly",
+     "year": 2024
+    }
+   ],
+   "last_updated": "2026-08-06"
+  },
+  {
+   "@id": "concept:nor-flash",
+   "@type": "Concept",
+   "label": {
+    "en": "NOR Flash"
+   },
+   "description": {
+    "en": "A non-volatile memory that stores charge in floating gates or charge traps, organized in a parallel cell-array structure, supporting byte/word-granular random-access reads and retaining data when powered off — typically used in firmware, BIOS, and embedded systems for execute-in-place (XIP). Essentially trades a parallel cell-array structure for byte-granular random addressing and execute-in-place capability, at the cost of lower areal capacity and higher cost-per-bit than NAND."
+   },
+   "level": 3,
+   "parent": "concept:memory-chip",
+   "last_updated": "2026-06-04"
+  },
+  {
+   "@id": "concept:optical-dsp",
+   "@type": "Concept",
+   "label": {
+    "en": "Optical DSP (Digital Signal Processor)"
+   },
+   "description": {
+    "en": "A chip that performs digital signal processing between the electrical- and optical-domain links of an optical module. On the electrical side of the optical transmit/receive path it digitally performs equalization (EQ), forward error correction (FEC) coding/decoding, clock data recovery (CDR), and mapping to PAM4 or coherent modulation formats, compensating for the signal degradation imposed by fiber-channel and device-bandwidth limits so that a high-speed bitstream can traverse a given optical link at a target bit error rate. It is distinct from the analog-front-end devices that provide linear amplification and drive — linear-drive (LPO) optical modules replace this digital signal-processing chip with an analog front end."
+   },
+   "level": 3,
+   "parent": "concept:interconnect-ic",
+   "references": [
+    {
+     "type": "press-release",
+     "title": "Marvell Unveils Industry's First 3nm 1.6 Tbps PAM4 Interconnect Platform — integrates eight 200 Gbps SerDes electrical lanes to the host",
+     "url": "https://www.marvell.com/company/newsroom/marvell-unveils-industrys-first-3nm-1-6tbps-pam4-interconnect-platform.html",
+     "publisher": "Marvell"
+    },
+    {
+     "type": "webpage",
+     "title": "PAM4 Optical DSPs (Ara / Nova / Spica / Perseus product family)",
+     "url": "https://www.marvell.com/products/pam-dsp.html",
+     "publisher": "Marvell"
+    },
+    {
+     "type": "webpage",
+     "title": "Coherent DSP for optical transport networks",
+     "url": "https://www.marvell.com/products/coherent-dsp.html",
+     "publisher": "Marvell"
+    },
+    {
+     "type": "webpage",
+     "title": "BCM87416 7nm 400G PAM-4 Transceiver PHY (optical DSP)",
+     "url": "https://www.broadcom.com/products/ethernet-connectivity/phy-and-poe/optical/bcm87416",
+     "publisher": "Broadcom"
+    },
+    {
+     "type": "report",
+     "title": "Markets for PAM4 and Coherent DSPs (profiles Marvell, Broadcom, Credo, MaxLinear DSP vendors)",
+     "url": "https://www.lightcounting.com/document/february-2025-pam4-and-coherent-dsps-updated-april-2025/340/toc",
+     "publisher": "LightCounting",
+     "year": 2025
+    }
+   ],
+   "last_updated": "2026-07-17",
+   "status": "confirmed"
+  },
+  {
+   "@id": "concept:laser-driver",
+   "@type": "Concept",
+   "label": {
+    "en": "Laser Driver"
+   },
+   "description": {
+    "en": "An analog-front-end chip in the transmit path of an optical module that converts an electrical signal into the modulation current or voltage required to drive a laser or optical modulator. It modulates the output optical power or phase of the light source per the input data with adequate bandwidth, swing, and linearity, writing the electrical-domain bitstream onto the optical carrier. Two drive forms exist: direct modulation (driving the laser bias current) and external modulation (driving an electro-optic modulator). In some products the laser driver and transimpedance amplifier are co-packaged into a single analog-front-end device, or monolithically integrated with the optical-module DSP; such co-packaged and integrated forms are covered in this node's description and do not warrant a separate node."
+   },
+   "level": 3,
+   "parent": "concept:analog-chip",
+   "references": [
+    {
+     "type": "webpage",
+     "title": "Linear Driver for PAM4 and Coherent optical modules",
+     "url": "https://www.marvell.com/products/linear-driver.html",
+     "publisher": "Marvell"
+    },
+    {
+     "type": "webpage",
+     "title": "FiberEdge Laser Drivers (GN1848 quad VCSEL driver)",
+     "url": "https://www.semtech.com/products/signal-integrity/laser-drivers-transceivers",
+     "publisher": "Semtech"
+    },
+    {
+     "type": "webpage",
+     "title": "PURE DRIVE laser drivers (MALD-39435 VCSEL driver / MALD-39225 2x100G)",
+     "url": "https://www.macom.com/updates/news/2024/macom-expands-pure-drive-portfolio",
+     "publisher": "MACOM",
+     "year": 2024
+    },
+    {
+     "type": "report",
+     "title": "Markets for PAM4 and Coherent DSPs (covers laser driver / CDR / TIA chipset market)",
+     "url": "https://www.lightcounting.com/document/february-2025-pam4-and-coherent-dsps-updated-april-2025/340/toc",
+     "publisher": "LightCounting",
+     "year": 2025
+    }
+   ],
+   "last_updated": "2026-08-06",
+   "status": "confirmed"
+  },
+  {
+   "@id": "concept:tia",
+   "@type": "Concept",
+   "label": {
+    "en": "Transimpedance Amplifier (TIA)"
+   },
+   "description": {
+    "en": "An analog-front-end chip in the receive path of an optical module that converts and amplifies the weak photocurrent output by a photodetector into a voltage signal. With low-noise, high-bandwidth transimpedance gain it restores the optical power received in the optical domain into a voltage waveform suitable for downstream decision or digital signal processing. By downstream architecture it divides into linear TIAs feeding a DSP decision and limiting TIAs for direct-detect reception. In some products the transimpedance amplifier and laser driver are co-packaged into a single analog-front-end device, or monolithically integrated with the optical-module DSP; such co-packaged and integrated forms are covered in this node's description and do not warrant a separate node."
+   },
+   "level": 3,
+   "parent": "concept:analog-chip",
+   "references": [
+    {
+     "type": "webpage",
+     "title": "Transimpedance Amplifiers for PAM4 and Coherent optical modules",
+     "url": "https://www.marvell.com/products/transimpedance-amplifiers.html",
+     "publisher": "Marvell"
+    },
+    {
+     "type": "webpage",
+     "title": "Transimpedance Amplifiers — Client Side (MATA-39434 4x100G PAM-4 TIA)",
+     "url": "https://www.macom.com/products/optical/transimpedance-amplifiers/transimpedance-amplifiers-client_side",
+     "publisher": "MACOM"
+    },
+    {
+     "type": "webpage",
+     "title": "FiberEdge / Data Center linear TIA (GN1816 quad TIA)",
+     "url": "https://www.semtech.com/products/signal-integrity/data-center",
+     "publisher": "Semtech"
+    },
+    {
+     "type": "report",
+     "title": "Markets for PAM4 and Coherent DSPs (covers TIA / laser driver chipset market)",
+     "url": "https://www.lightcounting.com/document/february-2025-pam4-and-coherent-dsps-updated-april-2025/340/toc",
+     "publisher": "LightCounting",
+     "year": 2025
+    }
+   ],
+   "last_updated": "2026-08-06",
+   "status": "confirmed"
+  },
+  {
+   "@id": "concept:application-processor",
+   "@type": "Concept",
+   "label": {
+    "en": "Application Processor (AP)"
+   },
+   "description": {
+    "en": "A class of composite system-level master-control SoC for mobile and edge devices that integrates central-processing-unit cores with graphics, neural-network acceleration, image signal processing, multimedia codec, and even baseband function domains onto a single chip. Essentially carries the primary computation and peripheral control of an edge device on a single chip, gaining area, power, and cost efficiency by integrating multiple heterogeneous functional blocks within one package. As a composite system-level chip spanning multiple single-function subtrees, its category identity is defined by the whole-chip system-integration essence rather than by any single embedded functional block."
+   },
+   "level": 2,
+   "parent": "concept:chip",
+   "status": "confirmed",
+   "references": [
+    {
+     "type": "report",
+     "title": "Global Smartphone AP-SoC Market Share (Quarterly) — application processor / SoC listed as an independent industry category; Qualcomm, MediaTek, Apple, Samsung, HiSilicon, UNISOC among vendors",
+     "url": "https://counterpointresearch.com/en/insights/global-smartphone-apsoc-market-share-quarterly",
+     "publisher": "Counterpoint Research"
+    },
+    {
+     "type": "report",
+     "title": "Smartphone application processor vendor shipment share worldwide — Apple, MediaTek, Qualcomm, Samsung, UNISOC, HiSilicon",
+     "url": "https://www.statista.com/statistics/1226674/smartphone-application-processor-vendor-shipment-share-worldwide/",
+     "publisher": "Statista"
+    }
+   ],
+   "last_updated": "2026-07-19"
+  },
+  {
+   "@id": "concept:audio-codec",
+   "@type": "Concept",
+   "label": {
+    "en": "Audio Codec"
+   },
+   "description": {
+    "en": "A class of mixed-signal chip that performs bidirectional conversion between analog audio signals and digital audio data, integrating the associated analog front-end and signal processing. Essentially integrates audio-domain analog-to-digital conversion, digital-to-analog conversion, and accompanying analog/mixed-signal functions such as sampling, gain, mixing, and headphone-amplifier drive into a single device, serving as the audio interface between a processor and acoustic transducers such as microphones, speakers, and headphones. Distinct from general-purpose data converters, this category takes complete audio-path codec-and-drive as its defining function."
+   },
+   "level": 3,
+   "parent": "concept:analog-chip",
+   "status": "confirmed",
+   "references": [
+    {
+     "type": "webpage",
+     "title": "Cirrus Logic — Audio Codecs (integrated ADC/DAC audio interface chips)",
+     "url": "https://www.cirrus.com/support/technologies/codecs",
+     "publisher": "Cirrus Logic"
+    },
+    {
+     "type": "report",
+     "title": "Audio IC Market — Companies: Cirrus Logic, Realtek, ESS Technology, AKM (Asahi Kasei), Texas Instruments, Analog Devices among audio codec suppliers",
+     "url": "https://www.skyquestt.com/report/audio-ic-market/companies",
+     "publisher": "SkyQuest Technology"
+    }
+   ],
+   "last_updated": "2026-07-19"
+  },
+  {
+   "@id": "concept:registered-clock-driver",
+   "@type": "Concept",
+   "label": {
+    "en": "Registered Clock Driver (RCD)"
+   },
+   "description": {
+    "en": "A memory-interface chip deployed on DDR memory modules (DIMMs) that registers and re-drives the command/address signals sent by the host memory controller while regenerating and distributing the clock. Essentially circuitizes the signal-integrity restoration and fan-out of the memory command bus into a standalone device, enabling more DRAM devices to be loaded on one module at higher data rates while maintaining signal quality — it does not itself retain data state, distinguishing it from memory chips that retain data via charge. The category is defined for its registering and electrical behavior by JEDEC standards (such as the JESD82-51x series) and is listed by industry as an independent category within the memory-module chipset."
+   },
+   "level": 3,
+   "parent": "concept:interconnect-ic",
+   "status": "confirmed",
+   "references": [
+    {
+     "type": "webpage",
+     "title": "Rambus DDR5 Registering Clock Driver (RCD) — DDR5 RDIMM clock/command-address register chip",
+     "url": "https://www.rambus.com/memory-interface-chips/ddr5-dimm-chipset/ddr5-rcd/",
+     "publisher": "Rambus"
+    },
+    {
+     "type": "webpage",
+     "title": "Renesas RRG5004 — Gen 4 DDR5 Registering Clock Driver (JEDEC-compliant RCD)",
+     "url": "https://www.renesas.com/en/products/rrg5004",
+     "publisher": "Renesas Electronics"
+    },
+    {
+     "type": "report",
+     "title": "DIMM chipset keeps expanding — RCD/DB/PMIC memory-module chipset led by merchant suppliers Montage, Rambus, and Renesas (IDT)",
+     "url": "https://www.yolegroup.com/yole-group-actuality/dimm-chipset-keeps-expanding/",
+     "publisher": "Yole Group"
+    }
+   ],
+   "last_updated": "2026-07-19"
+  },
+  {
+   "@id": "activity:wafer-sort",
+   "@type": "Activity",
+   "label": {
+    "en": "Wafer Sort"
+   },
+   "description": {
+    "en": "A test insertion that, while dies are still in wafer form and not yet singulated or packaged, applies electrical stimuli to each die on the wafer and screens and bins them against specification. Essentially screens known-good dies at the wafer level before committing to packaging, removing failing units from the flow before packaging cost is incurred, serving as a wafer-level ship-out judgment step in chip production (not creating an independent artifact)."
+   },
+   "level": 3,
+   "parent": "activity:chip-testing",
+   "produces": [
+    "concept:chip"
+   ],
+   "precedes": [
+    "activity:packaging-process"
+   ],
+   "status": "confirmed",
+   "references": [
+    {
+     "type": "encyclopedia",
+     "title": "Wafer testing — wafer sort / die sort performed on dies while still on the wafer, before packaging, contacting dies through a probe card",
+     "url": "https://en.wikipedia.org/wiki/Wafer_testing",
+     "publisher": "Wikipedia"
+    },
+    {
+     "type": "webpage",
+     "title": "V93000 SoC Test Systems — ATE platform used for wafer-level and package-level device testing",
+     "url": "https://www.advantest.com/en/products/semiconductor-test-system/soc/v93000/",
+     "publisher": "Advantest"
+    }
+   ],
+   "last_updated": "2026-07-19"
+  },
+  {
+   "@id": "activity:final-test",
+   "@type": "Activity",
+   "label": {
+    "en": "Final Test"
+   },
+   "description": {
+    "en": "A test insertion that, after dies have been packaged into assembly-ready packaged devices, applies electrical stimuli to the finished packaged devices and screens, bins, and boxes them against specification. Essentially performs the package-level electrical judgment of finished devices before delivery, covering functional, parametric, and speed binning, serving as a package-level ship-out judgment step in chip production (not creating an independent artifact)."
+   },
+   "level": 3,
+   "parent": "activity:chip-testing",
+   "precedes": [
+    "activity:system-level-test"
+   ],
+   "produces": [
+    "concept:chip"
+   ],
+   "status": "confirmed",
+   "references": [
+    {
+     "type": "encyclopedia",
+     "title": "Automatic test equipment — final test of packaged devices via ATE and a test handler that presents packaged parts and bins by result",
+     "url": "https://en.wikipedia.org/wiki/Automatic_test_equipment",
+     "publisher": "Wikipedia"
+    },
+    {
+     "type": "webpage",
+     "title": "UltraFLEXplus SoC Tester — ATE platform for final test of complex packaged devices",
+     "url": "https://www.teradyne.com/products/ultraflexplus/",
+     "publisher": "Teradyne"
+    }
+   ],
+   "last_updated": "2026-07-19"
+  },
+  {
+   "@id": "activity:system-level-test",
+   "@type": "Activity",
+   "label": {
+    "en": "System-Level Test"
+   },
+   "description": {
+    "en": "The third test insertion of chip testing: after wafer sort and final test, it runs packaged devices in final application mode to screen defects that escaped the earlier insertions and to verify actual device operation in a system context (IP-block interfaces and hardware/software interaction); a ship-out judgment step that creates no independent artifact."
+   },
+   "level": 3,
+   "parent": "activity:chip-testing",
+   "produces": [
+    "concept:chip"
+   ],
+   "status": "confirmed",
+   "references": [
+    {
+     "type": "webpage",
+     "title": "System Level Test — Teradyne official product page",
+     "url": "https://www.teradyne.com/system-level-test/",
+     "publisher": "Teradyne",
+     "source": "primary",
+     "supports": []
+    },
+    {
+     "type": "webpage",
+     "title": "Glossary — Advantest investor relations glossary",
+     "url": "https://www.advantest.com/en/investors/ir-library/glossary/",
+     "publisher": "Advantest",
+     "source": "primary",
+     "supports": []
+    },
+    {
+     "type": "webpage",
+     "title": "Exploring the Mysteries of System-Level Test — NSF-funded academic paper",
+     "url": "https://par.nsf.gov/servlets/purl/10401355",
+     "publisher": "NSF Public Access Repository",
+     "source": "secondary",
+     "supports": []
+    }
+   ],
+   "last_updated": "2026-08-13"
+  }
+ ]
+}

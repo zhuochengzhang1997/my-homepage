@@ -1,0 +1,37 @@
+title: "Vertically Stacked Multilayer Atomic-layer-deposited Sub-1-nanometer In₂O₃ Field-effect Transistors with Back-end-of-line Compatibility"
+authors:
+  - displayName: Z. Zhang
+    isSiteOwner: true
+  - displayName: Z. Lin
+    isSiteOwner: false
+  - displayName: M. Si
+    isSiteOwner: false
+  - displayName: D. Zhang
+    isSiteOwner: false
+  - displayName: H. Dou
+    isSiteOwner: false
+  - displayName: Z. Chen
+    isSiteOwner: false
+  - displayName: A. Charnas
+    isSiteOwner: false
+  - displayName: H. Wang
+    isSiteOwner: false
+  - displayName: P. D. Ye
+    isSiteOwner: false
+year: 2022
+publishedAt: "2022-05-16"
+type: journal-article
+status: published
+doi: 10.1063/5.0092936
+venue:
+  name: Applied Physics Letters
+volume: "120"
+issue: "20"
+articleNumber: "202104"
+verification:
+  status: user-confirmed
+  provenance: user-supplied
+  sourceId: site-owner-publication-list-2026-01-20
+  note: Bibliographic details come from the site owner's own publication list; the complete record is maintained on Google Scholar.
+  checkedAt: 2026-08-26
+  publishable: true

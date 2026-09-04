@@ -1,0 +1,37 @@
+role: Graduate Research Assistant
+institution: Purdue University
+department: Birck Nanotechnology Center
+advisor: Prof. Peide D. Ye
+startDate: "2019"
+endDate: "2023"
+ongoing: false
+order: 3
+summary: >-
+  Atomic-layer-deposited oxide-semiconductor transistors for BEOL-compatible and
+  monolithic 3-D integration.
+trajectoryNote: >-
+  More than 5,000 hours in Purdue cleanrooms taught me to treat process control,
+  measurement, and evidence as one continuous engineering loop.
+bullets:
+  - >-
+    Demonstrated atomic-layer-deposited, single-channel gate-all-around In₂O₃
+    nanoribbon transistors in a BEOL-compatible process, reaching a record drain
+    current for the device class.
+  - >-
+    Fabricated 3-D vertical In₂O₃ / IGZO transistors using thick ALD In₂O₃ as
+    the gate, working toward full-oxide logic.
+  - >-
+    Investigated and improved the reliability of ALD oxide-semiconductor
+    transistors, explaining threshold-voltage shifts with a trap-distribution
+    model and using high-temperature O₂ annealing to reach ultrahigh bias
+    stability.
+  - >-
+    Ran the full device R&D loop end to end: design, cleanroom fabrication,
+    structural and electrical characterization, physics interpretation, and
+    publication.
+verification:
+  status: user-confirmed
+  provenance: user-confirmed
+  sourceId: facts-yaml-2026-08-23
+  checkedAt: 2026-08-23
+  publishable: true

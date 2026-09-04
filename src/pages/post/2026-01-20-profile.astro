@@ -1,0 +1,24 @@
+---
+const target = "/";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Profile moved | Zhuocheng Zhang</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={new URL(target, Astro.site)} />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <script is:inline define:vars={{ target }}>
+      window.location.replace(target);
+    </script>
+  </head>
+  <body>
+    <main>
+      <h1>This profile has moved</h1>
+      <p><a href={target}>Continue to Zhuocheng Zhang’s homepage</a>.</p>
+    </main>
+  </body>
+</html>

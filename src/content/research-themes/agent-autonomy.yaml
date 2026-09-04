@@ -1,0 +1,39 @@
+title: Bounded autonomy for compact modeling
+order: 1
+thesis: >-
+  A general-purpose LLM agent can perform selected compact-modeling tasks when
+  its tools and actions are bounded by physical checks, with every step left
+  available for engineering review.
+body:
+  - >-
+    A typed tool layer sits over an open-source circuit simulator and a standard
+    industry transistor model. Engineering checks enforce parameter scope and
+    physical bounds before and after every change. The agent records its
+    diagnosis, hypothesis, and expected effect before it acts. A senior
+    engineer’s worked demonstration supplies the operating method.
+  - >-
+    Evaluation was a controlled study rather than a demonstration. It used real
+    calibration tasks with known ground truth, held-out task variants, measured
+    SKY130 silicon data associated with an open process design kit, and open
+    model cards.
+  - >-
+    The contrast showed what the harness contributes. Without explicit scope,
+    physical checks, and a usable method, an agent could produce convincing
+    curves through unsupported parameter changes or by fitting effects the data
+    could not identify. With the complete harness in place, it stayed within
+    scope, focused on the engineering objective, and left unsupported parameters
+    untouched. The controls improved both the result and the reasoning process
+    behind it.
+tags:
+  - Compact modeling
+  - Agent harness design
+  - Controlled evaluation
+verification:
+  status: user-confirmed
+  provenance: user-confirmed
+  sourceId: research-copy-review-2026-08-26
+  note: >-
+    Qualitative site version. Manuscript title, venue, and quantitative results
+    are deliberately withheld while the manuscript is under peer review.
+  checkedAt: 2026-08-26
+  publishable: true

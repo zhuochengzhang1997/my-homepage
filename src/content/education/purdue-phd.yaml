@@ -1,0 +1,15 @@
+degree: Ph.D.
+field: Microelectronics
+program: Electrical and Computer Engineering
+institution: Purdue University
+school: Birck Nanotechnology Center
+advisor: Prof. Peide D. Ye
+startYear: 2019
+graduationYear: 2023
+order: 1
+verification:
+  status: user-confirmed
+  provenance: user-confirmed
+  sourceId: facts-yaml-2026-08-23
+  checkedAt: 2026-08-23
+  publishable: true

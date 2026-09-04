@@ -1,0 +1,7 @@
+name: A small program
+tagline: Placeholder
+kind: program
+description: >-
+  A program I made for my own use will sit here. Name and notes to come.
+order: 2
+draft: true

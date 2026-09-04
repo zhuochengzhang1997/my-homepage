@@ -1,0 +1,11 @@
+date: 2026-07
+text: >-
+  Submitted a first-author manuscript on LLM-agent-based compact-model
+  calibration for peer review.
+verification:
+  status: user-confirmed
+  provenance: user-confirmed
+  sourceId: facts-yaml-2026-08-23
+  note: Venue deliberately not named while the manuscript is under review.
+  checkedAt: 2026-08-23
+  publishable: true

@@ -1,0 +1,38 @@
+---
+/**
+ * Studio exhibit: Future Thesis OS.
+ *
+ * A static English snapshot of the project's own dashboard, taken on
+ * 29 August 2026 and frozen. Nothing on the page runs, updates, or reaches the
+ * network: the board reads a single `data.json` sitting next to it under
+ * `public/studio/future-thesis-os/app/`.
+ */
+import StudioAppLayout from "../../layouts/StudioAppLayout.astro";
+
+const description = "Turns scattered signals into testable views of technology and industry.";
+---
+
+<StudioAppLayout
+  title="Future Thesis"
+  description={description}
+  appSrc="/studio/future-thesis-os/app/index.html"
+  appTitle="Future Thesis map of trends, links, chains, and scenarios"
+>
+  <Fragment slot="intro">
+    <p class="eyebrow">Studio</p>
+    <h1>Future Thesis</h1>
+    <p>
+      Information is no longer scarce. News, papers, earnings, product releases, and technical
+      writing arrive faster than any one person can connect them. The harder problem is deciding
+      what the signals mean together, across fields and timescales, and knowing what evidence would
+      change that view.
+    </p>
+    <p>
+      Future Thesis is a personal world model for that task. It maintains trends, the mechanisms
+      linking them, the paths those links form, and falsifiable scenarios about where they lead. A
+      weekly cycle searches for evidence, updates probabilities, and records why a view moved,
+      turning a stream of fragments into judgments that can be tested over time.
+    </p>
+    <a class="text-link" href="/studio/">Back to Studio</a>
+  </Fragment>
+</StudioAppLayout>

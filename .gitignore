@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+
+# Astro build output and caches
+dist/
+.astro/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Local tooling
+.DS_Store
+Thumbs.db
+*.log
+
+# Editor settings
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# --- Local-only design workspace -------------------------------------------
+# Everything below stays on disk but is never published. The site is built
+# from `src/` and `public/`; none of these are read at build time.
+
+# Study records, mockups and reference imagery from the design rounds.
+design/
+design_concepts/
+design_reference/
+
+# Design system, process and content specs — the working notes behind the
+# site, not part of it.
+docs/
+AGENTS.md
+
+# Internal artboards. `public/` is copied verbatim into the build, so leaving
+# these tracked would publish them at /_ad/ for anyone to browse.
+public/_ad/
+
+# Phase-2 concept backgrounds. Nothing in `src/` references them; they were
+# 2.2 MB of dead weight riding along in `public/`.
+public/concept-art/
+
+# Agent and editor scratch directories.
+.agents/
+.codex/
+.claude/

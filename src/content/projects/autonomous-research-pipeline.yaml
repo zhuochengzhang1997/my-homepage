@@ -1,0 +1,16 @@
+name: Autonomous research pipeline
+tagline: A daily cloud-agent pipeline with layered memory and calibration scoring.
+description: >-
+  A cloud agent runs unattended every morning: it gathers and enriches source
+  material, classifies it into a layered memory taxonomy, and publishes a daily
+  written analysis. A prediction-calibration scorecard grades earlier calls
+  against what actually happened, so the system is measured rather than merely
+  productive.
+stack:
+  - Python
+  - Cloud agent routine
+  - Layered memory design
+  - Scheduled workflows
+status: Running daily since Apr 2026
+order: 6
+draft: true

@@ -1,0 +1,37 @@
+title: From execution to a learning loop
+order: 2
+thesis: >-
+  Reviewed work can carry experience from one task to the next without changing
+  model weights. Current studies test whether governed records change later
+  decisions, rather than merely the language used to explain them.
+body:
+  - >-
+    The system is designed to carry reviewed methods from one task into the
+    next. Each agent run is stored as an immutable, schema-checked record that
+    later runs cannot overwrite. A method becomes reusable only after review has
+    recorded where it applies, a test that can be rerun, and the counterexamples
+    already known.
+  - >-
+    The agent records its stated rationale before each action, so the history
+    holds more than a sequence of parameter edits. It also records why each
+    change was made, which is what makes the history worth distilling.
+  - >-
+    The learning loop has already shown a concrete effect. In controlled paired
+    evaluations, a reviewed method changed both the agent’s mechanism diagnosis
+    and the procedure it performed, rather than merely changing its explanation.
+    This is the purpose of the loop: preserve experience as evidence, distill it
+    into a usable method, and test that method before it guides later work. A
+    blinded out-of-sample study is now testing how well the effect carries to new
+    tasks.
+status: Active, self-directed
+tags:
+  - Evidence governance
+  - Method distillation
+  - Preregistered evaluation
+verification:
+  status: user-confirmed
+  provenance: user-confirmed
+  sourceId: research-copy-review-2026-08-26
+  note: Qualitative site version; quantitative results withheld while work is in progress.
+  checkedAt: 2026-08-26
+  publishable: true

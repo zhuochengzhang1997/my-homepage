@@ -1,0 +1,67 @@
+---
+/**
+ * ResearchDiagram — the three schematics on /research/.
+ *
+ * Carried on the GR-016 frost plate (same tokens as the Home portrait). Lives
+ * in the lead column under title and thesis. Owner trial 2026-08-31: each
+ * plate holds a raster reference. Width follows the lead column; height
+ * follows the image. Not a lock. aria-hidden: the prose already carries the
+ * meaning.
+ */
+import type { ImageMetadata } from "astro";
+
+import harnessRef from "../assets/research/agent-autonomy-ref.png";
+import loopRef from "../assets/research/learning-loop-ref.png";
+import graphRef from "../assets/research/domain-ontology-ref.png";
+
+interface Props {
+  theme: string;
+}
+
+const { theme } = Astro.props;
+
+const PHOTOS: Record<string, ImageMetadata> = {
+  "agent-autonomy": harnessRef,
+  "learning-loop": loopRef,
+  "domain-ontology": graphRef,
+};
+
+const photo = PHOTOS[theme];
+---
+
+{
+  photo && (
+    <figure
+      class="research-line__diagram frost-plate research-diagram research-diagram--photo"
+      aria-hidden="true"
+      data-nudge={import.meta.env.DEV ? `${theme}-diagram` : undefined}
+      data-nudge-label={import.meta.env.DEV ? `${theme} diagram` : undefined}
+    >
+      <img
+        class="research-diagram__photo"
+        src={photo.src}
+        width={photo.width}
+        height={photo.height}
+        alt=""
+      />
+    </figure>
+  )
+}
+
+<style>
+  .research-diagram {
+    min-width: 0;
+  }
+
+  .research-diagram--photo {
+    display: grid;
+  }
+
+  .research-diagram__photo {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-figure);
+    background: var(--color-canvas);
+  }
+</style>

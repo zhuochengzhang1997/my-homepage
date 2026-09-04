@@ -1,0 +1,14 @@
+name: job-watcher
+tagline: A read-only watcher over public applicant-tracking sources.
+description: >-
+  Polls nine public job sources daily with tiered keyword filters and reports
+  snapshot diffs rather than raw listings. Built agent-first and deployed on a
+  home server; strictly read-only by design, with no account access and no
+  automated submissions.
+stack:
+  - Python
+  - Scheduled jobs
+  - Home server
+status: Running daily
+order: 4
+draft: true

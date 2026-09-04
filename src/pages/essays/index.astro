@@ -1,0 +1,67 @@
+---
+import { getCollection } from "astro:content";
+
+import SectionHeader from "../../components/SectionHeader.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const entries = (await getCollection("essays"))
+  .filter((entry) => !entry.data.draft)
+  .sort((a, b) => {
+    const byDate = b.data.date.getTime() - a.data.date.getTime();
+    if (byDate !== 0) return byDate;
+    return a.data.order - b.data.order;
+  });
+
+const formatDate = (value: Date) =>
+  new Intl.DateTimeFormat("en", { year: "numeric", month: "long" }).format(value);
+---
+
+<BaseLayout
+  title="Essays | Zhuocheng Zhang"
+  description="Essays on AI systems, agentic workflows, and the engineering required to make them useful, verifiable, and governable."
+  image="/og/essays.png"
+>
+  <main id="main-content">
+    <div class="section-band section-band--canvas page-lede-band page-lede-band--tight">
+      <div class="page-shell editorial-grid">
+        <SectionHeader
+          class="page-lede-band__header page-lede-band__header--narrow"
+          eyebrow="Long-form writing"
+          title="Essays"
+        >
+          <Fragment slot="lede">
+            Analysis of AI, engineering workflows,
+            <span class="lede-line">and the systems required to connect them.</span>
+          </Fragment>
+        </SectionHeader>
+      </div>
+    </div>
+
+    <div class="section-band section-band--soft essay-index-band">
+      <ol class="essay-index page-shell">
+        {
+          entries.map((entry) => (
+            <li class="essay-entry">
+              <article class="editorial-grid" aria-labelledby={`${entry.id}-title`}>
+                <p class="essay-entry__meta">
+                  <time datetime={entry.data.date.toISOString().slice(0, 10)}>
+                    {formatDate(entry.data.date)}
+                  </time>
+                </p>
+
+                <div class="essay-entry__body">
+                  <h2 id={`${entry.id}-title`}>
+                    <a href={`/essays/${entry.id}/`}>{entry.data.title}</a>
+                  </h2>
+                  <p class="essay-entry__standfirst">
+                    {entry.data.subtitle ?? entry.data.description}
+                  </p>
+                </div>
+              </article>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </main>
+</BaseLayout>

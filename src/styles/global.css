@@ -1,0 +1,2441 @@
+/* =========================================================================
+   Self-hosted variable Archivo — latin + latin-ext, weights 400–600.
+   Copied from @fontsource-variable/archivo into /public/fonts. Production
+   must not request Google Fonts. See docs/DESIGN.md §3 and §8.
+   ========================================================================= */
+
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/archivo-latin.woff2") format("woff2-variations");
+  unicode-range:
+    U+0000-00ff, U+0131, U+0152-0153, U+02bb-02bc, U+02c6, U+02da, U+02dc, U+0304, U+0308, U+0329,
+    U+2000-206f, U+20ac, U+2122, U+2191, U+2193, U+2212, U+2215, U+feff, U+fffd;
+}
+
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/archivo-latin-ext.woff2") format("woff2-variations");
+  unicode-range:
+    U+0100-02ba, U+02bd-02c5, U+02c7-02cc, U+02ce-02d7, U+02dd-02ff, U+0304, U+0308, U+0329,
+    U+1d00-1dbf, U+1e00-1e9f, U+1ef2-1eff, U+2020, U+20a0-20ab, U+20ad-20c0, U+2113, U+2c60-2c7f,
+    U+a720-a7ff;
+}
+
+/* =========================================================================
+   DESIGN v4 tokens. Hex and roles come from docs/DESIGN.md. Motion durations
+   from docs/MOTION.md. Mirror any token change in src/styles/tailwind.css.
+   Legacy --color-ink / --color-band names are aliases so existing selectors
+   keep working; do not treat those names as a second palette.
+   ========================================================================= */
+
+:root {
+  color-scheme: light;
+
+  /* Colour — DESIGN.md §2 */
+  --color-canvas: #fffbfa;
+  --color-wash: #f4e8ea;
+  /* Figure fills only (GR-017). Never a page ground or a band. */
+  --color-wash-deep: #e6ccd2;
+  --color-line: #e7d6d8;
+  --color-control: var(--color-mute); /* kit C2: identifying edges use mute */
+  --color-mute: #7a4e56;
+  --color-display: #5c2432;
+  --color-accent: #8b3044;
+  --color-body: #1c1416;
+  --color-focus: var(--color-accent);
+
+  /* Aliases used by remaining selectors */
+  --color-canvas-subtle: var(--color-canvas);
+  --color-band: var(--color-wash);
+  --color-surface: var(--color-canvas);
+  --color-surface-raised: var(--color-canvas);
+  --color-ink: var(--color-body);
+  --color-ink-soft: var(--color-body);
+  --color-ink-muted: var(--color-mute);
+  --color-accent-strong: var(--color-display);
+  --color-on-accent: var(--color-canvas);
+  --color-hairline: var(--color-line);
+  --color-selection: var(--color-wash);
+  --color-header: var(--color-canvas);
+
+  /* Dark-mode inverses are deferred (DESIGN.md §11). Aliases exist so a
+     leftover selector cannot fall back to cream-paper hex. */
+  --color-dark: var(--color-body);
+  --color-dark-soft: var(--color-display);
+  --color-on-dark: var(--color-canvas);
+  --color-on-dark-soft: var(--color-mute);
+  --color-accent-on-dark: var(--color-accent);
+  --color-accent-on-dark-strong: var(--color-display);
+  --color-hairline-on-dark: var(--color-line);
+
+  /* Type — one family (GR-004). DESIGN.md §3. */
+  --font: "Archivo", system-ui, sans-serif;
+  --font-display: var(--font);
+  --font-body: var(--font);
+
+  --text-display: 3.5rem;
+  --text-lead: 1.25rem;
+  --text-body: 1rem;
+  --text-brand: 1.25rem;
+  --text-meta: 0.8125rem;
+  --text-eyebrow: 0.8125rem;
+
+  --type-display-hero: var(--text-display);
+  --type-display-hero-lh: 1.08;
+  --type-display-hero-ls: -0.025em;
+  --type-h1: clamp(2rem, 2.6vw, 2.5rem);
+  --type-h1-lh: 1.12;
+  --type-h1-ls: -0.02em;
+  --type-h2: 1.5rem;
+  --type-h2-lh: 1.15;
+  --type-h2-ls: -0.015em;
+  --type-h3: 1.25rem;
+  --type-h3-lh: 1.2;
+  --type-h3-ls: -0.01em;
+  --type-lead: var(--text-lead);
+  --type-lead-lh: 1.35;
+  --type-lead-ls: 0;
+  --type-body: var(--text-body);
+  --type-body-lh: 1.5;
+  --type-body-ls: 0;
+  --type-prose: 1rem;
+  --type-prose-lh: 1.5;
+  --type-prose-ls: 0;
+  --type-body-sm: 0.9375rem;
+  --type-body-sm-lh: 1.5;
+  --type-meta: var(--text-meta);
+  --type-meta-lh: 1.4;
+  --type-eyebrow: var(--text-eyebrow);
+  --type-eyebrow-ls: 0.22em;
+  --type-control: var(--text-meta);
+
+  /* Icons — one Lucide contract, three sizes, one stroke */
+  --icon-xs: 0.875rem;
+  --icon-sm: 1rem;
+  --icon-md: 1.125rem;
+  --icon-stroke: 1.75;
+
+  /* Spacing and grid */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+
+  --page-gutter: clamp(1.5rem, 4vw, 4rem);
+  --section-space: 6rem;
+  --content-width: 82rem;
+  /* Extra desktop inset so inner copy shares Home Background's left edge.
+     0 below 64rem; `{space.gutter}` at desktop. */
+  --content-rail-inset: 0px;
+  --grid-gap: 1.5rem;
+  --measure-body: 66ch;
+  --measure-prose: 68ch;
+  --measure-lead: 41.25rem;
+  --header-height: 4rem;
+  --scroll-offset: 80px;
+
+  /* Radius — figure 12px (frost kit R12). Boxed chrome: 4px (kit A4, K4). */
+  --radius-none: 0;
+  --radius-control: 4px;
+  --radius-card: 4px;
+  --radius-sheet: 4px;
+  --radius-pill: 4px;
+  --radius-figure: 12px;
+
+  /* Frost plate (kit R12 P10 S2 G1 F58 K4 Ndrop Sf). Home portrait +
+     Research diagrams (owner trial 2026-08-31). Fill locked F58. */
+  --space-plate: 10px;
+  --frost-blur: 18px;
+  --frost-fill: color-mix(in srgb, var(--color-canvas) 58%, transparent);
+  --frost-fill-opaque: color-mix(in srgb, var(--color-canvas) 88%, transparent);
+  --shadow-figure: 0 5px 14px color-mix(in srgb, var(--color-display) 14%, transparent);
+
+  /* Identifying control stroke (kit B2). Decorative hairlines stay 1px. */
+  --control-stroke: 2px;
+
+  /* Control shadows stay none (kit Sf). Hover lift still forbidden (MOTION X6). */
+  --shadow-float: none;
+  --shadow-header: none;
+  --shadow-control: none;
+
+  /* Motion — MOTION.md: {motion.fast} only */
+  --duration-press: 120ms;
+  --duration-ui: 120ms;
+  --ease-out: ease-out;
+  --ease-in-out: ease-out;
+}
+
+/* =========================================================================
+   Base
+   ========================================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 20rem;
+  scroll-behavior: auto;
+  scroll-padding-top: var(--scroll-offset);
+  background-color: var(--color-canvas);
+}
+
+body {
+  display: flex;
+  isolation: isolate;
+  position: relative;
+  min-width: 20rem;
+  min-height: 100vh;
+  min-height: 100dvh;
+  flex-direction: column;
+  margin: 0;
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--type-body);
+  font-synthesis-weight: none;
+  letter-spacing: var(--type-body-ls);
+  line-height: var(--type-body-lh);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --wash-channel-gutter: 0.28;
+  --wash-channel-center: 0.78;
+  --wash-channel-half: calc(var(--content-width) / 2);
+  --wash-channel-feather: 5rem;
+  --wash-channel-left-feather: max(
+    0%,
+    calc(50% - var(--wash-channel-half) - var(--wash-channel-feather))
+  );
+  --wash-channel-left-edge: max(0%, calc(50% - var(--wash-channel-half)));
+  --wash-channel-right-edge: min(100%, calc(50% + var(--wash-channel-half)));
+  --wash-channel-right-feather: min(
+    100%,
+    calc(50% + var(--wash-channel-half) + var(--wash-channel-feather))
+  );
+  --wash-channel-fill: linear-gradient(
+    to right,
+    rgb(255 251 250 / var(--wash-channel-gutter)) 0%,
+    rgb(255 251 250 / var(--wash-channel-gutter)) var(--wash-channel-left-feather),
+    rgb(255 251 250 / var(--wash-channel-center)) var(--wash-channel-left-edge),
+    rgb(255 251 250 / var(--wash-channel-center)) 50%,
+    rgb(255 251 250 / var(--wash-channel-center)) var(--wash-channel-right-edge),
+    rgb(255 251 250 / var(--wash-channel-gutter)) var(--wash-channel-right-feather),
+    rgb(255 251 250 / var(--wash-channel-gutter)) 100%
+  );
+}
+
+/* Wash lives on ::before (document-attached raster). A canvas reading-channel
+   on ::after keeps type on near-white while gutters keep atmosphere (GR-012).
+   z-index -1 (not 0 with content at 1): a stacking context on `.page-main`
+   would stop `.frost-plate` from sampling the wash. */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url("/images/wash-chip.webp");
+  background-repeat: repeat-y;
+  background-position: top center;
+  background-size: 100% auto;
+  background-attachment: scroll;
+}
+
+body[data-wash="research"]::before {
+  background-image: url("/images/wash-research.webp");
+}
+
+body[data-wash="essays"]::before {
+  background-image: url("/images/wash-essays.webp");
+}
+
+body[data-wash="publications"]::before {
+  background-image: url("/images/wash-publications.webp");
+}
+
+body[data-wash="studio"]::before {
+  background-image: url("/images/wash-studio.webp");
+}
+
+body::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--wash-channel-fill);
+}
+
+/* Home first screen sits on the wash (DESIGN.md §2). Channel resumes below
+   the portrait module: .home-reading and the footer. Other routes keep the
+   document-wide veil. */
+body[data-wash="home"]::after {
+  content: none;
+}
+
+.home-reading,
+body[data-wash="home"] .site-footer {
+  position: relative;
+}
+
+.home-reading::before,
+body[data-wash="home"] .site-footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--wash-channel-fill);
+}
+
+.home-reading > *,
+body[data-wash="home"] .site-footer > * {
+  position: relative;
+  z-index: 1;
+}
+
+body > * {
+  position: relative;
+}
+
+.page-main {
+  flex: 1;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  color: var(--color-display);
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
+button,
+a {
+  touch-action: manipulation;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+[id] {
+  scroll-margin-top: var(--scroll-offset);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--color-selection);
+  color: var(--color-ink);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* =========================================================================
+   Layout primitives — one page floor, three band colours, one 12-column grid
+   ========================================================================= */
+
+.page-shell {
+  width: min(calc(100% - (2 * var(--page-gutter))), var(--content-width));
+  margin-inline: auto;
+}
+
+/* Everything in the page-shell except the three entry cards shares
+   `--content-rail-inset`. Those cards already pad by the same amount, so the
+   Featured essay column *is* the rail. Header and footer use the same inset. */
+.page-main .page-shell:not(.home-entry-grid) {
+  padding-inline: var(--content-rail-inset);
+}
+
+.site-header__inner,
+.site-footer__inner {
+  padding-inline: var(--content-rail-inset);
+}
+
+.editorial-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--grid-gap);
+}
+
+.section-band {
+  background: transparent;
+  padding-block: var(--section-space);
+}
+
+/* Wash is a token for small fills, not a second page ground (DESIGN.md §2). */
+.section-band--soft,
+.section-band--paper,
+.section-band--subtle {
+  background: transparent;
+}
+
+/* Two neighbouring bands of the same colour are separated by one hairline,
+   never by an invented third background. */
+.section-band--canvas + .section-band--canvas,
+.section-band--soft + .section-band--soft,
+.section-band--paper + .section-band--paper {
+  border-top: 1px solid var(--color-hairline);
+}
+
+@media (min-width: 45rem) {
+  .editorial-grid {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --content-rail-inset: var(--space-5);
+  }
+
+  .editorial-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+}
+
+/* Phone composition: the desktop system is preserved, but its spacing and
+   display scale are not simply squeezed into a narrow viewport. */
+@media (max-width: 44.98rem) {
+  :root {
+    --type-display-hero: clamp(2.625rem, 12vw, 3rem);
+    --type-h1: clamp(2rem, 9vw, 2.25rem);
+    --section-space: 3rem;
+  }
+
+  .section-band {
+    padding-block: var(--section-space);
+  }
+}
+
+@media (max-width: 22.49rem) {
+  :root {
+    --page-gutter: 1rem;
+  }
+}
+
+/* =========================================================================
+   Typography
+   ========================================================================= */
+
+.eyebrow {
+  margin: 0 0 var(--space-3);
+  color: var(--color-mute);
+  font-size: var(--type-eyebrow);
+  font-weight: 600;
+  letter-spacing: var(--type-eyebrow-ls);
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.page-intro h1 {
+  max-width: 16ch;
+  font-size: var(--type-h1);
+  letter-spacing: var(--type-h1-ls);
+  line-height: var(--type-h1-lh);
+}
+
+.page-intro--section h2 {
+  font-size: var(--type-h2);
+  letter-spacing: var(--type-h2-ls);
+  line-height: var(--type-h2-lh);
+}
+
+.page-intro__lede {
+  max-width: var(--measure-lead);
+  margin-top: var(--space-5);
+  color: var(--color-ink-soft);
+  font-size: var(--type-lead);
+  letter-spacing: var(--type-lead-ls);
+  line-height: var(--type-lead-lh);
+}
+
+.lede {
+  max-width: var(--measure-lead);
+  color: var(--color-ink-soft);
+  font-size: var(--type-lead);
+  letter-spacing: var(--type-lead-ls);
+  line-height: var(--type-lead-lh);
+}
+
+/* =========================================================================
+   Icons — one Lucide contract, inherited colour only
+
+   An icon never carries meaning on its own: every one of them sits beside a
+   visible text label or inside a control that owns an aria-label. Colour is
+   always inherited at full opacity, never faded to solve contrast.
+   ========================================================================= */
+
+/* The stroke-width attribute in Icon.astro is the no-CSS fallback; the token is
+   what actually governs, so the weight stays adjustable from one place. */
+.icon {
+  flex: 0 0 auto;
+  stroke-width: var(--icon-stroke);
+}
+
+/* Every action that carries a leading or trailing mark uses the same 6px gap
+   between the mark and its label. */
+.theme-card__cta,
+.publication-entry__links a,
+.related-navigation__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.publication-filters .button {
+  gap: 0.375rem;
+}
+
+.icon :is(path, rect, circle, line, polyline, polygon) {
+  vector-effect: non-scaling-stroke;
+}
+
+/* =========================================================================
+   Interaction grammars — exactly three:
+     1. filled accent button  → the primary action (Contact) only
+     2. underlined text link  → every other navigation and external link
+     3. small label           → status and taxonomy, never clickable
+   Radius tokens stay 0 this gate (SPEC-CHROME). Identifying borders use
+   --color-control, not --color-line.
+   ========================================================================= */
+
+/* The underline is a hairline at rest and takes the accent on hover, so a page
+   of links reads as prose with affordances rather than as a ruled list. */
+.text-link,
+.text-link-inline,
+.section-link,
+.related-navigation a,
+.publication-entry__links a,
+.prose-article__links a,
+.page-intro__stats a,
+.theme-card__cta {
+  color: var(--color-accent);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: var(--color-hairline);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition:
+    color var(--duration-ui) var(--ease-out),
+    text-decoration-color var(--duration-ui) var(--ease-out);
+}
+
+.text-link:hover,
+.text-link-inline:hover,
+.section-link:hover,
+.related-navigation a:hover,
+.publication-entry__links a:hover,
+.prose-article__links a:hover,
+.page-intro__stats a:hover,
+.theme-card__cta:hover {
+  color: var(--color-accent-strong);
+  text-decoration-color: var(--color-accent);
+}
+
+.button {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: var(--control-stroke) solid transparent;
+  border-radius: var(--radius-control);
+  padding-inline: var(--space-4);
+  font-size: var(--type-control);
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  transition:
+    background-color var(--duration-ui) var(--ease-out),
+    border-color var(--duration-ui) var(--ease-out),
+    color var(--duration-ui) var(--ease-out);
+}
+
+.button--primary {
+  border-color: var(--color-accent);
+  border-radius: var(--radius-pill);
+  padding-inline: var(--space-5);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.button--secondary {
+  border-color: var(--color-control);
+  background: var(--color-surface);
+  color: var(--color-ink);
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.icon-button {
+  display: inline-flex;
+  width: 2.75rem;
+  height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  border: var(--control-stroke) solid var(--color-control);
+  border-radius: var(--radius-control);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  transition:
+    background-color var(--duration-ui) var(--ease-out),
+    border-color var(--duration-ui) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .button--primary:hover {
+    border-color: var(--color-accent-strong);
+    background: var(--color-accent-strong);
+  }
+
+  .button--secondary:hover,
+  .icon-button:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent-strong);
+    background: var(--color-wash);
+  }
+}
+
+.button:active,
+.icon-button:active {
+  background-color: var(--color-wash);
+}
+
+.status-badge {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-control);
+  padding: 0.15rem var(--space-2);
+  background: var(--color-band);
+  color: var(--color-ink-soft);
+  font-size: var(--type-meta);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: var(--type-meta-lh);
+}
+
+.status-badge--accent {
+  border-left: 2px solid var(--color-accent);
+  color: var(--color-ink);
+}
+
+.status-badge--quiet {
+  background: transparent;
+}
+
+/* On the soft band the label's own fill would vanish, so it borrows the paper
+   tone instead of introducing a fourth surface colour. */
+.section-band--soft .status-badge {
+  background: var(--color-surface);
+}
+
+/* =========================================================================
+   Card — the one card surface
+   ========================================================================= */
+
+.theme-card {
+  position: relative;
+  display: flex;
+  min-height: 18.75rem;
+  flex-direction: column;
+  gap: var(--space-3);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-card);
+  padding: var(--space-6);
+  background: var(--color-surface);
+  transition: border-color var(--duration-ui) var(--ease-out);
+}
+
+.theme-card:has(.theme-card__cta) {
+  border-color: var(--color-control);
+  border-width: var(--control-stroke);
+}
+
+.theme-card__icon {
+  color: var(--color-accent);
+}
+
+.theme-card__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  color: var(--color-mute);
+  font-size: var(--type-eyebrow);
+  font-weight: 600;
+  letter-spacing: var(--type-eyebrow-ls);
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.theme-card__eyebrow .icon {
+  flex: 0 0 auto;
+}
+
+.theme-card h3 {
+  font-size: var(--type-h3);
+  letter-spacing: var(--type-h3-ls);
+  line-height: var(--type-h3-lh);
+}
+
+.theme-card__body {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.theme-card__body p {
+  color: var(--color-ink-soft);
+  font-size: var(--type-body-sm);
+  line-height: var(--type-body-sm-lh);
+}
+
+.theme-card .status-badge {
+  margin-top: var(--space-2);
+}
+
+.theme-card__cta {
+  margin-top: auto;
+  padding-top: var(--space-4);
+  font-size: var(--type-body-sm);
+}
+
+/* One stretched link: the whole card is the target, and the hover and focus
+   states cover the whole card with it. */
+.theme-card__cta::after {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  content: "";
+}
+
+.theme-card:has(.theme-card__cta:focus-visible) {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.theme-card__cta:focus-visible {
+  outline: none;
+}
+
+@media (hover: hover) {
+  .theme-card:hover {
+    border-color: var(--color-accent);
+  }
+
+  .theme-card:hover .theme-card__cta {
+    color: var(--color-accent-strong);
+  }
+}
+
+.card-grid {
+  display: grid;
+  gap: var(--grid-gap);
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  margin: 0;
+  padding: 0;
+  color: var(--color-ink-muted);
+  font-size: var(--type-meta);
+  line-height: var(--type-meta-lh);
+  list-style: none;
+}
+
+.tag-list li + li::before {
+  margin-right: var(--space-3);
+  content: "·";
+}
+
+/* =========================================================================
+   Home
+   ========================================================================= */
+
+/* First screen: a verbal claim on a white field, with one placed portrait
+   about three-fifths of the first-screen height (GR-006, DESIGN.md §4).
+   Desktop: figure left, claim right. Canvas shows on all four sides.
+   Exact x/y is optical, not a lock. */
+.home-hero {
+  display: flex;
+  min-height: calc(100svh - var(--header-height));
+  align-items: center;
+  overflow: visible;
+  padding-block: var(--space-8);
+}
+
+.home-hero__grid {
+  display: grid;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.home-hero__intro,
+.home-hero__figure {
+  min-width: 0;
+}
+
+.home-hero__claim {
+  max-width: var(--measure-lead);
+  color: var(--color-display);
+  font-size: var(--type-display-hero);
+  font-weight: 600;
+  letter-spacing: var(--type-display-hero-ls);
+  line-height: var(--type-display-hero-lh);
+  text-wrap: balance;
+}
+
+/* Each sentence of the claim owns its own line: the break is authored in the
+   content file, never left to the browser. */
+.home-hero__claim-line {
+  display: block;
+}
+
+.home-hero__lead {
+  display: flex;
+  flex-direction: column;
+  max-width: var(--measure-lead);
+  margin-top: var(--space-5);
+  color: var(--color-body);
+  font-size: var(--type-lead);
+  font-weight: 500;
+  letter-spacing: var(--type-lead-ls);
+  line-height: var(--type-lead-lh);
+}
+
+/* Shared frost plate (kit R12 P10 S2 G1 F58 K4 Ndrop Sf). Home portrait +
+   Research diagrams. Not chrome, not a header, not a second glass system. */
+.frost-plate {
+  padding: var(--space-plate);
+  border-radius: var(--radius-figure);
+  background: var(--frost-fill);
+  box-shadow: var(--shadow-figure);
+  backdrop-filter: blur(var(--frost-blur)) saturate(1.35);
+  -webkit-backdrop-filter: blur(var(--frost-blur)) saturate(1.35);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .frost-plate {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--frost-fill-opaque);
+  }
+}
+
+.home-hero__figure {
+  display: grid;
+  position: relative;
+  width: min(100%, 16rem);
+  margin: 0;
+  overflow: visible;
+  aspect-ratio: 4 / 5;
+}
+
+.home-hero__figure img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: cover;
+  object-position: 50% 40%;
+  border-radius: var(--radius-figure);
+}
+
+@media (max-width: 44.98rem) {
+  .home-hero {
+    min-height: auto;
+    padding-block: 2.5rem 3rem;
+  }
+
+  .home-hero__grid {
+    gap: 1.5rem;
+  }
+
+  .home-hero__intro {
+    display: contents;
+  }
+
+  .home-hero__intro > .eyebrow {
+    order: 1;
+    margin-bottom: -0.75rem;
+  }
+
+  .home-hero__claim {
+    order: 2;
+  }
+
+  .home-hero__figure {
+    order: 3;
+    width: min(68vw, 14rem);
+    justify-self: center;
+  }
+
+  .home-hero__lead {
+    order: 4;
+    margin-top: 0;
+    font-size: 1.125rem;
+  }
+
+  .proof-grid {
+    order: 5;
+    margin-top: 0;
+  }
+
+  .home-about-band {
+    padding-block: 3rem 3.5rem;
+  }
+
+  .home-about > .page-intro {
+    margin-bottom: var(--space-6);
+  }
+
+  .about-arc {
+    gap: 0;
+  }
+
+  .about-arc__step {
+    padding-block: var(--space-5);
+  }
+
+  .about-arc__step + .about-arc__step {
+    border-top: 1px solid var(--color-hairline);
+  }
+
+  .home-entry-grid__header {
+    text-align: left;
+  }
+
+  .home-entry-grid__header .page-intro__lede {
+    margin-inline: 0;
+  }
+}
+
+.proof-grid {
+  display: grid;
+  margin: var(--space-6) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Icon to the left of the two-line claim, so the three items stay one row
+   of marks-plus-text rather than a stacked caption. */
+.proof-grid__item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 0.75rem;
+  align-items: center;
+  border-top: 1px solid var(--color-hairline);
+  padding-block: var(--space-4);
+}
+
+.proof-grid__item .icon {
+  flex-shrink: 0;
+  color: var(--color-ink-muted);
+}
+
+.proof-grid__text {
+  display: grid;
+  min-width: 0;
+  row-gap: 0.125rem;
+}
+
+.proof-grid__value {
+  color: var(--color-ink);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.proof-grid__label {
+  color: var(--color-ink-muted);
+  font-size: var(--type-meta);
+  line-height: var(--type-meta-lh);
+}
+
+.home-facts {
+  display: grid;
+  gap: var(--space-5);
+  margin: var(--space-6) 0 0;
+}
+
+.home-facts > div {
+  display: grid;
+  align-content: start;
+  gap: var(--space-2);
+}
+
+.home-facts dt {
+  color: var(--color-ink-muted);
+  font-size: var(--type-meta);
+  font-weight: 500;
+  letter-spacing: var(--type-eyebrow-ls);
+  line-height: var(--type-meta-lh);
+  text-transform: uppercase;
+}
+
+.home-facts dd {
+  max-width: 44ch;
+  margin: 0;
+  font-size: var(--type-body-sm);
+  line-height: var(--type-body-sm-lh);
+}
+
+/* Home band rhythm after the hero. The change from wash to canvas is the
+   section boundary — no full-width rule under the figure. */
+.home-entry-band {
+  padding-block: 3.5rem;
+}
+
+.home-about-band {
+  padding-block: 4rem 4.5rem;
+}
+
+.home-entry-grid {
+  row-gap: var(--space-7);
+}
+
+.home-entry-grid__header,
+.home-entry-grid__cards {
+  grid-column: 1 / -1;
+}
+
+/* Owner 2026-08-31: this band's intro sits on the page center, not in the
+   left reading column used by inner pages. Cards below stay a 3-up row. */
+.home-entry-grid__header {
+  text-align: center;
+}
+
+.home-entry-grid__header .page-intro__lede {
+  max-width: 48ch;
+  margin-inline: auto;
+}
+
+/* The three entry paths are ruled index columns, not paper cards. They keep
+   every Card semantic — the stretched link, the focus ring, the eyebrow and
+   title pair — and give up only the surface: no border box, no radius, no
+   fill, and no lift on hover. Only the title and the call to action change
+   colour. The generic Card surface is untouched everywhere else. */
+.home-entry-grid__cards .theme-card {
+  min-height: 0;
+  border: 0;
+  border-top: 1px solid var(--color-hairline);
+  border-radius: var(--radius-none);
+  padding: 1.75rem 0;
+  background: transparent;
+}
+
+.home-entry-grid__cards .theme-card h3 {
+  transition: color var(--duration-ui) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .home-entry-grid__cards .theme-card:hover {
+    transform: none;
+  }
+
+  .home-entry-grid__cards .theme-card:hover h3 {
+    color: var(--color-accent-strong);
+  }
+}
+
+.home-about > .page-intro {
+  margin-bottom: var(--space-7);
+}
+
+.home-map > .page-intro {
+  margin-bottom: var(--space-5);
+}
+
+/* Background reads as an arc: where the work started, why it turned, what it is
+   now. One column per beat on wide screens, stacked in order on narrow ones. */
+.about-arc {
+  display: grid;
+  gap: var(--space-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-arc__step {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+}
+
+.about-arc__label {
+  margin: 0;
+  color: var(--color-ink-muted);
+  font-size: var(--type-meta);
+  font-weight: 600;
+  letter-spacing: var(--type-eyebrow-ls);
+  line-height: var(--type-meta-lh);
+  text-transform: uppercase;
+}
+
+/* Three narrow columns of ~40 characters throw orphans easily, and a single
+   word alone on a column's last line reads as a mistake. `pretty` costs
+   nothing where it is unsupported, and it holds through copy edits in a way
+   that hand-tuning word counts does not. */
+.about-arc__step p:not(.about-arc__label) {
+  max-width: var(--measure-body);
+  margin: 0;
+  color: var(--color-ink-soft);
+  text-wrap: pretty;
+}
+
+@media (min-width: 45rem) {
+  .home-hero {
+    padding-block: var(--space-8);
+  }
+
+  .home-hero__grid {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas: "figure intro";
+    align-items: center;
+    gap: var(--grid-gap);
+  }
+
+  .home-hero__intro {
+    grid-area: intro;
+  }
+
+  .home-hero__figure {
+    grid-area: figure;
+    width: auto;
+    height: min(50vh, 24rem);
+    aspect-ratio: 4 / 5;
+    justify-self: start;
+  }
+
+  .proof-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--grid-gap);
+  }
+
+  .home-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .about-arc {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-5);
+  }
+}
+
+@media (min-width: 64rem) {
+  .home-hero {
+    padding-block: var(--space-8);
+  }
+
+  .home-hero__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 41.25rem);
+    grid-template-areas: "figure intro";
+    column-gap: var(--space-7);
+  }
+
+  .home-hero__figure {
+    height: min(60vh, 32.25rem);
+    max-height: 32.25rem;
+    /* Optical lock, 1440, owner 2026-08-31. Margin, not translate: a transform
+       on the plate makes backdrop-filter sample a blank layer. */
+    margin-inline-start: 7rem;
+  }
+
+  .home-hero__claim {
+    translate: 0 1rem;
+  }
+
+  .home-hero__lead {
+    translate: 0 2.5rem;
+  }
+
+  .home-entry-band {
+    padding-block: 5rem;
+  }
+
+  .home-entry-grid__cards .theme-card {
+    min-height: 16.5rem;
+    border-top: 0;
+    padding: 0 var(--space-5);
+  }
+
+  .home-entry-grid__cards .theme-card:nth-child(n + 2) {
+    border-left: 1px solid var(--color-hairline);
+  }
+
+  /* Same column geometry as the entry cards below: cancel the shell rail,
+     then reuse their gap, inline pad, and hairline. */
+  .about-arc {
+    margin-inline: calc(-1 * var(--content-rail-inset));
+    gap: var(--grid-gap);
+  }
+
+  .about-arc__step {
+    padding-inline: var(--space-5);
+  }
+
+  .about-arc__step:nth-child(n + 2) {
+    border-left: 1px solid var(--color-hairline);
+  }
+
+  .about-arc__step p:not(.about-arc__label) {
+    max-width: none;
+  }
+
+  .home-about-band {
+    padding-block: 5.5rem 6rem;
+  }
+
+  .proof-grid {
+    margin-top: 1.75rem;
+    gap: 1.25rem;
+    translate: 0 1.5rem;
+  }
+
+  .proof-grid__item {
+    padding-block: 1rem 0.5rem;
+  }
+
+  .home-facts {
+    margin-top: 1.5rem;
+    gap: 1.5rem;
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* =========================================================================
+   Research
+   ========================================================================= */
+
+/* Shared inner-page introduction band. Below 45rem: 48/40 clamp, so phone
+   composition is not the desktop lock scaled down. At ≥ 45rem: {space.6} /
+   {space.4} so Research, Essays, Publications, and Studio share one intro
+   lock (eyebrow / title / lede sit at the same vertical origin). */
+.page-lede-band {
+  padding-block: clamp(3rem, 5.7vw, 5rem) clamp(2.5rem, 4.6vw, 4rem);
+}
+
+/* The lede already has bottom padding. A full {space.section} on the next
+   band stacked a vacant strip between the title and the page’s content. */
+.page-lede-band + .section-band {
+  padding-block-start: var(--space-6);
+}
+
+@media (min-width: 45rem) {
+  .page-lede-band {
+    padding-block: var(--space-6) var(--space-4);
+  }
+
+  .page-lede-band + .section-band {
+    padding-block-start: var(--space-4);
+  }
+}
+
+.page-lede-band__header {
+  grid-column: 1 / -1;
+}
+
+.page-lede-band__header h1 {
+  max-width: 22ch;
+  text-wrap: pretty;
+}
+
+.page-lede-band__glue {
+  white-space: normal;
+}
+
+/* Desktop: start the marked clause on its own line so a wrap does not land
+   inside a phrase (Home “without…”, Research second sentence, Essays “and…”). */
+@media (min-width: 64rem) {
+  .page-lede-band__glue {
+    white-space: nowrap;
+  }
+
+  .lede-line {
+    display: block;
+  }
+}
+
+@media (max-width: 44.98rem) {
+  .page-lede-band {
+    padding-block: 2.5rem 2rem;
+  }
+
+  .page-lede-band + .section-band {
+    padding-block-start: var(--space-5);
+  }
+
+  .research-line {
+    padding-block: 3rem;
+  }
+
+  .research-line > .editorial-grid {
+    row-gap: var(--space-5);
+  }
+
+  .research-line__lead,
+  .research-line__body {
+    gap: var(--space-4);
+  }
+
+  .trajectory {
+    row-gap: var(--space-6);
+  }
+
+  .timeline {
+    padding-left: var(--space-4);
+  }
+}
+
+.page-lede-band__header .page-intro__lede {
+  max-width: 60ch;
+  text-wrap: pretty;
+}
+
+.research-theme-list {
+  margin-block: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.research-line {
+  border-top: 1px solid var(--color-hairline);
+  padding-block: var(--space-8);
+}
+
+.research-line:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.research-line:last-child {
+  padding-bottom: 0;
+}
+
+.research-line__number {
+  color: var(--color-accent);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-variant-numeric: tabular-nums;
+  grid-column: 1 / -1;
+  line-height: 1.2;
+}
+
+.research-line__lead,
+.research-line__body {
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+  grid-column: 1 / -1;
+}
+
+.research-line__lead h2 {
+  font-size: var(--type-h3);
+  letter-spacing: var(--type-h3-ls);
+  line-height: var(--type-h3-lh);
+}
+
+.research-line__thesis {
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+.research-line__diagram {
+  min-width: 0;
+  margin: 0;
+}
+
+/* The research narrative carries the core argument of the site, so it reads at
+   the primary body size rather than at citation-metadata size. Timeline
+   summaries below stay at 15px. */
+.research-line__body p {
+  max-width: 62ch;
+  color: var(--color-ink-soft);
+  font-size: var(--type-body);
+  line-height: 1.65;
+}
+
+.trajectory {
+  row-gap: var(--space-7);
+}
+
+.trajectory__header,
+.trajectory__body {
+  grid-column: 1 / -1;
+}
+
+.trajectory__header .page-intro__lede {
+  font-size: var(--type-body-sm);
+  line-height: var(--type-body-sm-lh);
+}
+
+.timeline {
+  border-left: 1px solid var(--color-accent);
+  margin: 0;
+  padding: 0 0 0 var(--space-5);
+  list-style: none;
+}
+
+.timeline__item {
+  padding-block: var(--space-6);
+}
+
+.timeline__item:first-child {
+  padding-top: 0;
+}
+
+.timeline__period {
+  color: var(--color-ink-muted);
+  font-size: var(--type-meta);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  line-height: var(--type-meta-lh);
+}
+
+.timeline__item h3 {
+  margin-top: var(--space-2);
+  font-size: var(--type-h3);
+  letter-spacing: var(--type-h3-ls);
+  line-height: var(--type-h3-lh);
+}
+
+.timeline__institution {
+  margin-top: var(--space-2);
+  color: var(--color-ink-muted);
+  font-size: var(--type-meta);
+  line-height: var(--type-meta-lh);
+}
+
+.timeline__summary,
+.timeline__note {
+  max-width: var(--measure-body);
+  margin-top: var(--space-3);
+  color: var(--color-ink-soft);
+  font-size: var(--type-body-sm);
+  line-height: var(--type-body-sm-lh);
+}
+
+.education-list {
+  margin: var(--space-6) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.education-list li {
+  display: grid;
+  gap: var(--space-1);
+  border-top: 1px solid var(--color-hairline);
+  padding-block: 1.25rem;
+}
+
+.education-list li:last-child {
+  border-bottom: 1px solid var(--color-hairline);
+}
+
+.education-list__degree {
+  display: grid;
+  color: var(--color-ink);
+  font-size: var(--type-body-sm);
+  font-weight: 500;
+}
+
+.education-list__institution {
+  display: grid;
+  color: var(--color-ink-soft);
+  font-size: var(--type-body-sm);
+}
+
+.education-list__school,
+.education-list__keep {
+  white-space: nowrap;
+}
+
+.education-list__degree .education-list__school {
+  color: var(--color-ink-soft);
+  font-weight: 400;
+}
+
+.education-list__year {
+  color: var(--color-ink-muted);
+  font-size: var(--type-meta);
+  font-variant-numeric: tabular-nums;
+}
+
+.related-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+  margin: var(--space-6) 0 0;
+  padding: 0;
+  font-size: var(--type-body-sm);
+  list-style: none;
+}
+
+@media (min-width: 45rem) {
+  .research-line__number {
+    grid-column: 1;
+  }
+
+  .research-line__lead {
+    grid-column: 2 / 5;
+  }
+
+  .research-line__body {
+    grid-column: 5 / -1;
+  }
+
+  .trajectory__header {
+    grid-column: 1 / 4;
+  }
+
+  .trajectory__body {
+    grid-column: 4 / -1;
+  }
+
+  .education-list li {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: var(--grid-gap);
+    align-items: baseline;
+  }
+
+  .education-list__degree {
+    grid-column: 1 / 5;
+  }
+
+  .education-list__institution {
+    grid-column: 5 / 8;
+  }
+
+  .education-list__year {
+    grid-column: 8;
+  }
+}
+
+@media (min-width: 64rem) {
+  .page-lede-band__header {
+    grid-column: 1 / 10;
+  }
+
+  .research-line__lead {
+    grid-column: 2 / 6;
+  }
+
+  .research-line__body {
+    grid-column: 6 / 12;
+  }
+
+  .trajectory__header {
+    grid-column: 1 / 5;
+  }
+
+  .trajectory__body {
+    grid-column: 5 / -1;
+    /* Optical lock, 1440, owner 2026-08-31. Extra to flow. */
+    translate: 2rem 0;
+  }
+
+  /* Optical lock, 1440, owner 2026-08-31. Extra to flow; not inherited
+     below 64rem. Values from zz.layoutNudge.v2 (then bumped to v3). */
+  .research-line#agent-autonomy .research-line__diagram {
+    translate: 0 1.5rem;
+  }
+
+  .research-line#agent-autonomy .research-line__body,
+  .research-line#learning-loop .research-line__body,
+  .research-line#domain-ontology .research-line__body {
+    translate: 4rem 0;
+  }
+
+  .research-line#domain-ontology .research-line__diagram {
+    translate: 0 1.4375rem;
+  }
+}
+
+/* =========================================================================
+   Essays index
+   ========================================================================= */
+
+@media (max-width: 44.98rem) {
+  .page-lede-band--tight {
+    padding-bottom: clamp(2.5rem, 4vw, 3.5rem);
+  }
+}
+
+.essay-index-band {
+  padding-block: clamp(3rem, 5vw, 4.5rem);
+}
+
+.essay-index {
+  margin-block: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.essay-entry {
+  border-top: 1px solid var(--color-hairline);
+  padding-block: 2.5rem;
+}
+
+.essay-entry:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.essay-entry:last-child {
+  padding-bottom: 0;
+}
+
+.essay-entry__meta,
+.essay-entry__body {
+  grid-column: 1 / -1;
+}
+
+.essay-entry__meta {
+  color: var(--color-ink-muted);
+  font-size: var(--type-meta);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  line-height: var(--type-meta-lh);
+}
+
+.essay-entry__body {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.essay-entry h2 {
+  font-size: var(--type-h3);
+  letter-spacing: var(--type-h3-ls);
+  line-height: var(--type-h3-lh);
+  scroll-margin-top: calc(var(--header-height) + 0.75rem);
+}
+
+.essay-entry h2 a {
+  text-decoration: none;
+}
+
+.essay-entry h2 a:hover,
+.essay-entry h2 a:focus-visible {
+  color: var(--color-accent-strong);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+
+.essay-entry__standfirst {
+  max-width: var(--measure-body);
+  color: var(--color-ink-soft);
+}
+
+@media (max-width: 44.98rem) {
+  .essay-index-band {
+    padding-block: 2.5rem 3rem;
+  }
+
+  .essay-entry {
+    padding-block: 2rem;
+  }
+
+  .essay-entry > .editorial-grid {
+    row-gap: var(--space-3);
+  }
+}
+
+@media (min-width: 45rem) {
+  .essay-entry__meta {
+    grid-column: 1 / 3;
+  }
+
+  .essay-entry__body {
+    grid-column: 3 / -1;
+  }
+}
+
+@media (min-width: 64rem) {
+  .page-lede-band__header--narrow {
+    grid-column: 1 / 9;
+  }
+}
+
+/* =========================================================================
+   Reading mode — the one paper sheet on the canvas floor
+   ========================================================================= */
+
+/* Reading column: same side inset as the site shell, but `{measure.prose}`
+   wide and centered — not the shared content rail (DESIGN.md §4). */
+.prose-rail {
+  width: min(calc(100% - (2 * var(--page-gutter))), var(--measure-prose));
+  margin-inline: auto;
+}
+
+.prose-article {
+  background: transparent;
+  padding: 0;
+}
+
+.prose-article__header {
+  border-bottom: 1px solid var(--color-hairline);
+  margin-bottom: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
+/* 16ch suits a one-word title but breaks a real essay title into five lines and
+   splits the phrase it is named after. Wider measure, balanced breaks. */
+.prose-article__header h1 {
+  max-width: 24ch;
+  font-size: var(--type-h1);
+  text-wrap: balance;
+  letter-spacing: var(--type-h1-ls);
+  line-height: var(--type-h1-lh);
+}
+
+/* Owner 2026-09-01: this H1 names a phrase that must not wrap mid-idea.
+   Drop the 24ch / balance cap so the authored break is the only break. */
+.prose-article__header h1.prose-article__title--lined {
+  max-width: none;
+  text-wrap: auto;
+}
+
+.prose-article__standfirst {
+  max-width: var(--measure-prose);
+  margin-top: var(--space-5);
+  color: var(--color-body);
+  font-size: var(--type-lead);
+  font-weight: 500;
+  line-height: var(--type-lead-lh);
+}
+
+.prose-article__meta {
+  margin-top: var(--space-5);
+  color: var(--color-ink-muted);
+  font-size: var(--type-meta);
+  font-weight: 500;
+  line-height: var(--type-meta-lh);
+}
+
+.prose {
+  max-width: var(--measure-prose);
+  color: var(--color-ink-soft);
+  font-size: var(--type-prose);
+  letter-spacing: var(--type-prose-ls);
+  line-height: var(--type-prose-lh);
+}
+
+.prose > * + * {
+  margin-top: 1em;
+}
+
+.prose p {
+  text-wrap: pretty;
+}
+
+.prose h2,
+.prose h3 {
+  color: var(--color-display);
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+.prose h2 {
+  margin-top: 2.4em;
+  font-size: var(--type-h3);
+  letter-spacing: var(--type-h3-ls);
+  line-height: var(--type-h3-lh);
+}
+
+.prose h3 {
+  margin-top: 1.8em;
+  font-size: 1.1875rem;
+  letter-spacing: -0.012em;
+  line-height: 1.2;
+}
+
+.prose h2 + * {
+  margin-top: 0.55em;
+}
+
+.prose h3 + * {
+  margin-top: 0.45em;
+}
+
+.prose strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.prose em {
+  font-style: italic;
+}
+
+.prose a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.prose a:hover {
+  color: var(--color-accent-strong);
+}
+
+.prose ol,
+.prose ul {
+  display: grid;
+  gap: 0.65em;
+  margin-block: 1em;
+  padding-left: 1.35em;
+}
+
+.prose li::marker {
+  color: var(--color-accent);
+}
+
+.prose blockquote {
+  border-left: 2px solid var(--color-accent);
+  margin-inline: 0;
+  padding: 0.2em 0 0.2em 1.15em;
+  color: var(--color-ink-soft);
+  font-family: var(--font-display);
+  font-style: italic;
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--color-hairline);
+  margin-block: 2.2em;
+}
+
+.prose code {
+  border-radius: var(--radius-control);
+  padding: 0.1em 0.35em;
+  background: var(--color-band);
+  font-family: var(--font);
+  font-size: 0.9em;
+}
+
+.prose pre,
+.prose pre.astro-code {
+  overflow-x: auto;
+  margin-block: 1.35em;
+  padding-block: clamp(1.25rem, 2.5vw, 1.75rem);
+  padding-inline: 0;
+  /* Beat Shiki's inline github-dark background (DESIGN.md §2, §4). */
+  background-color: var(--color-wash) !important;
+  color: var(--color-body) !important;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  font-family: var(--font);
+  font-size: clamp(0.8125rem, 0.25vw + 0.75rem, 0.875rem);
+  font-weight: 500;
+  line-height: 1.65;
+  letter-spacing: 0.005em;
+  scrollbar-color: var(--color-mute) transparent;
+  scrollbar-width: thin;
+  overscroll-behavior-inline: contain;
+}
+
+.prose pre code {
+  display: block;
+  box-sizing: border-box;
+  inline-size: max-content;
+  min-inline-size: 100%;
+  padding-inline: clamp(1rem, 3vw, 2rem);
+  text-align: center;
+  white-space: pre;
+}
+
+.prose pre.astro-code span {
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.prose img {
+  border-radius: var(--radius-card);
+  margin-inline: auto;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95em;
+  display: block;
+  overflow-x: auto;
+}
+
+.prose th,
+.prose td {
+  border-bottom: 1px solid var(--color-hairline);
+  padding: 0.45em 0.65em 0.45em 0;
+  text-align: start;
+  vertical-align: top;
+}
+
+.prose th {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.prose .katex {
+  font-size: 1.05em;
+}
+
+.prose .katex-display {
+  margin-block: 1.35em;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.prose-article__footer {
+  border-top: 1px solid var(--color-hairline);
+  margin-top: 2.5rem;
+  padding-top: 2.5rem;
+}
+
+.prose-article__footer h2 {
+  color: var(--color-ink-muted);
+  font-size: var(--type-meta);
+  font-weight: 600;
+  letter-spacing: var(--type-eyebrow-ls);
+  line-height: var(--type-meta-lh);
+  text-transform: uppercase;
+}
+
+.prose-article__footer p {
+  max-width: var(--measure-body);
+  margin-top: var(--space-3);
+  color: var(--color-ink-soft);
+  font-size: var(--type-body-sm);
+  line-height: var(--type-body-sm-lh);
+}
+
+.prose-article__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  font-size: var(--type-body-sm);
+  list-style: none;
+}
+
+.prose-article__links a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+}
+
+.prose-related {
+  margin-top: var(--space-6);
+}
+
+@media (max-width: 44.98rem) {
+  .prose-main {
+    padding-block: 2.75rem 3rem;
+  }
+
+  .prose-article__header {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .prose-article__standfirst {
+    font-size: 1.125rem;
+    line-height: 1.45;
+  }
+
+  .prose-article__title-break {
+    display: none;
+  }
+
+  .prose pre,
+  .prose pre.astro-code,
+  .prose table,
+  .prose .katex-display {
+    max-width: 100%;
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .prose pre,
+  .prose pre.astro-code {
+    background-image: linear-gradient(
+      to right,
+      transparent calc(100% - 1.5rem),
+      color-mix(in srgb, var(--color-mute) 10%, transparent)
+    );
+  }
+}
+
+/* Reading progress — essay detail only (MOTION.md M4). Fixed above the sticky
+   header so it never reflows the page. Visible under reduced motion; fill
+   easing is not required. */
+.reading-progress {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  pointer-events: none;
+}
+
+.reading-progress__bar {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+
+/* =========================================================================
+   Publications
+   ========================================================================= */
+
+.page-intro__stats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+  color: var(--color-ink-soft);
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.page-intro__stats > * + * {
+  border-left: 1px solid var(--color-hairline);
+  padding-left: var(--space-3);
+}
+
+.publication-toolbar {
+  background: transparent;
+  padding-block: var(--space-3);
+}
+
+.publication-filters {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.publication-filters__field {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.publication-filters label {
+  color: var(--color-ink-muted);
+  font-size: var(--type-meta);
+  font-weight: 500;
+  line-height: var(--type-meta-lh);
+}
+
+.publication-filters select {
+  width: 100%;
+  height: 2.75rem;
+  border: var(--control-stroke) solid var(--color-control);
+  border-radius: var(--radius-control);
+  padding-inline: var(--space-3);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-size: var(--type-control);
+  transition:
+    border-color var(--duration-ui) var(--ease-out),
+    background-color var(--duration-ui) var(--ease-out),
+    color var(--duration-ui) var(--ease-out);
+}
+
+.publication-filters .button {
+  height: 2.75rem;
+}
+
+@media (hover: hover) {
+  .publication-filters select:hover {
+    border-color: var(--color-accent);
+    background: var(--color-wash);
+  }
+}
+
+.publication-ledger-band {
+  padding-block: var(--space-6) var(--section-space);
+}
+
+.publication-results {
+  margin-bottom: var(--space-4);
+  color: var(--color-ink-muted);
+  font-size: var(--type-meta);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.publication-list {
+  margin-block: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.publication-list[aria-busy="true"] {
+  cursor: progress;
+}
+
+.publication-entry {
+  border-bottom: 1px solid var(--color-hairline);
+  padding-block: 1.75rem;
+}
+
+.publication-entry:first-child {
+  border-top: 1px solid var(--color-hairline);
+}
+
+.publication-entry[hidden] {
+  display: none;
+}
+
+.publication-entry__year {
+  grid-column: 1 / -1;
+  color: var(--color-ink-muted);
+  font-size: var(--type-meta);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.publication-entry__body {
+  display: grid;
+  gap: var(--space-2);
+  grid-column: 1 / -1;
+}
+
+.publication-entry h2 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  line-height: 1.2;
+}
+
+.publication-entry__authors,
+.publication-entry__venue {
+  color: var(--color-ink-soft);
+  font-size: var(--type-body-sm);
+  line-height: 1.5;
+}
+
+/* Desktop: an author list is one line. Longer names may paint into the
+   unused space under the DOI; they must not wrap a last name onto a
+   second line. */
+@media (min-width: 64rem) {
+  .publication-entry__authors {
+    white-space: nowrap;
+  }
+}
+
+/* The owner's name carries the first-author signal the old badge used to. */
+.publication-entry__authors strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.publication-entry__venue {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  color: var(--color-ink-muted);
+}
+
+.publication-entry__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  grid-column: 1 / -1;
+  font-size: var(--type-meta);
+  list-style: none;
+}
+
+@media (max-width: 44.98rem) {
+  .publication-ledger-band {
+    padding-block: var(--space-5) 3rem;
+  }
+
+  .publication-entry {
+    padding-block: var(--space-6);
+  }
+
+  .publication-entry > .editorial-grid {
+    row-gap: var(--space-3);
+  }
+
+  .publication-entry__links {
+    margin-top: var(--space-2);
+  }
+}
+
+.content-status {
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-card);
+  margin-top: var(--space-6);
+  padding: var(--space-6);
+  background: var(--color-surface);
+}
+
+.content-status h2 {
+  font-size: var(--type-h3);
+  letter-spacing: var(--type-h3-ls);
+  line-height: var(--type-h3-lh);
+}
+
+.content-status p {
+  max-width: var(--measure-body);
+  margin-top: var(--space-3);
+  color: var(--color-ink-soft);
+  font-size: var(--type-body-sm);
+  line-height: var(--type-body-sm-lh);
+}
+
+.content-status .text-link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  font-size: var(--type-body-sm);
+}
+
+@media (min-width: 45rem) {
+  .publication-filters {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
+    align-items: end;
+  }
+
+  .publication-entry__year {
+    grid-column: 1;
+  }
+
+  .publication-entry__body {
+    grid-column: 2 / 7;
+  }
+
+  .publication-entry__links {
+    margin: 0;
+    grid-column: 7 / -1;
+    justify-content: flex-end;
+    text-align: right;
+  }
+}
+
+@media (min-width: 56.25rem) {
+  /* Desktop only: the toolbar tracks the header. It is never translucent. */
+  .publication-toolbar {
+    position: sticky;
+    z-index: 30;
+    top: var(--scroll-offset);
+  }
+}
+
+@media (min-width: 64rem) {
+  .publication-entry__body {
+    grid-column: 2 / 11;
+  }
+
+  .publication-entry__links {
+    grid-column: 11 / -1;
+  }
+}
+
+/* =========================================================================
+   Studio — exhibition hang, not a product card grid (SPEC-DENSITY)
+   ========================================================================= */
+
+.studio-hang {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.studio-hang__column {
+  display: grid;
+  align-content: start;
+  gap: var(--space-7);
+}
+
+.studio-piece {
+  margin: 0;
+}
+
+.studio-piece__frame {
+  width: min(100%, 20rem);
+  aspect-ratio: 4 / 5;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-figure);
+  background: var(--color-canvas);
+}
+
+.studio-piece figcaption,
+.studio-piece--program {
+  display: grid;
+  gap: var(--space-3);
+  max-width: var(--measure-body);
+}
+
+.studio-piece--photograph figcaption {
+  margin-top: var(--space-4);
+}
+
+.studio-piece h2 {
+  font-size: var(--type-h3);
+  letter-spacing: var(--type-h3-ls);
+  line-height: var(--type-h3-lh);
+}
+
+.studio-piece p {
+  color: var(--color-ink-soft);
+  font-size: var(--type-body-sm);
+  line-height: var(--type-body-sm-lh);
+}
+
+.studio-piece .eyebrow {
+  margin-bottom: 0;
+}
+
+@media (min-width: 45rem) {
+  .studio-hang {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: var(--space-7);
+    gap: var(--space-7);
+  }
+}
+
+/* =========================================================================
+   404
+   ========================================================================= */
+
+.not-found {
+  grid-column: 1 / -1;
+}
+
+.not-found__actions {
+  margin-top: var(--space-7);
+}
+
+.projects-intro {
+  margin-bottom: var(--space-7);
+}
+
+.project-card__status {
+  margin-top: var(--space-3);
+}
+
+@media (min-width: 64rem) {
+  .not-found {
+    grid-column: 1 / 9;
+  }
+}
+
+/* =========================================================================
+   The micro-label voice — same Archivo family, tabular figures, weight 600.
+   ========================================================================= */
+.eyebrow,
+.theme-card__eyebrow,
+.home-facts dt,
+.research-line__number,
+.timeline__period,
+.education-list__year,
+.essay-entry__meta,
+.prose-article__meta,
+.prose-article__footer h2,
+.publication-results,
+.publication-entry__year {
+  font-family: var(--font-body);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+/* =========================================================================
+   User preferences — MOTION.md {motion.none}
+   ========================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .status-badge,
+  .button,
+  .icon-button {
+    border: 1px solid CanvasText;
+    background: Canvas;
+  }
+}

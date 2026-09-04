@@ -1,0 +1,41 @@
+title: "Back-End-of-Line-Compatible Scaled InGaZnO Transistors by Atomic Layer Deposition"
+authors:
+  - displayName: J. Zhang
+    isSiteOwner: false
+  - displayName: Z. Lin
+    isSiteOwner: false
+  - displayName: Z. Zhang
+    isSiteOwner: true
+  - displayName: K. Xu
+    isSiteOwner: false
+  - displayName: H. Dou
+    isSiteOwner: false
+  - displayName: B. Yang
+    isSiteOwner: false
+  - displayName: A. Charnas
+    isSiteOwner: false
+  - displayName: D. Zheng
+    isSiteOwner: false
+  - displayName: X. Zhang
+    isSiteOwner: false
+  - displayName: H. Wang
+    isSiteOwner: false
+  - displayName: P. D. Ye
+    isSiteOwner: false
+year: 2023
+publishedAt: "2023-12"
+type: journal-article
+status: published
+doi: 10.1109/ted.2023.3312357
+venue:
+  name: IEEE Transactions on Electron Devices
+volume: "70"
+issue: "12"
+pages: "6651-6657"
+verification:
+  status: user-confirmed
+  provenance: external-source
+  sourceId: google-scholar-mela3NQAAAAJ-2026-08-31
+  note: Listed as a journal or conference paper on the site owner's Google Scholar profile. Authors, venue, and pagination completed from the Crossref/publisher record.
+  checkedAt: 2026-08-31
+  publishable: true

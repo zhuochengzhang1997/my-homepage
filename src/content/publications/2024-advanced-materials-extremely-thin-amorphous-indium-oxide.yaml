@@ -1,0 +1,33 @@
+title: "Extremely Thin Amorphous Indium Oxide Transistors"
+authors:
+  - displayName: A. Charnas
+    isSiteOwner: false
+  - displayName: Z. Zhang
+    isSiteOwner: true
+  - displayName: Z. Lin
+    isSiteOwner: false
+  - displayName: D. Zheng
+    isSiteOwner: false
+  - displayName: J. Zhang
+    isSiteOwner: false
+  - displayName: M. Si
+    isSiteOwner: false
+  - displayName: P. D. Ye
+    isSiteOwner: false
+year: 2024
+publishedAt: "2023-12-08"
+type: journal-article
+status: published
+doi: 10.1002/adma.202304044
+venue:
+  name: Advanced Materials
+volume: "36"
+issue: "9"
+articleNumber: "2304044"
+verification:
+  status: user-confirmed
+  provenance: user-supplied
+  sourceId: site-owner-publication-list-2026-01-20
+  note: Bibliographic details come from the site owner's own publication list; the complete record is maintained on Google Scholar.
+  checkedAt: 2026-08-26
+  publishable: true

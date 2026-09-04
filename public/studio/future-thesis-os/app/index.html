@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Future Thesis turns scattered signals into testable views of where technology and industry are heading.">
+<meta name="robots" content="noindex, nofollow">
+<title>Future Thesis: world model</title>
+<style>
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/archivo-latin.woff2") format("woff2-variations");
+  unicode-range:
+    U+0000-00ff, U+0131, U+0152-0153, U+02bb-02bc, U+02c6, U+02da, U+02dc, U+0304, U+0308, U+0329,
+    U+2000-206f, U+20ac, U+2122, U+2191, U+2193, U+2212, U+2215, U+feff, U+fffd;
+}
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/archivo-latin-ext.woff2") format("woff2-variations");
+  unicode-range:
+    U+0100-02ba, U+02bd-02c5, U+02c7-02cc, U+02ce-02d7, U+02dd-02ff, U+0304, U+0308, U+0329,
+    U+1d00-1dbf, U+1e00-1e9f, U+1ef2-1eff, U+2020, U+20a0-20ab, U+20ad-20c0, U+2113, U+2c60-2c7f,
+    U+a720-a7ff;
+}
+:root{
+  --ground:#0e1319; --surface:#141b24; --surface-2:#1a222d; --raise:#202a36;
+  --ink:#e8ebf1; --ink-dim:#a7b1bf; --muted:#6d7887; --line:#232d3a; --line-2:#2e3a49;
+  --accent:#d0a24e; --accent-soft:#3a3221;
+  --up:#4fa78d; --down:#d5766b; --flat:#6d7887;
+  --st-emerging:#6f8fb8; --st-strength:#4f9d92; --st-main:#74a850; --st-loose:#cb9a3e; --st-fals:#cd5c53;
+  --bottleneck:#d75f58; --driver:#5a9fd8; --pat:#9a7bc0; --ext:#5f6b7a;
+  --shadow:0 1px 0 rgba(255,255,255,.02), 0 8px 24px -12px rgba(0,0,0,.6);
+  /* Card marks only (stripe + bar). Scenario: macaron ciel. Chain: DESIGN.md
+     {color.wash-deep} — lightest burgundy pink that still reads at 4px. */
+  --mark-scen:#B9D4E3;
+  --mark-chain:#E6CCD2;
+  /* One family: Archivo (DESIGN.md §3, GR-004). IDs, probabilities and
+     counts inherit this face — they are not a second typeface. */
+  --font:"Archivo", system-ui, sans-serif;
+  --mono:var(--font);
+  --sans:var(--font);
+}
+@media (prefers-color-scheme: light){
+  :root{
+    --ground:#f2efe8; --surface:#faf8f3; --surface-2:#f5f2ea; --raise:#ffffff;
+    --ink:#1b2027; --ink-dim:#4a5563; --muted:#7c8698; --line:#e2ddd0; --line-2:#d5cfbf;
+    --accent:#a9772a; --accent-soft:#f0e6cf;
+    --up:#3d8f77; --down:#c25c50; --flat:#8a94a2;
+    --st-emerging:#5b7ba6; --st-strength:#3f8a80; --st-main:#5f9440; --st-loose:#b7852b; --st-fals:#c04b42;
+    --bottleneck:#c74b43; --driver:#3d7fbd; --pat:#7f5fab; --ext:#8a94a2;
+    --shadow:0 1px 2px rgba(60,50,30,.06), 0 10px 30px -16px rgba(60,50,30,.28);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0e1319; --surface:#141b24; --surface-2:#1a222d; --raise:#202a36;
+  --ink:#e8ebf1; --ink-dim:#a7b1bf; --muted:#6d7887; --line:#232d3a; --line-2:#2e3a49;
+  --accent:#d0a24e; --accent-soft:#3a3221;
+  --up:#4fa78d; --down:#d5766b; --flat:#6d7887;
+  --st-emerging:#6f8fb8; --st-strength:#4f9d92; --st-main:#74a850; --st-loose:#cb9a3e; --st-fals:#cd5c53;
+  --bottleneck:#d75f58; --driver:#5a9fd8; --pat:#9a7bc0; --ext:#5f6b7a;
+  --shadow:0 1px 0 rgba(255,255,255,.02), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+:root[data-theme="light"]{
+  --ground:#f2efe8; --surface:#faf8f3; --surface-2:#f5f2ea; --raise:#ffffff;
+  --ink:#1b2027; --ink-dim:#4a5563; --muted:#7c8698; --line:#e2ddd0; --line-2:#d5cfbf;
+  --accent:#a9772a; --accent-soft:#f0e6cf;
+  --up:#3d8f77; --down:#c25c50; --flat:#8a94a2;
+  --st-emerging:#5b7ba6; --st-strength:#3f8a80; --st-main:#5f9440; --st-loose:#b7852b; --st-fals:#c04b42;
+  --bottleneck:#c74b43; --driver:#3d7fbd; --pat:#7f5fab; --ext:#8a94a2;
+  --shadow:0 1px 2px rgba(60,50,30,.06), 0 10px 30px -16px rgba(60,50,30,.28);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--ground);color:var(--ink);font-family:var(--sans);line-height:1.55;
+  font-synthesis-weight:none;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  font-variant-numeric:lining-nums}
+.mono{font-family:inherit;font-variant-numeric:lining-nums tabular-nums}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+a{color:inherit}
+h1,h2,h3{margin:0;font-weight:600;text-wrap:balance}
+button{font-family:inherit;cursor:pointer}
+::selection{background:var(--accent);color:var(--ground)}
+
+/* ---------- Header ---------- */
+header{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--ground) 88%,transparent);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav.tabs{display:flex;gap:2px;padding:10px 0 0}
+.tab{background:none;border:none;color:var(--muted);font-size:13.5px;padding:9px 15px;border-bottom:2px solid transparent;
+  display:flex;align-items:center;gap:7px;font-weight:500}
+.tab .n{font-family:inherit;font-size:10.5px;opacity:.7}
+.tab:hover{color:var(--ink-dim)}
+.tab.on{color:var(--ink);border-bottom-color:var(--accent)}
+.tab:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+
+/* ---------- Generic ---------- */
+.view{display:none;padding:26px 0 90px;animation:fade .35s ease}
+.view.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.sec-h{display:flex;align-items:baseline;gap:10px;margin:0 0 13px;flex-wrap:wrap}
+.sec-h h2{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim)}
+.sec-h .c{font-family:inherit;font-size:12px;color:var(--muted);font-variant-numeric:lining-nums tabular-nums}
+.sec-h .hint{margin-left:auto;font-size:11.5px;color:var(--muted)}
+
+/* ---------- Cards ---------- */
+.grid{display:grid;gap:10px}
+.tg{grid-template-columns:repeat(auto-fill,minmax(214px,1fr))}
+.card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:11px;
+  padding:13px 14px 12px 17px;overflow:hidden;transition:transform .14s ease,border-color .14s ease,box-shadow .14s;cursor:pointer}
+.card:hover{transform:translateY(-2px);border-color:var(--line-2);box-shadow:var(--shadow)}
+.card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.card .stripe{position:absolute;left:0;top:0;bottom:0;width:4px}
+.card.moved .stripe{box-shadow:0 0 10px -1px var(--up)}
+.card .top{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.card .dslot{margin-left:auto}
+.card .id{font-family:inherit;font-size:11px;color:var(--muted);letter-spacing:.04em}
+.card .st{font-size:10.5px;padding:1px 7px;border-radius:20px;font-weight:500}
+.card .ttl{font-size:13.5px;font-weight:600;line-height:1.4;margin-bottom:12px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.5em}
+.card .held{margin-top:6px;color:var(--muted);font-size:10px}
+.card .bot{display:flex;align-items:center;gap:9px}
+.bar{flex:1;height:5px;background:var(--surface-2);border-radius:3px;overflow:hidden;border:1px solid var(--line);position:relative}
+.bar>i{display:block;height:100%;border-radius:3px}
+.bar>u{position:absolute;top:-2px;bottom:-2px;width:1.5px;background:var(--ink-dim);opacity:.65}
+.pv{font-family:inherit;font-size:15px;font-weight:600;min-width:38px;text-align:right;font-variant-numeric:lining-nums tabular-nums}
+.delta{font-family:inherit;font-size:11px;padding:1px 6px;border-radius:5px;font-weight:600;white-space:nowrap;font-variant-numeric:lining-nums tabular-nums}
+.delta.u{color:var(--up);background:color-mix(in srgb,var(--up) 15%,transparent)}
+.delta.d{color:var(--down);background:color-mix(in srgb,var(--down) 15%,transparent)}
+.delta.f{color:var(--flat);background:color-mix(in srgb,var(--flat) 13%,transparent)}
+.up-badge{font-size:9.5px;font-family:inherit;color:var(--st-main);border:1px solid var(--st-main);
+  border-radius:4px;padding:0 4px;letter-spacing:.04em}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:34px;margin-top:34px}
+@media(max-width:840px){.cols{grid-template-columns:1fr;gap:30px}}
+.sgrid{grid-template-columns:1fr}
+#scen-grid .card,
+#chain-list .card{display:flex;flex-direction:column;padding-bottom:8px}
+#scen-grid .card .top,
+#chain-list .card .top{display:grid;grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:baseline;gap:8px 10px;margin-bottom:6px}
+#scen-grid .card .dslot,
+#chain-list .card .dslot{margin-left:0}
+#scen-grid .card .ttl,
+#chain-list .card .ttl{margin-bottom:0;min-height:0}
+#scen-grid .card .held,
+#chain-list .card .held{margin-top:4px;min-height:1.3em;line-height:1.3;
+  overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+
+/* ---------- Graph ---------- */
+.gwrap{display:grid;grid-template-columns:1fr 274px;gap:22px}
+@media(max-width:900px){.gwrap{grid-template-columns:1fr}}
+.gstage{background:var(--surface);border:1px solid var(--line);border-radius:14px;position:relative;overflow:hidden;min-height:400px}
+#net{display:block;width:100%;height:auto;touch-action:none}
+#net text{font-family:inherit;font-variant-numeric:lining-nums}
+.gstage .rd{position:absolute;left:14px;bottom:12px;right:14px;font-size:11.5px;color:var(--muted);pointer-events:none;
+  line-height:1.5;max-width:72%}
+.gstage .rd b{color:var(--ink);font-weight:600}
+.glegend{position:absolute;top:12px;right:14px;display:flex;flex-direction:column;gap:5px;font-size:10.5px;color:var(--muted);
+  background:color-mix(in srgb,var(--surface) 82%,transparent);padding:8px 10px;border:1px solid var(--line);border-radius:8px}
+.glegend i{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:6px;vertical-align:middle}
+.gside h3{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:2px 0 9px}
+.gside .blk{background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:13px 14px;margin-bottom:12px}
+.rank{display:flex;align-items:center;gap:9px;padding:5px 0;font-size:12px;border-bottom:1px dashed var(--line);cursor:pointer}
+.rank:last-child{border-bottom:none}
+.rank:hover .rl{color:var(--accent)}
+.rank .rn{font-family:inherit;font-size:12px;font-weight:600;width:20px;text-align:center;border-radius:4px}
+.rank .rid{font-family:inherit;font-size:11px;color:var(--muted);min-width:30px}
+.rank .rl{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.loop{font-size:11.5px;color:var(--ink-dim);line-height:1.55;padding:7px 0;border-bottom:1px dashed var(--line)}
+.loop:last-child{border:none}
+.loop b{color:var(--accent);font-weight:600}
+.loop .new{font-family:inherit;font-size:9.5px;color:var(--up);border:1px solid var(--up);border-radius:4px;padding:0 4px;margin-left:5px}
+.hub{background:linear-gradient(180deg,var(--accent-soft),transparent);border:1px solid var(--accent);
+  border-radius:11px;padding:12px 14px;margin-bottom:12px;font-size:11.5px;line-height:1.6;color:var(--ink-dim)}
+.hub b{color:var(--accent)}
+
+/* ---------- Weekly ---------- */
+.wgrid{display:grid;grid-template-columns:1.5fr 1fr;gap:24px;align-items:start}
+@media(max-width:860px){.wgrid{grid-template-columns:1fr}}
+.story{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:0 11px 11px 0;padding:14px 16px;margin-bottom:11px}
+.story .sh{display:flex;align-items:baseline;gap:9px;margin-bottom:6px}
+.story .sn{font-family:inherit;font-size:12px;color:var(--accent);font-weight:600}
+.story .sm{font-size:13.5px;font-weight:600}
+.story p{margin:0;font-size:12.5px;color:var(--ink-dim);line-height:1.6}
+.story .tag{display:inline-block;font-family:inherit;font-size:10.5px;color:var(--up);
+  background:color-mix(in srgb,var(--up) 13%,transparent);padding:1px 6px;border-radius:5px;margin:6px 4px 0 0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:15px 16px;margin-bottom:16px}
+.panel h3{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:11px}
+.dtable{width:100%;border-collapse:collapse;font-size:12px}
+.dtable td{padding:5px 4px;border-bottom:1px solid var(--line)}
+.dtable tr:last-child td{border-bottom:none}
+.dtable .di{font-family:inherit;color:var(--muted);white-space:nowrap}
+.dtable .dn{color:var(--ink-dim)}
+.dtable .dd{font-family:inherit;text-align:right;font-weight:600;white-space:nowrap}
+.rule{font-size:12px;color:var(--ink-dim);line-height:1.6;padding:8px 0;border-bottom:1px dashed var(--line);display:flex;gap:9px}
+.rule:last-child{border:none}
+.rule .rk{font-family:inherit;font-size:10.5px;color:var(--accent);flex-shrink:0;margin-top:2px;min-width:44px}
+.cand{background:linear-gradient(180deg,var(--accent-soft),transparent);border:1px dashed var(--accent);
+  border-radius:11px;padding:13px 15px;margin-bottom:9px}
+.cand .ch{font-family:inherit;font-size:11.5px;color:var(--accent);font-weight:600;margin-bottom:4px}
+.cand .cm{font-size:12.5px;font-weight:600;margin-bottom:5px}
+.cand p{margin:0;font-size:11.5px;color:var(--ink-dim);line-height:1.55}
+.cand .meta{margin-top:7px;color:var(--muted);font-family:inherit;font-size:10.5px}
+.sym{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:15px 17px;margin-bottom:20px}
+.symrow{display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin-bottom:11px}
+.symrow .big{font-family:inherit;font-size:17px;font-weight:600}
+.symrow .lab{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+.symrow .flag{margin-left:auto;font-family:inherit;font-size:10.5px;color:var(--st-loose);
+  border:1px solid var(--st-loose);border-radius:5px;padding:2px 8px}
+.sym .arg{font-size:12px;color:var(--ink-dim);line-height:1.65;border-top:1px dashed var(--line);padding-top:11px}
+.sym .arg b{color:var(--ink)}
+.sig{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px;margin-top:11px}
+.sigb{background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:9px 11px}
+.sigb .sn{font-family:inherit;font-size:15px;font-weight:600}
+.sigb .sl{font-size:10.5px;color:var(--muted);margin-top:2px}
+.sigb .sd{font-size:11px;color:var(--ink-dim);line-height:1.5;margin-top:6px}
+
+/* ---------- Drill ---------- */
+.scrim{position:fixed;inset:0;background:rgba(4,7,11,.5);backdrop-filter:blur(2px);opacity:0;pointer-events:none;
+  transition:opacity .25s;z-index:60}
+.scrim.on{opacity:1;pointer-events:auto}
+.drill{position:fixed;top:0;right:0;bottom:0;width:min(478px,92vw);background:var(--surface);border-left:1px solid var(--line-2);
+  transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);z-index:70;overflow-y:auto;box-shadow:-20px 0 50px -30px rgba(0,0,0,.7)}
+.drill.on{transform:none}
+.dhead{padding:20px 22px 16px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--surface);z-index:2}
+.dhead .krow{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.badge{font-family:inherit;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:5px;
+  border:1px solid var(--line-2);color:var(--ink-dim)}
+.dhead .did{font-family:inherit;font-size:12px;color:var(--accent)}
+.dclose{margin-left:auto;background:var(--surface-2);border:1px solid var(--line-2);color:var(--ink-dim);width:30px;height:30px;
+  border-radius:7px;font-size:16px;line-height:1}
+.dclose:hover{color:var(--ink);border-color:var(--accent)}
+.dclose:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.dhead h2{font-size:17px;line-height:1.35;margin-bottom:13px}
+.dmetrics{display:flex;gap:20px;align-items:flex-end;flex-wrap:wrap}
+.dmetrics .m b{font-family:inherit;font-size:26px;font-weight:600;line-height:1}
+.dmetrics .m span{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:5px}
+.dbody{padding:18px 22px 40px}
+.field{margin-bottom:18px}
+.field .fl{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;
+  display:flex;align-items:center;gap:7px}
+.field .fl::before{content:"";width:14px;height:1px;background:var(--accent)}
+.field p{margin:0;font-size:13px;color:var(--ink);line-height:1.65}
+.field.mech p{color:var(--ink-dim);font-size:12.5px}
+.field table{width:100%;border-collapse:collapse;font-size:11.5px;margin:8px 0}
+.field td,.field th{border:1px solid var(--line);padding:4px 7px;text-align:left;vertical-align:top}
+.field th{color:var(--muted);font-weight:600}
+.field.log p{color:var(--ink-dim);font-size:12px;background:var(--surface-2);border:1px solid var(--line);
+  border-radius:9px;padding:10px 12px;line-height:1.6}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-family:inherit;font-size:11px;padding:3px 9px;border-radius:6px;background:var(--surface-2);border:1px solid var(--line-2);
+  color:var(--ink-dim);cursor:pointer;transition:.13s}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip.dis{cursor:default;background:none}
+.chip.dis:hover{border-color:var(--line-2);color:var(--ink-dim)}
+footer{border-top:1px solid var(--line);padding:22px 0 40px;font-size:11.5px;color:var(--muted);line-height:1.7}
+footer b{color:var(--ink-dim);font-weight:600}
+@media(max-width:719px){
+  .wrap{padding-inline:16px}
+  nav.tabs{gap:0;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none}
+  nav.tabs::-webkit-scrollbar{display:none}
+  .tab{min-height:44px;padding:9px 12px;flex:0 0 auto}
+  .view{padding:20px 0 64px}
+  .sec-h{align-items:flex-start;margin-bottom:12px}
+  .sec-h .hint{width:100%;margin-left:0;font-size:12px;line-height:1.5}
+  .tg{grid-template-columns:1fr}
+  .grid{gap:12px}
+  .card{padding:15px 15px 14px 18px}
+  .card .ttl{font-size:14.5px;min-height:0}
+  .card .id,.card .held{font-size:11px}
+  .cols{margin-top:28px;gap:28px}
+  .gwrap{gap:16px}
+  .gstage{min-height:min(70dvh,36rem)}
+  .gstage .rd{max-width:65%;font-size:11px}
+  .glegend{top:10px;right:10px}
+  .gside .blk,.hub{padding:14px 15px}
+  .rank,.loop,.hub{font-size:12.5px}
+  .drill{width:100%;border-left:0}
+  .dhead{padding:16px}
+  .dclose{width:44px;height:44px;font-size:19px}
+  .dbody{padding:16px 16px 36px}
+  .field p,.field.mech p{font-size:14px}
+  .field.log p{font-size:13.5px}
+  .chip{min-height:36px;padding:6px 10px;font-size:12px}
+}
+</style>
+<style>
+/* ---------- loading state + shared panel rendering ---------- */
+#boot{position:fixed;inset:0;display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center;
+  background:var(--ground);z-index:99;font-family:inherit;font-size:13px;color:var(--muted);text-align:center;padding:24px}
+#boot .err{color:var(--st-fals);max-width:520px;line-height:1.6}
+</style>
+</head>
+<body>
+<div id="boot">Loading the model...</div>
+
+<header>
+  <div class="wrap">
+    <nav class="tabs" role="tablist">
+      <button class="tab on" data-v="ov" role="tab"><span>Overview</span></button>
+      <button class="tab" data-v="gr" role="tab"><span>Relationship map</span></button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="view on" id="v-ov">
+    <div class="sec-h"><h2>Trends</h2><span class="c" id="tc"></span><span class="hint">Model snapshot from 29 August 2026</span></div>
+    <div class="grid tg" id="trend-grid"></div>
+    <div class="cols">
+      <div class="scen">
+        <div class="sec-h"><h2>Scenarios</h2><span class="c" id="sc"></span></div>
+        <div class="grid sgrid" id="scen-grid"></div>
+      </div>
+      <div>
+        <div class="sec-h"><h2>Chains</h2><span class="c" id="cc"></span></div>
+        <div class="grid sgrid" id="chain-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="v-gr">
+    <div class="sec-h"><h2>Relationship map</h2><span class="c" id="gcount"></span>
+      <span class="hint">Drag to rearrange. Hover to trace a path. Click to inspect.</span></div>
+    <div class="gwrap">
+      <div class="gstage">
+        <div class="glegend" id="glegend"></div>
+        <svg id="net" viewBox="0 0 900 620" role="img" aria-label="Map of relationships between trends"></svg>
+        <div class="rd" id="rd"></div>
+      </div>
+      <div class="gside">
+        <div class="hub" id="hub"></div>
+        <div class="blk"><h3>Where pressures converge</h3><div id="indeg"></div></div>
+        <div class="blk"><h3>What drives the system</h3><div id="outdeg"></div></div>
+        <div class="blk"><h3>Closed loops</h3><div id="loops"></div></div>
+      </div>
+    </div>
+  </section>
+
+
+  <footer id="foot"></footer>
+</main>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drill" id="drill" aria-hidden="true"></aside>
+
+<script>
+/* ===================== bootstrap: fetch the snapshot data ===================== */
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s??"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+async function boot(){
+  try{
+    const res=await fetch("./data.json",{cache:"no-store"});
+    if(!res.ok)throw new Error("HTTP "+res.status);
+    const data=await res.json();
+    $("#boot").remove();
+    render(data);
+  }catch(err){
+    $("#boot").innerHTML=`<div class="err">Could not load data.json: ${esc(err.message)}<br>
+      This page reads its data from data.json next to it.<br>
+      Open it over HTTP rather than from the local file system.</div>`;
+  }
+}
+
+/* ===================== render ===================== */
+function render(DATA){
+const M=DATA.meta;
+const STc={"Emerging":"var(--st-emerging)","Strengthening":"var(--st-strength)","Mainstream":"var(--st-main)","Loosening":"var(--st-loose)","Falsified":"var(--st-fals)"};
+const fmt=p=>p==null?"Not set":p.toFixed(2);
+const dchip=d=>{const s=d>0?"u":d<0?"d":"f";const a=d>0?"▲":d<0?"▼":"■";
+  const t=d===0?"held":(d>0?"+":"")+d.toFixed(2);return `<span class="delta ${s}">${a} ${t}</span>`;};
+const ago=iso=>{if(!iso)return"";const d=(new Date(M.asof)-new Date(iso))/864e5;
+  return d<=0?"this week":d<=7?"last week":Math.round(d/7)+" weeks ago";};
+const heldLabel=o=>o.lastMoved?"last changed "+ago(o.lastMoved):"latest note "+(o.logDate||"not dated");
+
+const ALL=[...DATA.trends,...DATA.scenarios,...DATA.chains,...DATA.couplings];
+const IDX={};ALL.forEach(o=>IDX[o.id]=o);
+
+const cardHTML=(o,c,extra="",alwaysHeld=false,inlineTitle=false)=>`<article class="card${o.delta?" moved":""}" tabindex="0" data-id="${o.id}">
+    <span class="stripe" style="background:${c}"></span>
+    <div class="top"><span class="id">${o.id}</span>${extra}
+      ${inlineTitle?`<div class="ttl">${esc(o.title)}</div>`:""}
+      <span class="dslot">${dchip(o.delta)}</span></div>
+    ${inlineTitle?"":`<div class="ttl">${esc(o.title)}</div>`}
+    <div class="bot"><div class="bar"><i style="width:${o.prob*100}%;background:${c}"></i>${o.delta?`<u style="left:${o.prev*100}%"></u>`:""}</div>
+      <span class="pv">${fmt(o.prob)}</span></div>
+    ${(!o.delta||alwaysHeld)?`<div class="held">${o.delta?"":heldLabel(o)}</div>`:""}
+  </article>`;
+
+/* trends */
+$("#tc").textContent=DATA.trends.length;
+$("#trend-grid").innerHTML=DATA.trends.slice().sort((a,b)=>b.prob-a.prob).map(t=>{
+  const c=STc[t.status]||"var(--muted)";
+  const extra=`<span class="st" style="color:${c};background:color-mix(in srgb,${c} 15%,transparent)">${t.status}</span>
+      ${t.upgraded?'<span class="up-badge">↑ promoted</span>':''}`;
+  return cardHTML(t,c,extra);
+}).join("");
+
+/* scenarios and chains share the trend card: id, delta, title, bar + value */
+$("#sc").textContent=DATA.scenarios.length;
+$("#scen-grid").innerHTML=DATA.scenarios.slice().sort((a,b)=>b.prob-a.prob)
+  .map(s=>cardHTML(s,"var(--mark-scen)","",true,true)).join("");
+$("#cc").textContent=DATA.chains.length;
+$("#chain-list").innerHTML=DATA.chains.slice().sort((a,b)=>b.prob-a.prob)
+  .map(c=>cardHTML(c,"var(--mark-chain)","",true,true)).join("");
+
+/* ---------- graph ---------- */
+const G=DATA.graph;
+const cls=n=>n.bottleneck?"bottleneck":n.driver?"driver":({trend:"trend",scen:"scen",pattern:"pat"}[n.kind]||"ext");
+const NC={bottleneck:"var(--bottleneck)",driver:"var(--driver)",trend:"var(--ink-dim)",scen:"var(--accent)",pat:"var(--pat)",ext:"var(--ext)"};
+$("#glegend").innerHTML=[["bottleneck","Convergence point"],["driver","System driver"],["trend","Trend"],["scen","Scenario"],["pat","Pattern"],["ext","External factor"]]
+  .map(([k,l])=>`<span><i style="background:${NC[k]}"></i>${l}</span>`).join("");
+$("#gcount").textContent=M.active_couplings+" couplings · "+G.edges.length+" edges · "+G.nodes.length+" nodes";
+$("#hub").innerHTML=G.hub
+  ?`<b>Structural hub ${G.hub.id}</b><br>${esc(G.hub.label.replace(G.hub.id,"").trim())}<br>${G.hub.indeg} incoming and ${G.hub.outdeg} outgoing relationships. This is where the most paths meet and continue.`
+  :"No structural hub found.";
+
+const W=900,H=620,PAD=48;
+let N=G.nodes.map(n=>({...n,cls:cls(n),deg:n.indeg+n.outdeg}));
+const nById={};N.forEach(n=>nById[n.id]=n);
+const E=G.edges.filter(e=>nById[e.src]&&nById[e.dst]);
+N.sort((a,b)=>b.deg-a.deg);
+N.forEach((n,i)=>{const a=i*2.399963,r=Math.sqrt(i/N.length)*Math.min(W,H)*0.42;
+  n.x=W/2+Math.cos(a)*r;n.y=H/2+Math.sin(a)*r;n.vx=0;n.vy=0;});
+for(let it=0;it<440;it++){
+  const k=1-it/580;
+  for(let i=0;i<N.length;i++)for(let j=i+1;j<N.length;j++){
+    const dx=N[i].x-N[j].x,dy=N[i].y-N[j].y,d2=dx*dx+dy*dy+0.01,d=Math.sqrt(d2),f=5400/d2;
+    N[i].vx+=f*dx/d*k;N[i].vy+=f*dy/d*k;N[j].vx-=f*dx/d*k;N[j].vy-=f*dy/d*k;}
+  E.forEach(e=>{if(e.src===e.dst)return;const a=nById[e.src],b=nById[e.dst];const dx=b.x-a.x,dy=b.y-a.y,d=Math.sqrt(dx*dx+dy*dy)+0.01,f=(d-118)*0.028;
+    a.vx+=f*dx/d;a.vy+=f*dy/d;b.vx-=f*dx/d;b.vy-=f*dy/d;});
+  N.forEach(n=>{n.vx+=(W/2-n.x)*0.006;n.vy+=(H/2-n.y)*0.006;
+    n.x+=n.vx*0.82;n.y+=n.vy*0.82;n.vx*=0.86;n.vy*=0.86;
+    n.x=Math.max(PAD,Math.min(W-PAD,n.x));n.y=Math.max(PAD,Math.min(H-PAD,n.y));});}
+const svg=$("#net"),SVGNS="http://www.w3.org/2000/svg";
+const el=(t,a)=>{const e=document.createElementNS(SVGNS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+const defs=el("defs",{});
+defs.innerHTML='<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--line-2)"/></marker>';
+svg.appendChild(defs);
+const gE=el("g",{}),gN=el("g",{});svg.appendChild(gE);svg.appendChild(gN);
+const rad=n=>9+n.deg*2.3;
+const edgeEls=E.map(e=>{
+  if(e.src===e.dst){const c=el("circle",{fill:"none",stroke:"var(--line-2)","stroke-width":1.5,opacity:.55,r:16});c._e=e;c._self=1;gE.appendChild(c);return c;}
+  const ln=el("line",{stroke:"var(--line-2)","stroke-width":e.meta?1:1.5,
+  "stroke-dasharray":e.meta?"3 3":"","marker-end":"url(#ar)",opacity:.55});ln._e=e;gE.appendChild(ln);return ln;});
+const nodeEls=N.map(n=>{const g=el("g",{style:"cursor:pointer"});g._n=n;g.classList.add("gn");
+  const c=el("circle",{r:rad(n),stroke:NC[n.cls],"stroke-width":(n.bottleneck||n.driver)?2.5:1.5,
+    fill:(n.bottleneck||n.driver)?"color-mix(in srgb,"+NC[n.cls]+" 22%,var(--surface))":"var(--surface-2)"});
+  const tx=el("text",{"text-anchor":"middle",dy:"0.34em","font-size":n.deg>2?11:9.5,"font-family":"inherit",
+    fill:(n.bottleneck||n.driver)?NC[n.cls]:"var(--ink-dim)","font-weight":600,"pointer-events":"none"});
+  tx.textContent=n.id.length<=7?n.id:n.label.slice(0,4);
+  g.appendChild(c);g.appendChild(tx);gN.appendChild(g);return g;});
+function place(){edgeEls.forEach(ln=>{const e=ln._e,a=nById[e.src],b=nById[e.dst];
+  if(ln._self){ln.setAttribute("cx",a.x+rad(a)+8);ln.setAttribute("cy",a.y-rad(a)-2);return;}
+  const dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy)||1,rb=rad(b)+3;
+  ln.setAttribute("x1",a.x);ln.setAttribute("y1",a.y);
+  ln.setAttribute("x2",b.x-dx/d*rb);ln.setAttribute("y2",b.y-dy/d*rb);});
+  nodeEls.forEach(g=>g.setAttribute("transform","translate("+g._n.x+","+g._n.y+")"));}
+place();
+const RD='Hover over a node to trace its relationships. <b>Red</b> marks convergence points. <b>Blue</b> marks systemic drivers. Dashed lines show meta relationships.';
+$("#rd").innerHTML=RD;
+function focus(n){const nb=new Set([n.id]);E.forEach(e=>{if(e.src===n.id)nb.add(e.dst);if(e.dst===n.id)nb.add(e.src);});
+  nodeEls.forEach(g=>g.style.opacity=nb.has(g._n.id)?1:.18);
+  edgeEls.forEach(ln=>{const on=ln._e.src===n.id||ln._e.dst===n.id;
+    ln.setAttribute("opacity",on?.95:.06);ln.setAttribute("stroke",on?"var(--accent)":"var(--line-2)");
+    ln.setAttribute("stroke-width",on?2:(ln._e.meta?1:1.5));});
+  const outs=E.filter(e=>e.src===n.id),ins=E.filter(e=>e.dst===n.id);
+  $("#rd").innerHTML=`<b>${n.id}</b> ${esc(n.label.replace(n.id,"").trim())}<br>${n.indeg} incoming and ${n.outdeg} outgoing relationships`
+    +(outs.length?"<br>Drives: "+outs.map(e=>`<b>${e.dst}</b> (${e.cid})`).join(", "):"")
+    +(ins.length?"<br>Driven by: "+ins.map(e=>`<b>${e.src}</b> (${e.cid})`).join(", "):"");}
+function blur(){nodeEls.forEach(g=>g.style.opacity=1);
+  edgeEls.forEach(ln=>{ln.setAttribute("opacity",.55);ln.setAttribute("stroke","var(--line-2)");
+    ln.setAttribute("stroke-width",ln._e.meta?1:1.5);});$("#rd").innerHTML=RD;}
+let drag=null;
+const pt=ev=>{const r=svg.getBoundingClientRect(),cx=ev.touches?ev.touches[0].clientX:ev.clientX,
+  cy=ev.touches?ev.touches[0].clientY:ev.clientY;return{x:(cx-r.left)/r.width*W,y:(cy-r.top)/r.height*H};};
+nodeEls.forEach(g=>{
+  g.addEventListener("mouseenter",()=>{if(!drag)focus(g._n);});
+  g.addEventListener("mouseleave",()=>{if(!drag)blur();});
+  g.addEventListener("mousedown",ev=>{drag=g._n;ev.preventDefault();});
+  g.addEventListener("touchstart",()=>{drag=g._n;focus(g._n);},{passive:true});
+  g.addEventListener("click",()=>{if(IDX[g._n.id])openDrill(g._n.id);});});
+addEventListener("mousemove",ev=>{if(drag){const p=pt(ev);drag.x=p.x;drag.y=p.y;place();}});
+addEventListener("touchmove",ev=>{if(drag){const p=pt(ev);drag.x=p.x;drag.y=p.y;place();}},{passive:true});
+addEventListener("mouseup",()=>{if(drag){drag=null;blur();}});
+addEventListener("touchend",()=>{if(drag){drag=null;blur();}});
+
+const rankRows=k=>N.filter(n=>n[k]>0).sort((a,b)=>b[k]-a[k]).slice(0,5).map(n=>{
+  const col=k==="indeg"?"var(--bottleneck)":"var(--driver)";
+  return `<div class="rank" data-id="${n.id}"><span class="rn" style="color:${col};background:color-mix(in srgb,${col} 15%,transparent)">${n[k]}</span>
+    <span class="rid">${n.id}</span><span class="rl">${esc(n.label.replace(n.id,"").trim())}</span></div>`;}).join("");
+$("#indeg").innerHTML=rankRows("indeg");
+$("#outdeg").innerHTML=rankRows("outdeg");
+/* Closed loops: directed cycles detected from the graph structure + the "closed loop detection" section declared in each chain file */
+$("#loops").innerHTML=[
+  ...(G.loops||[]).map(l=>`<div class="loop"><b>Feedback loop${l.nodes.length===2&&l.nodes[0]===l.nodes[1]?" within one node":""}</b> ${
+    l.nodes.map((n,i)=>i<l.cids.length?`${esc(n)} →(${l.cids[i]}) `:esc(n)).join("")}</div>`),
+  ...DATA.chains.filter(c=>c.loop).map(c=>`<div class="loop"><b>${c.id} · ${esc(c.loop)}</b><br>${esc(c.story)}</div>`)
+].join("")||'<div class="loop">No feedback loop found.</div>';
+
+
+$("#foot").innerHTML=`Snapshot from 29 August 2026. Each probability records the model's current confidence in a thesis.`;
+
+/* ---------- drill ---------- */
+const drill=$("#drill"),scrim=$("#scrim");
+const relChip=id=>{const o=IDX[id];return `<span class="chip${o?'':' dis'}" ${o?`data-id="${id}"`:''}>${id}</span>`;};
+function showDrill(){drill.classList.add("on");scrim.classList.add("on");drill.setAttribute("aria-hidden","false");
+  $(".dclose",drill).onclick=closeDrill;drill.scrollTop=0;}
+function openDrill(id){const o=IDX[id];if(!o)return;
+  const kind={trend:"TREND",scenario:"SCENARIO",chain:"CHAIN",coupling:"COUPLING"}[o.kind];
+  const c=o.kind==="trend"?(STc[o.status]||"var(--accent)"):"var(--accent)";
+  /* Body text is plain prose apart from the occasional pipe table, which is
+     rendered as a table rather than escaped into a row of literal pipes. */
+  const rich=v=>{const out=[];let tbl=null;
+    const flush=()=>{if(tbl){out.push("<table>"+tbl.map((r,i)=>"<tr>"+r.map(c=>i===0?`<th>${c}</th>`:`<td>${c}</td>`).join("")+"</tr>").join("")+"</table>");tbl=null;}};
+    for(const raw of String(v).split("\n")){const t=raw.trim();
+      if(/^\|.*\|$/.test(t)){const cells=t.replace(/^\||\|$/g,"").split("|").map(c=>esc(c.trim()));
+        if(cells.every(c=>/^[-: ]*$/.test(c)))continue;(tbl??=[]).push(cells);continue;}
+      flush();out.push(esc(raw)+"<br>");}
+    flush();return out.join("").replace(/(<br>)+$/,"");};
+  const f=(l,v,cl="")=>v?`<div class="field ${cl}"><div class="fl">${l}</div><p>${rich(v)}</p></div>`:"";
+  let metrics="",body="";
+  if(o.kind==="coupling"){
+    metrics=`<div class="dmetrics"><div class="m"><b style="font-size:18px">${esc(o.frm)} → ${esc(o.to)}</b><span>Direction</span></div>
+      <div class="m"><b style="font-size:18px;color:var(--accent)">${o.strength||"Not set"}</b><span>Strength</span></div></div>`;
+    body=f("Claim",o.cause)+f("How the change travels",o.mechanism,"mech")
+      +`<div class="field"><div class="fl">Type</div><div class="chips"><span class="chip dis">${(o.type||"").replace("_"," ")}</span>${o.candidate?'<span class="chip dis">under review</span>':""}</div></div>`;
+  }else{
+    const sub=o.kind==="chain"?"Progress":"Probability";
+    metrics=`<div class="dmetrics">
+      <div class="m"><b style="color:${c}">${fmt(o.prob)}</b><span>${sub}</span></div>
+      ${o.kind==="trend"?`<div class="m"><b style="font-size:15px;color:${c}">${o.status}</b><span>Status${o.upgraded?", promoted this week":""}</span></div>`:""}
+      <div class="m"><b style="font-size:19px;color:${o.delta>0?'var(--up)':o.delta<0?'var(--down)':'var(--flat)'}">${
+        o.delta===0?"held":(o.delta>0?"+":"")+o.delta.toFixed(2)}</b><span>${
+        o.delta?`this week, previously ${o.prev.toFixed(2)}`:`held this week, ${heldLabel(o)}`}</span></div></div>`;
+    if(o.kind==="trend") body=f("Thesis",o.oneliner)+f("Mechanism",o.mechanism,"mech")+f("Analogy",o.analogy,"mech")
+      +(o.dclass?`<div class="field"><div class="fl">Falsifier registry</div><div class="chips">${
+        o.dclass.split("+").map(x=>`<span class="chip dis">Class ${x.trim()}</span>`).join("")}<span class="chip dis">${o.nsrc} primary sources</span></div></div>`:"")
+      +((o.rel_scen.length||o.rel_coup.length)?`<div class="field"><div class="fl">Related objects</div><div class="chips">${
+        o.rel_scen.map(relChip).join("")}${o.rel_coup.map(relChip).join("")}</div></div>`:"");
+    else if(o.kind==="scenario") body=f("Scenario",o.oneliner)+f("What would change this view",o.falsify,"mech")
+      +(o.rel_chain.length?`<div class="field"><div class="fl">Supporting chains</div><div class="chips">${o.rel_chain.map(relChip).join("")}</div></div>`:"");
+    else body=f("Chain",o.story)+f("Main constraint",o.bottleneck,"mech")
+      +(o.loop?`<div class="field"><div class="fl">Closed loops</div><div class="chips"><span class="chip dis">${o.loop}</span></div></div>`:"")
+      +(o.rel_scen.length?`<div class="field"><div class="fl">Scenarios reinforced</div><div class="chips">${o.rel_scen.map(relChip).join("")}</div></div>`:"");
+    if(o.lastLog) body+=f("Latest update, "+o.logDate,o.lastLog,"log");
+  }
+  drill.innerHTML=`<div class="dhead"><div class="krow"><span class="badge">${kind}</span><span class="did">${o.id}</span>
+    <button class="dclose" aria-label="Close">✕</button></div><h2>${esc(o.title)}</h2>${metrics}</div><div class="dbody">${body}</div>`;
+  showDrill();}
+function closeDrill(){drill.classList.remove("on");scrim.classList.remove("on");drill.setAttribute("aria-hidden","true");}
+scrim.onclick=closeDrill;
+addEventListener("keydown",e=>{if(e.key==="Escape")closeDrill();});
+addEventListener("click",e=>{const h=e.target.closest("[data-id]");
+  if(!h||e.target.closest(".gn"))return;const id=h.getAttribute("data-id");if(IDX[id])openDrill(id);});
+addEventListener("keydown",e=>{if(e.key!=="Enter")return;const h=e.target.closest("[data-id]");
+  if(h&&IDX[h.getAttribute("data-id")])openDrill(h.getAttribute("data-id"));});
+
+$$(".tab").forEach(b=>b.onclick=()=>{$$(".tab").forEach(x=>x.classList.remove("on"));b.classList.add("on");
+  $$(".view").forEach(v=>v.classList.remove("on"));$("#v-"+b.dataset.v).classList.add("on");scrollTo({top:0});});
+}
+boot();
+</script>
+</body></html>

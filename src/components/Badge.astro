@@ -1,0 +1,24 @@
+---
+/**
+ * Badge — the one small status/label in the design system.
+ *
+ * One grammar: a square label on the band tone with a decorative hairline. It
+ * marks status or taxonomy and is never clickable — anything actionable uses a
+ * text link or the filled Contact button instead.
+ *
+ * Tones:
+ *   - "stone"  (default) the plain label
+ *   - "accent" the same label with a 2px accent rule for important status
+ *   - "quiet"  the same label without the fill, for taxonomy
+ */
+interface Props {
+  tone?: "stone" | "accent" | "quiet";
+  class?: string;
+}
+
+const { tone = "stone", class: className } = Astro.props;
+---
+
+<span class:list={["status-badge", `status-badge--${tone}`, className]}>
+  <slot />
+</span>

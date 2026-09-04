@@ -1,0 +1,72 @@
+/* Tailwind entry point.
+ *
+ * 1. Preflight is NOT imported. Tailwind's base reset would fight the hand
+ *    written reset and element styles in global.css. Only the theme and the
+ *    utility layer are pulled in.
+ * 2. The theme block re-declares the design tokens from global.css with
+ *    byte-identical values, so redefining them on :root is a no-op while still
+ *    exposing them to utilities. If a token changes, change it in global.css
+ *    first, then mirror it here.
+ *
+ * Utilities live in the `utilities` cascade layer, so unlayered rules in
+ * global.css always win a direct conflict. See docs/DESIGN.md.
+ */
+
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+
+@source "../**/*.{astro,ts,tsx}";
+
+@theme {
+  --color-canvas: #fffbfa;
+  --color-wash: #f4e8ea;
+  /* Figure fills only (GR-017). Never a page ground or a band. */
+  --color-wash-deep: #e6ccd2;
+  --color-line: #e7d6d8;
+  --color-control: #7a4e56;
+  --color-mute: #7a4e56;
+  --color-display: #5c2432;
+  --color-accent: #8b3044;
+  --color-body: #1c1416;
+  --color-focus: #8b3044;
+
+  --color-canvas-subtle: #fffbfa;
+  --color-band: #f4e8ea;
+  --color-surface: #fffbfa;
+  --color-surface-raised: #fffbfa;
+  --color-ink: #1c1416;
+  --color-ink-soft: #1c1416;
+  --color-ink-muted: #7a4e56;
+  --color-accent-strong: #5c2432;
+  --color-on-accent: #fffbfa;
+  --color-hairline: #e7d6d8;
+  --color-selection: #f4e8ea;
+
+  --color-dark: #1c1416;
+  --color-dark-soft: #5c2432;
+  --color-on-dark: #fffbfa;
+  --color-on-dark-soft: #7a4e56;
+  --color-accent-on-dark: #8b3044;
+  --color-accent-on-dark-strong: #5c2432;
+
+  --font-display: "Archivo", system-ui, sans-serif;
+  --font-body: "Archivo", system-ui, sans-serif;
+
+  --radius-none: 0;
+  --radius-control: 4px;
+  --radius-card: 4px;
+  --radius-sheet: 4px;
+  --radius-pill: 4px;
+  --radius-figure: 12px;
+  --space-plate: 10px;
+  --frost-fill: color-mix(in srgb, var(--color-canvas) 58%, transparent);
+  --frost-fill-opaque: color-mix(in srgb, var(--color-canvas) 88%, transparent);
+  --shadow-figure: 0 5px 14px color-mix(in srgb, var(--color-display) 14%, transparent);
+  --shadow-header: none;
+  --shadow-control: none;
+
+  --ease-out: ease-out;
+  --ease-in-out: ease-out;
+}

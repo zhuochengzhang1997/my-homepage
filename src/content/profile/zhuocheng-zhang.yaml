@@ -1,0 +1,116 @@
+name: Zhuocheng Zhang
+language: en
+email: zhuochengzhang@foxmail.com
+githubHandle: zhuochengzhang1997
+positioning:
+  eyebrow: Semiconductors × AI agents
+  statement:
+    - Software got its agents.
+    - Silicon hasn’t.
+  # Seen in search results, Slack unfurls and WeChat cards, where none of the
+  # page's evidence travels with it. With no surrounding proof, the aim is worth
+  # more to a stranger than the deliverable, so it leads and the credential
+  # follows. Kept under ~155 characters so it is not truncated.
+  metaDescription: >-
+    Zhuocheng Zhang builds and evaluates agent systems for semiconductor
+    engineering, with the goal of shortening engineering cycles through
+    reliable workflow automation.
+  verification:
+    status: user-confirmed
+    provenance: user-confirmed
+    sourceId: homepage-copy-review-2026-08-26
+    checkedAt: 2026-08-26
+    publishable: true
+proofPoints:
+  - label: Ph.D. Microelectronics
+    detail: Purdue
+  - label: 300-mm fab tape-out
+    detail: HiSilicon
+  - label: Agentic workflows
+    detail: CUHK
+identities:
+  scholar: https://scholar.google.com/citations?user=mela3NQAAAAJ
+  orcid: https://orcid.org/0000-0002-3559-0704
+  github: https://github.com/zhuochengzhang1997
+  linkedin: https://www.linkedin.com/in/zhuocheng-zhang-370566160/
+scholarMetrics:
+  citationsLabel: 1,260+
+  hIndex: 20
+  i10Index: 29
+  verification:
+    status: user-confirmed
+    provenance: user-confirmed
+    sourceId: facts-yaml-2026-08-23
+    note: Google Scholar snapshot supplied by the site owner; rounded down for display.
+    checkedAt: 2026-08-23
+    publishable: true
+biography:
+  sourceText: >-
+    Zhuocheng Zhang is a postdoctoral researcher at The Chinese University of
+    Hong Kong, working on AI agents for semiconductor compact modeling. Before
+    that he was a senior device engineer at HiSilicon and earned his Ph.D. in
+    microelectronics at Purdue University.
+  # One paragraph per column of the Home Background arc, and the arc is the
+  # constraint: each answers exactly one question and none leaks the next one's
+  # answer. 1 establishes hands-on device and fab experience. 2 names the
+  # repeated manual loops and why agents are relevant. 3 states the current
+  # work, its first application, and the broader goal without claiming that the
+  # entire semiconductor workflow is already automated.
+  paragraphs:
+    - >-
+      I spent more than 5,000 hours in Purdue cleanrooms, fabricating
+      oxide-semiconductor transistors and learning the full loop from process
+      design to electrical measurement. At HiSilicon, I took a vertical
+      gate-all-around device architecture through a 300-mm production fab,
+      working from simulation and process integration to silicon data.
+    - >-
+      Semiconductor development still depends on manual loops: triaging test
+      data, recalibrating models as new silicon arrives, and reconstructing
+      decisions that were never captured. The work is repetitive, but it still
+      consumes expert time and slows the next iteration. I moved toward AI
+      because agents can take on the repeatable execution while engineers
+      retain judgment, review, and accountability.
+    - >-
+      At CUHK, I build and evaluate agent systems for semiconductor engineering,
+      starting with compact modeling. I focus on the tools, physical
+      constraints, and evidence trails that keep an agent’s work controlled and
+      auditable. The goal is to automate repeatable parts of semiconductor
+      workflows and shorten engineering cycles without giving up physical rigor
+      or engineering control.
+  verification:
+    status: user-confirmed
+    provenance: user-confirmed
+    sourceId: homepage-about-arc-2026-09-01
+    checkedAt: 2026-09-01
+    publishable: true
+currentRole:
+  title: Postdoctoral Researcher
+  institution: The Chinese University of Hong Kong
+  department: Department of Computer Science and Engineering
+  advisor: Prof. Bei Yu
+  startDate: 2026-04
+  verification:
+    status: user-confirmed
+    provenance: user-confirmed
+    sourceId: facts-yaml-2026-08-23
+    checkedAt: 2026-08-23
+    publishable: true
+previousRoleSummary:
+  title: Senior Device Engineer
+  institution: HiSilicon
+  verification:
+    status: user-confirmed
+    provenance: user-confirmed
+    sourceId: facts-yaml-2026-08-23
+    checkedAt: 2026-08-23
+    publishable: true
+researchThemeIds:
+  - agent-autonomy
+  - learning-loop
+  - domain-ontology
+identityVerification:
+  status: user-confirmed
+  provenance: user-confirmed
+  sourceId: content-decisions-2026-06-11
+  checkedAt: 2026-06-11
+  publishable: true

@@ -1,0 +1,16 @@
+name: modeling-agent & modeling-ontology
+tagline: Agent-native infrastructure for SPICE compact modeling.
+description: >-
+  Physics-aware guardrails, audited decision trails, and an evidence-governed
+  knowledge layer that let a general-purpose LLM agent do real compact-modeling
+  work. This is my research line at CUHK; a first-author manuscript is under
+  peer review.
+stack:
+  - Python
+  - ngspice
+  - BSIM4
+  - Agent harness design
+  - Ontology engineering
+status: Research line, active
+order: 1
+draft: true

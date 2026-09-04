@@ -1,0 +1,61 @@
+---
+import Badge from "./Badge.astro";
+import Card from "./Card.astro";
+
+/**
+ * ProjectCard — a Studio piece on the shared Card surface.
+ *
+ * Deliberately adds no new surface: it composes Card and contributes only
+ * piece-specific content (optional stack tags, status chip, repository link).
+ */
+interface Props {
+  name: string;
+  tagline: string;
+  description: string;
+  stack?: string[];
+  status?: string;
+  repository?: string;
+  class?: string;
+}
+
+const {
+  name,
+  tagline,
+  description,
+  stack = [],
+  status,
+  repository,
+  class: className,
+} = Astro.props;
+---
+
+<Card
+  title={name}
+  eyebrow={tagline}
+  href={repository}
+  cta="View on GitHub"
+  class:list={["project-card", className]}
+>
+  <p>{description}</p>
+
+  {
+    (stack.length > 0 || status) && (
+      <Fragment slot="footer">
+        {stack.length > 0 && (
+          <ul class="tag-list" aria-label={`${name} stack`}>
+            {stack.map((item) => (
+              <li>
+                <Badge tone="quiet">{item}</Badge>
+              </li>
+            ))}
+          </ul>
+        )}
+        {status && (
+          <p class="project-card__status">
+            <Badge>{status}</Badge>
+          </p>
+        )}
+      </Fragment>
+    )
+  }
+</Card>
