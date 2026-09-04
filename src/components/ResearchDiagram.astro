@@ -7,12 +7,34 @@
  * plate holds a raster reference. Width follows the lead column; height
  * follows the image. Not a lock. aria-hidden: the prose already carries the
  * meaning.
+ *
+ * These went out as raw `<img src={photo.src}>`, which hands the browser the
+ * untouched source PNG: 1672x911 downloaded to fill a 385 px plate, 2.7 MB
+ * across the three, eager, and /research/ took 14 s to finish loading. Astro
+ * only optimizes what goes through `<Image>` — an `ImageMetadata.src` is just
+ * a copied file. Keep this on `<Image>`.
  */
 import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
 
 import harnessRef from "../assets/research/agent-autonomy-ref.png";
 import loopRef from "../assets/research/learning-loop-ref.png";
 import graphRef from "../assets/research/domain-ontology-ref.png";
+
+/**
+ * Rendered widths to generate; anything wider than the source is dropped.
+ * The plate measures 307 CSS px at 375 viewport and 385 px from 82rem up, so
+ * 1200 covers the widest case at 3x. Same ladder idea as `PhotoWall`.
+ */
+const WIDTHS = [400, 800, 1200];
+
+/**
+ * Below the 45rem breakpoint the line stacks and the plate runs nearly full
+ * width (82vw measured); above it the plate is a column (~30vw measured at
+ * 768, 1024 and 1440). Rounded up rather than down — over-fetching costs one
+ * ladder step, under-fetching costs sharpness.
+ */
+const SIZES = "(max-width: 44.98rem) 82vw, 30vw";
 
 interface Props {
   theme: string;
@@ -37,12 +59,14 @@ const photo = PHOTOS[theme];
       data-nudge={import.meta.env.DEV ? `${theme}-diagram` : undefined}
       data-nudge-label={import.meta.env.DEV ? `${theme} diagram` : undefined}
     >
-      <img
+      <Image
         class="research-diagram__photo"
-        src={photo.src}
-        width={photo.width}
-        height={photo.height}
+        src={photo}
         alt=""
+        widths={WIDTHS.filter((candidate) => candidate <= photo.width)}
+        sizes={SIZES}
+        loading="lazy"
+        decoding="async"
       />
     </figure>
   )
