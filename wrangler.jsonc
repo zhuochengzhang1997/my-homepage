@@ -1,0 +1,20 @@
+{
+  // Cloudflare Workers Static Assets. The site is entirely pre-rendered, so
+  // there is no `main` entry point and no @astrojs/cloudflare adapter — Astro
+  // builds plain files and Cloudflare serves them.
+  "name": "zhuochengzhang-com",
+  "compatibility_date": "2026-09-04",
+
+  "assets": {
+    "directory": "./dist",
+    // Serve the 404 page built from `src/pages/404.astro` instead of the
+    // platform default. Not "single-page-application": the redirect stubs for
+    // /about/, /experience/, /writing/ and /projects/ are real files, and an
+    // SPA fallback would swallow genuine 404s.
+    "not_found_handling": "404-page"
+  },
+
+  "observability": {
+    "enabled": true
+  }
+}

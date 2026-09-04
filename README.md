@@ -1,7 +1,7 @@
 # zhuochengzhang.com
 
 Personal academic homepage of Zhuocheng Zhang. Built with
-[Astro](https://astro.build), deployed on Cloudflare Pages.
+[Astro](https://astro.build), deployed on Cloudflare Workers.
 
 ## Requirements
 
@@ -40,7 +40,8 @@ a file there — no component changes needed.
 
 ## Deployment
 
-Cloudflare Pages builds `main` on every push:
+Cloudflare Workers (Static Assets) builds `main` on every push, via Workers
+Builds. `wrangler.jsonc` declares `dist/` as the asset directory.
 
 | Setting | Value |
 | --- | --- |
