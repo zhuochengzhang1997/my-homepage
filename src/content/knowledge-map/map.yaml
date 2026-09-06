@@ -16,10 +16,10 @@ levels:
     label: "Aware"
   - id: working
     rank: 3
-    label: "Working"
+    label: "Proficient"
   - id: expert
     rank: 4
-    label: "Expert"
+    label: "Advanced"
 groups:
   - id: ai
     label: "AI"
