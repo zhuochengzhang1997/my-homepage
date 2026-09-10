@@ -49,9 +49,9 @@ groups:
         order: "the model lifecycle"
         tiles:
           - name: "Deep learning foundations"
-            level: expert
+            level: working
           - name: "Transformer architecture"
-            level: expert
+            level: working
           - name: "Training dynamics and optimization"
             level: working
           - name: "Pre-training and scaling laws"
