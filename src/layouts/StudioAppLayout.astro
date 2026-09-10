@@ -21,9 +21,23 @@ interface Props {
   appSrc: string;
   appTitle: string;
   image?: string;
+  /**
+   * Size the frame to its content instead of to the viewport. Use it when the
+   * exhibit is a long single-page document rather than an app that owns a
+   * screen: the page then scrolls once, not twice. The exhibit has to opt in on
+   * its side too — see the `framed` branch in the Future Thesis board.
+   */
+  fitContent?: boolean;
 }
 
-const { title, description, appSrc, appTitle, image = "/og/default.png" } = Astro.props;
+const {
+  title,
+  description,
+  appSrc,
+  appTitle,
+  image = "/og/default.png",
+  fitContent = false,
+} = Astro.props;
 
 const pageTitle = title.includes("Zhuocheng Zhang") ? title : `${title} | Zhuocheng Zhang`;
 const canonicalUrl = Astro.url;
@@ -72,11 +86,41 @@ const imageUrl = new URL(image, Astro.site ?? Astro.url);
           </div>
         </header>
 
-        <iframe class="studio-app__frame" src={appSrc} title={appTitle} loading="lazy"></iframe>
+        <iframe
+          class:list={["studio-app__frame", { "studio-app__frame--fit": fitContent }]}
+          src={appSrc}
+          title={appTitle}
+          loading={fitContent ? "eager" : "lazy"}
+          data-fit={fitContent ? "" : undefined}
+        ></iframe>
       </main>
     </div>
     <script>
       import "../scripts/site-interactions";
+
+      // A content-sized exhibit frame. Same origin, so the height can simply be
+      // read off the inner document; a ResizeObserver keeps it honest when the
+      // board reflows its own canvases. Without this the frame is a viewport-
+      // height letterbox and the page scrolls twice.
+      const frame = document.querySelector<HTMLIFrameElement>("[data-fit]");
+      if (frame) {
+        const sync = () => {
+          const doc = frame.contentDocument;
+          if (!doc?.body) return;
+          const height = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight);
+          if (height > 0) frame.style.height = `${height}px`;
+        };
+        const observe = () => {
+          sync();
+          const doc = frame.contentDocument;
+          if (doc?.body) new ResizeObserver(sync).observe(doc.body);
+          // The board draws its canvases after first paint; re-measure once they settle.
+          window.setTimeout(sync, 400);
+        };
+        if (frame.contentDocument?.readyState === "complete") observe();
+        frame.addEventListener("load", observe);
+        window.addEventListener("resize", sync);
+      }
     </script>
   </body>
 </html>
@@ -115,6 +159,15 @@ const imageUrl = new URL(image, Astro.site ?? Astro.url);
     border: 1px solid var(--color-line);
     border-radius: 0;
     background: #fff;
+  }
+
+  /* Content-sized: the script sets an exact pixel height, so the only job left
+     here is to stop the viewport-height rule above from winning first paint. */
+  .studio-app__frame--fit {
+    height: auto;
+    min-height: 40rem;
+    border-inline: 0;
+    border-block-end: 0;
   }
 </style>
 

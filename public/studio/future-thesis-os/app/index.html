@@ -6,6 +6,7 @@
 <meta name="description" content="Future Thesis turns scattered signals into testable views of where technology and industry are heading.">
 <meta name="robots" content="noindex, nofollow">
 <title>Future Thesis: world model</title>
+<script>if(window.parent!==window)document.documentElement.className="framed";</script>
 <style>
 @font-face {
   font-family: "Archivo";
@@ -30,579 +31,804 @@
 }
 
 /* ══════════════════════════════════════════════════════════════
-   Ported from the project's own DESIGN.md (v1, 2026-09-04): cold
-   neutrals, one cobalt accent, hairlines instead of boxes.
+   Ported wholesale from the project's own dashboard (dashboard/
+   index.html, 2026-09-04) — the same file the live board runs on,
+   not a re-interpretation of its DESIGN.md. Structure, CSS and
+   drawing code are the project's; only the four departures below
+   are ours.
 
-   Two deliberate departures from that spec. Archivo carries every
-   role — the site this board is embedded in loads one face, and a
-   second family for one iframe is not worth 40 KB — so the serif /
-   sans duality is rebuilt out of weight, size and letter-spacing.
-   And the exhibit is a frozen English snapshot, so nothing here is
-   bilingual.
+   1. Archivo carries every role. The spec pairs Noto Serif SC with
+      Inter; the site this board is embedded in already loads one
+      face, and a second family for one iframe is not worth the
+      bytes. The serif / sans duality is rebuilt out of weight,
+      size and letter-spacing.
+   2. English only. The board is a frozen English snapshot, so
+      nothing here is bilingual.
+   3. Frozen, not live. Every "this week" reading is relabelled to
+      the snapshot window; the board does not update.
+   4. No candidate watchlist. That section has no data in the
+      public snapshot and is dropped rather than shown empty.
+   ══════════════════════════════════════════════════════════════ */
 
-   Single light world, per the spec. The old sheet defaulted to dark
-   and flipped on prefers-color-scheme, which put a black board under
-   the always-light page that frames it.
+/* ══════════════════════════════════════════════════════════════
+   Future Thesis OS · Public display site · See DESIGN.md for specifications (v1 · 2026-09-04)
+   Single light world · One accent colour · Two typographic voices (rebuilt here from Archivo alone - see the departures below)
    ══════════════════════════════════════════════════════════════ */
 :root{
   color-scheme:light;
-
-  /* Neutrals — cold, blue-leaning. Names kept from the old sheet so
-     the drawing code, which reads them through var(), needs no edit. */
-  --ground:#F5F7FA; --surface:#FFFFFF; --surface-2:#EDF1F5; --raise:#FFFFFF;
-  --ink:#0E1A2B; --ink-dim:#46546A; --muted:#7C8798;
-  --line:#E1E6EC; --line-2:#CBD3DD;
-
-  /* One accent. `--accent` is the reading colour (links, active text);
-     `--accent-2` is the data colour and appears only on marks. */
-  --accent:#1C5CAB; --accent-2:#2A78D6; --accent-hover:#104281;
-  --accent-soft:#DBE8FA; --accent-wash:rgba(42,120,214,.08);
-
-  /* Polarity, always paired with an arrow and a word. */
-  --up:#2A78D6; --down:#EB6834; --flat:#7C8798;
-
-  /* Trend status is set in words, not colour — these resolve to the
-     ink ramp so the drawing code keeps working. Falsified is the one
-     exception: it is a verdict, not a shade of the same thing. */
-  --st-emerging:#7C8798; --st-strength:#7C8798; --st-main:#46546A;
-  --st-loose:#7C8798; --st-fals:#EB6834;
-
-  /* Graph node roles. A map is the one place the spec allows data
-     colour on marks, but it is still one hue plus the polarity pair. */
-  --bottleneck:#EB6834; --driver:#2A78D6; --pat:#7C8798; --ext:#CBD3DD;
-
-  /* The drawing code still passes a per-kind fill for the meter. One data
-     colour now, so both resolve to it and `.bar>i` overrides either way —
-     defined here only so no inline style references a dangling variable. */
-  --mark-scen:var(--accent-2); --mark-chain:var(--accent-2);
-
+  --color-paper:#F5F7FA; --color-surface:#FFFFFF; --color-surface-2:#EDF1F5;
+  --color-ink:#0E1A2B; --color-ink-2:#46546A; --color-ink-3:#7C8798;
+  --color-line:#E1E6EC; --color-line-2:#CBD3DD;
+  --color-accent:#1C5CAB; --color-accent-2:#2A78D6; --color-accent-hover:#104281; --color-accent-soft:#DBE8FA; --color-accent-wash:rgba(42,120,214,.08);
+  --color-up:#2A78D6; --color-down:#EB6834;
+  --font-display:"Archivo","Archivo Fallback",Georgia,serif;
+  --font-text:"Archivo","Archivo Fallback",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --text-xs:12px; --text-sm:13.5px; --text-base:15px; --text-md:17px; --text-lg:20px; --text-xl:24px; --text-2xl:30px; --text-3xl:38px;
+  --text-4xl:clamp(38px,4.4vw,52px); --text-hero:clamp(40px,6.4vw,72px);
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:24px; --space-6:32px; --space-7:40px; --space-8:48px; --space-9:64px; --space-10:96px; --space-11:128px; --space-12:160px;
+  --radius-sm:6px; --radius-md:12px; --radius-pill:999px;
   --shadow-1:0 1px 2px rgba(14,26,43,.04),0 8px 24px -12px rgba(14,26,43,.18);
   --shadow-2:0 2px 6px rgba(14,26,43,.06),0 16px 40px -16px rgba(14,26,43,.28);
   --shadow-3:-24px 0 60px -28px rgba(14,26,43,.35);
-  --shadow:var(--shadow-1);
-
-  --radius-sm:6px; --radius-md:12px; --radius-pill:999px;
-
-  /* One family: Archivo. IDs, probabilities and counts inherit this
-     face — they are not a second typeface. */
-  --font:"Archivo", system-ui, sans-serif;
-  --mono:var(--font); --sans:var(--font);
-
-  --text-xs:12px; --text-sm:13.5px; --text-base:15px; --text-md:17px;
-  --text-lg:20px; --text-xl:24px; --text-2xl:30px;
-
-  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:24px;
-  --space-6:32px; --space-7:40px; --space-8:48px; --space-9:64px; --space-10:96px;
-
-  --ease:cubic-bezier(.2,.7,.2,1); --dur-1:150ms; --dur-2:300ms;
+  --max:1200px; --gutter:clamp(20px,4vw,48px);
+  --ease:cubic-bezier(.2,.7,.2,1); --dur-1:150ms; --dur-2:300ms; --dur-3:500ms;
 }
 *{box-sizing:border-box}
-html,body{margin:0}
-body{background:var(--ground);color:var(--ink);font-family:var(--sans);
-  font-size:var(--text-base);line-height:1.7;
-  font-synthesis-weight:none;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
-  font-variant-numeric:lining-nums}
-.mono{font-family:inherit;font-variant-numeric:lining-nums tabular-nums}
-.wrap{max-width:1200px;margin:0 auto;padding:0 clamp(20px,4vw,48px)}
-a{color:var(--accent)}
-h1,h2,h3{margin:0;font-weight:600;text-wrap:balance;letter-spacing:-.01em;line-height:1.2}
-button{font-family:inherit;cursor:pointer}
-::selection{background:var(--accent-soft);color:var(--ink)}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:var(--radius-sm)}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--color-paper);color:var(--color-ink);font-family:var(--font-text);font-size:var(--text-md);line-height:1.7;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-feature-settings:"cv11","ss01"}
+h1,h2,h3,h4{margin:0;font-family:var(--font-display);font-weight:600;letter-spacing:-.01em;text-wrap:balance;line-height:1.2}
+p{margin:0}
+a{color:var(--color-accent);text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:.22em}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:left}
+:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px;border-radius:var(--radius-sm)}
+.skip{position:absolute;left:-999px;top:8px;background:var(--color-ink);color:#fff;padding:8px 12px;z-index:100;border-radius:var(--radius-sm)}
+.skip:focus{left:8px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+.num{font-variant-numeric:tabular-nums}
+.measure{max-width:65ch}
 
-/* ---------- Header ---------- */
-header{position:sticky;top:0;z-index:40;background:rgba(245,247,250,.84);
-  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
-nav.tabs{display:flex;gap:var(--space-6);padding:0}
-.tab{background:none;border:none;color:var(--ink-dim);font-size:14px;font-weight:500;
-  padding:0;height:64px;border-bottom:1.5px solid transparent;
-  display:flex;align-items:center;gap:8px;transition:color var(--dur-1)}
-.tab .n{font-family:inherit;font-size:var(--text-xs);color:var(--muted);
-  font-variant-numeric:tabular-nums}
-.tab:hover{color:var(--ink)}
-.tab.on{color:var(--ink);border-bottom-color:var(--ink)}
-.tab:focus-visible{outline:2px solid var(--accent);outline-offset:-4px}
+/* ── Typographic roles ── */
+.eyebrow{font-size:var(--text-xs);font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--color-accent)}
+.eyebrow.quiet{color:var(--color-ink-3)}
+.label{font-size:var(--text-xs);font-weight:500;letter-spacing:.06em;color:var(--color-ink-3);font-variant-numeric:tabular-nums}
+.lede{font-size:clamp(17px,1.35vw,20px);color:var(--color-ink-2);line-height:1.75;max-width:56ch}
+.note{font-size:var(--text-base);color:var(--color-ink-2);line-height:1.7}
+.small{font-size:var(--text-sm);color:var(--color-ink-3);line-height:1.55}
 
-/* ---------- Generic ---------- */
-.view{display:none;padding:var(--space-9) 0 var(--space-10);animation:fade .35s ease}
-.view.on{display:block}
-@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* ── Components: Button / Chip ── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 var(--space-4);border-radius:var(--radius-pill);font-size:14px;font-weight:500;line-height:1;white-space:nowrap;
+  background:var(--color-surface);color:var(--color-ink);border:1px solid var(--color-line-2);transition:border-color var(--dur-1),color var(--dur-1),background var(--dur-1)}
+.btn:hover{border-color:var(--color-accent);color:var(--color-accent)}
+.btn.primary{background:var(--color-ink);color:#fff;border-color:var(--color-ink)}
+.btn.primary:hover{background:var(--color-accent-hover);border-color:var(--color-accent-hover);color:#fff}
+.btn.ghost{border-color:transparent;background:transparent}
+.btn.ghost:hover{background:var(--color-accent-wash);color:var(--color-accent)}
+.btn.sm{height:32px;padding:0 12px;font-size:13px}
+.btn.icon{width:36px;height:36px;padding:0;border-radius:50%;background:var(--color-surface-2);border-color:transparent;color:var(--color-ink-2);font-size:16px}
+.btn.icon:hover{background:var(--color-accent-soft);color:var(--color-accent)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{display:inline-flex;align-items:center;height:28px;padding:0 12px;border-radius:var(--radius-pill);font-size:13px;font-weight:500;color:var(--color-ink-2);background:var(--color-surface);border:1px solid var(--color-line-2);white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis;transition:border-color var(--dur-1),color var(--dur-1)}
+.chip .id{font-variant-numeric:tabular-nums;color:var(--color-ink-3);margin-right:6px;font-weight:600;font-size:12px}
+button.chip:hover{border-color:var(--color-accent);color:var(--color-accent)}
+.chip.static{cursor:default}
+.arrow{color:var(--color-ink-3);font-size:13px}
 
-/* Section head: eyebrow + count on the left, the quiet aside on the right. */
-.sec-h{display:flex;align-items:baseline;gap:var(--space-3);margin:0 0 var(--space-5);flex-wrap:wrap}
-.sec-h h2{font-size:var(--text-xs);font-weight:600;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--accent)}
-.sec-h .c{font-family:inherit;font-size:var(--text-xs);font-weight:500;color:var(--muted);
-  letter-spacing:.06em;font-variant-numeric:lining-nums tabular-nums}
-.sec-h .hint{margin-left:auto;font-size:var(--text-sm);color:var(--muted);line-height:1.55}
+/* ── Components: Meter ── */
+.meter{position:relative;height:6px;border-radius:3px;background:var(--color-accent-soft)}
+.meter i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--color-accent-2)}
+.meter b{position:absolute;top:50%;width:12px;height:12px;border-radius:50%;background:var(--color-accent-2);transform:translate(-50%,-50%);box-shadow:0 0 0 2px var(--color-surface)}
+.meter .tick{position:absolute;top:-5px;bottom:-5px;width:1px;background:var(--color-line-2)}
+.cred{display:flex;align-items:baseline;gap:8px;white-space:nowrap}
+.cred .lab{font-size:var(--text-sm);font-weight:500;color:var(--color-ink)}
+.cred .val{font-size:var(--text-xs);color:var(--color-ink-3);font-variant-numeric:tabular-nums}
+.delta{display:inline-flex;align-items:center;gap:5px;font-size:var(--text-xs);font-weight:500;color:var(--color-ink-2);font-variant-numeric:tabular-nums;white-space:nowrap}
+.delta::before{content:"";width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent}
+.delta.u::before{border-bottom:6px solid var(--color-up)}
+.delta.d::before{border-top:6px solid var(--color-down)}
 
-/* ---------- Trends, scenarios, chains ----------
-   No boxes. Each item is an unboxed block in a hairline-ruled grid;
-   only the title answers to the pointer. */
-.grid{display:grid}
-.tg{grid-template-columns:repeat(auto-fill,minmax(288px,1fr));
-  gap:0 var(--space-8);border-top:1px solid var(--line-2)}
-.card{position:relative;display:flex;flex-direction:column;gap:10px;
-  padding:var(--space-5) 0;border-bottom:1px solid var(--line);
-  background:none;border-radius:0;cursor:pointer;transition:none}
-.card:hover .ttl{color:var(--accent)}
-.card:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:var(--radius-sm)}
+/* ── Top bar ── */
+.framed .top{position:static;background:var(--color-paper);backdrop-filter:none;-webkit-backdrop-filter:none}
+.top{position:sticky;top:0;z-index:40;background:rgba(245,247,250,.84);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid transparent;transition:border-color var(--dur-2)}
+.top.scrolled{border-bottom-color:var(--color-line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:var(--space-5)}
+.wordmark{display:flex;align-items:baseline;gap:10px;color:var(--color-ink)}
+.wordmark:hover{text-decoration:none}
+.wordmark .name{font-family:var(--font-display);font-weight:600;font-size:18px}
+.wordmark .sub{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--color-ink-3)}
+nav.primary{display:flex;gap:var(--space-6)}
+nav.primary a{font-size:14px;font-weight:500;color:var(--color-ink-2);padding:6px 0;border-bottom:1.5px solid transparent;transition:color var(--dur-1)}
+nav.primary a:hover{color:var(--color-ink);text-decoration:none}
+nav.primary a.on{color:var(--color-ink);border-bottom-color:var(--color-ink)}
+@media(max-width:760px){nav.primary{display:none}}
 
-/* The old sheet marked kind with a 4px colour stripe down the left
-   edge. Kind is already in the heading above each list. */
-.card .stripe{display:none}
+/* ── Sections ── */
+section.sec{padding:var(--space-11) 0;position:relative}
+section.sec + section.sec{border-top:1px solid var(--color-line)}
+.sec-head{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--space-5);align-items:end;margin-bottom:var(--space-8)}
+.sec-head .l{grid-column:1/span 6}
+.sec-head .r{grid-column:8/span 5}
+.sec-head h2{font-size:var(--text-4xl);margin-top:var(--space-3)}
+.sec-head h2.compact{font-size:var(--text-xl)}
+@media(max-width:1000px){.sec-head{grid-template-columns:1fr;gap:var(--space-4)}.sec-head .l,.sec-head .r{grid-column:1}}
+@media(max-width:760px){section.sec{padding:var(--space-10) 0}}
 
-.card .top{display:flex;align-items:baseline;gap:var(--space-3);margin:0}
-.card .dslot{margin-left:auto}
-.card .id{font-family:inherit;font-size:var(--text-xs);font-weight:600;color:var(--muted);
-  letter-spacing:.06em;font-variant-numeric:tabular-nums}
-/* Status is a word, not a capsule. */
-.card .st{font-size:var(--text-xs);font-weight:500;letter-spacing:.06em;
-  color:var(--muted);padding:0;border-radius:0;background:none!important}
-.card .ttl{font-size:var(--text-lg);font-weight:600;line-height:1.35;letter-spacing:-.01em;
-  margin:0;transition:color var(--dur-1);
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.7em}
-.card .held{margin:0;color:var(--muted);font-size:var(--text-xs);line-height:1.5}
-.card .bot{display:flex;align-items:center;gap:var(--space-3)}
+/* ── Hero ── */
+.hero{position:relative;overflow:hidden;padding:var(--space-10) 0 var(--space-9)}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero .veil{position:absolute;inset:0;background:linear-gradient(90deg,var(--color-paper) 0%,rgba(245,247,250,.94) 34%,rgba(245,247,250,.62) 58%,rgba(245,247,250,.18) 100%);pointer-events:none}
+.hero .wrap{position:relative}
+.hero h1{font-size:var(--text-hero);line-height:1.1;margin:var(--space-4) 0 var(--space-5);max-width:14ch}
+.top3{margin-top:var(--space-9);border-top:1px solid var(--color-line-2)}
+.top3 .k{padding:var(--space-4) 0 var(--space-2)}
+.top3 .grid{display:grid;grid-template-columns:repeat(3,1fr)}
+.belief{padding:var(--space-4) var(--space-6) var(--space-5) 0;border-right:1px solid var(--color-line);display:flex;flex-direction:column;gap:10px}
+.belief + .belief{padding-left:var(--space-6)}
+.belief:last-child{border-right:0;padding-right:0}
+.belief .t{font-family:var(--font-display);font-size:var(--text-lg);font-weight:600;line-height:1.35;transition:color var(--dur-1)}
+.belief:hover .t{color:var(--color-accent)}
+@media(max-width:760px){.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-5) var(--space-4)}}
+@media(max-width:820px){.top3 .grid{grid-template-columns:1fr}.belief{border-right:0;border-bottom:1px solid var(--color-line);padding:var(--space-4) 0}.belief + .belief{padding-left:0}.belief:last-child{border-bottom:0}}
+.stats{display:flex;flex-wrap:wrap;gap:var(--space-6) var(--space-9);margin-top:var(--space-9);padding-top:var(--space-5);border-top:1px solid var(--color-line-2)}
+.stat b{display:block;font-size:36px;font-weight:600;line-height:1;letter-spacing:-.02em}
+.stat span{display:block;margin-top:var(--space-2);font-size:var(--text-sm);color:var(--color-ink-3)}
 
-/* Meter: 6px track, one filled bar, a dot at the reading. */
-.bar{flex:1;height:6px;background:var(--accent-soft);border-radius:3px;border:0;
-  overflow:visible;position:relative}
-.bar>i{display:block;height:100%;border-radius:3px;background:var(--accent-2)!important}
-.bar>u{position:absolute;top:50%;width:12px;height:12px;border-radius:50%;
-  background:var(--accent-2);opacity:1;transform:translate(-50%,-50%);
-  box-shadow:0 0 0 2px var(--ground)}
-.pv{font-family:inherit;font-size:var(--text-md);font-weight:600;min-width:38px;text-align:right;
-  font-variant-numeric:lining-nums tabular-nums;letter-spacing:-.01em}
+/* ── Seven futures ── */
+.futures{border-top:1px solid var(--color-line-2)}
+.future{border-bottom:1px solid var(--color-line)}
+.future .row{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:var(--space-8);align-items:center;width:100%;padding:var(--space-6) 0}
+.future .row:hover h3{color:var(--color-accent)}
+.future h3{font-size:var(--text-xl);line-height:1.3;transition:color var(--dur-1)}
+.future .one{margin-top:var(--space-2);color:var(--color-ink-2);font-size:var(--text-base);line-height:1.7;max-width:62ch}
+.future .side{display:flex;flex-direction:column;gap:12px}
+.future .side .cred{justify-content:space-between}
+.future .foot{display:flex;justify-content:space-between;align-items:center}
+.chev{display:inline-block;width:9px;height:9px;border-right:1.5px solid var(--color-ink-3);border-bottom:1.5px solid var(--color-ink-3);transform:rotate(45deg) translateY(-2px);transition:transform var(--dur-2) var(--ease)}
+.future.open .chev{transform:rotate(-135deg) translateY(-2px)}
+.future .panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--dur-3) var(--ease)}
+.future.open .panel{grid-template-rows:1fr}
+.future .panel > div{overflow:hidden}
+.future .inner{display:grid;grid-template-columns:1fr 1fr 340px;gap:var(--space-8);padding:var(--space-2) 0 var(--space-7)}
+.blk h4{font-family:var(--font-text);font-size:var(--text-xs);font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--color-ink-3);margin-bottom:var(--space-3)}
+.blk ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.blk li{font-size:var(--text-base);color:var(--color-ink-2);line-height:1.65;padding-left:16px;position:relative}
+.blk li::before{content:"";position:absolute;left:0;top:.75em;width:6px;height:1px;background:var(--color-line-2)}
+.blk li.q::before{width:6px;height:6px;border-radius:50%;top:.62em;background:var(--color-down)}
+.blk + .blk{margin-top:var(--space-5)}
+@media(max-width:1000px){.future .inner{grid-template-columns:1fr 1fr}.future .inner .spark-blk{grid-column:1/-1}}
+@media(max-width:760px){.future .row{grid-template-columns:1fr;gap:var(--space-4)}.future .inner{grid-template-columns:1fr;gap:var(--space-6)}}
 
-/* Polarity: triangle, then the number. No capsule, no fill. */
-.delta{font-family:inherit;font-size:var(--text-xs);font-weight:500;padding:0;border-radius:0;
-  background:none!important;color:var(--ink-dim)!important;white-space:nowrap;
-  font-variant-numeric:lining-nums tabular-nums;
-  display:inline-flex;align-items:center;gap:5px}
-.delta::before{content:"";width:0;height:0;
-  border-left:4px solid transparent;border-right:4px solid transparent}
-.delta.u::before{border-bottom:6px solid var(--up)}
-.delta.d::before{border-top:6px solid var(--down)}
-.delta.f::before{border-bottom:0;border-top:0;width:8px;height:1px;background:var(--flat)}
-.up-badge{font-size:var(--text-xs);font-family:inherit;font-weight:600;letter-spacing:.06em;
-  color:var(--accent);border:0;border-radius:0;padding:0}
+/* ── Belief trajectories ── */
+.spark{position:relative}
+.spark svg{display:block;width:100%;height:auto;overflow:visible}
+.spark .tip{position:absolute;pointer-events:none;background:var(--color-ink);color:#fff;font-size:12px;font-variant-numeric:tabular-nums;padding:5px 8px;border-radius:var(--radius-sm);transform:translate(-50%,-140%);white-space:nowrap;opacity:0;transition:opacity var(--dur-1)}
+.spark .tip b{font-weight:600}
+.spark .axis{display:flex;justify-content:space-between;font-size:11px;color:var(--color-ink-3);font-variant-numeric:tabular-nums;margin-top:6px}
 
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-9);margin-top:var(--space-10)}
-@media(max-width:840px){.cols{grid-template-columns:1fr;gap:var(--space-8)}}
-.sgrid{grid-template-columns:1fr;border-top:1px solid var(--line-2)}
-#scen-grid .card,
-#chain-list .card{gap:8px;padding:var(--space-5) 0}
-#scen-grid .card .top,
-#chain-list .card .top{display:grid;grid-template-columns:auto minmax(0,1fr) auto;
-  align-items:baseline;gap:8px var(--space-3);margin:0}
-#scen-grid .card .dslot,
-#chain-list .card .dslot{margin-left:0}
-#scen-grid .card .ttl,
-#chain-list .card .ttl{font-size:var(--text-md);min-height:0;-webkit-line-clamp:3}
-#scen-grid .card .held,
-#chain-list .card .held{min-height:1.3em;line-height:1.4;
-  overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+/* ── Trends ── */
+.group{padding:var(--space-6) 0 var(--space-8);border-top:1px solid var(--color-line-2)}
+.group:first-child{border-top:0;padding-top:0}
+.group .gh{display:flex;align-items:baseline;gap:var(--space-4);margin-bottom:var(--space-5)}
+.group .gh h3{font-size:var(--text-xl)}
+.forces{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:var(--space-6) var(--space-8)}
+.force{display:flex;flex-direction:column;gap:10px;padding:var(--space-4) 0}
+.force .meta{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.force h4{font-family:var(--font-display);font-size:var(--text-lg);font-weight:600;line-height:1.35;transition:color var(--dur-1)}
+.force:hover h4{color:var(--color-accent)}
+.force .one{font-size:var(--text-sm);color:var(--color-ink-2);line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.force .meter{margin-top:4px}
 
-/* ---------- Relationship map ---------- */
-.gwrap{display:grid;grid-template-columns:1fr 300px;gap:var(--space-8)}
-@media(max-width:900px){.gwrap{grid-template-columns:1fr;gap:var(--space-6)}}
-.gstage{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-md);
-  position:relative;overflow:hidden;min-height:420px}
-#net{display:block;width:100%;height:auto;touch-action:none}
-#net text{font-family:inherit;font-variant-numeric:lining-nums}
-.gstage .rd{position:absolute;left:var(--space-5);bottom:var(--space-4);right:var(--space-5);
-  font-size:var(--text-sm);color:var(--muted);pointer-events:none;line-height:1.55;max-width:72%}
-.gstage .rd b{color:var(--ink);font-weight:600}
-/* Legend reads as a row of quiet pills over the canvas. */
-.glegend{position:absolute;top:var(--space-4);right:var(--space-5);
-  display:flex;flex-direction:column;gap:6px;align-items:flex-start;
-  font-size:var(--text-xs);color:var(--ink-dim);background:none;padding:0;border:0}
-.glegend>*{display:inline-flex;align-items:center;height:28px;padding:0 12px;
-  border-radius:var(--radius-pill);background:rgba(255,255,255,.86);
-  border:1px solid var(--line);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
-.glegend i{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:7px;
-  vertical-align:middle}
+/* ── Map ── */
+section.map{background:var(--color-surface);padding-bottom:0}
+.stage{position:relative;height:clamp(420px,56vw,640px);border-top:1px solid var(--color-line);border-bottom:1px solid var(--color-line);background:var(--color-surface)}
+.stage canvas{display:block;width:100%;height:100%;touch-action:none}
+.stage .legend{position:absolute;left:var(--gutter);bottom:var(--space-4);display:flex;gap:6px;flex-wrap:wrap;pointer-events:none}
+.stage .legend span{display:inline-flex;align-items:center;gap:7px;height:28px;padding:0 12px;border-radius:var(--radius-pill);background:rgba(255,255,255,.86);border:1px solid var(--color-line);font-size:12px;color:var(--color-ink-2);backdrop-filter:blur(6px)}
+.stage .legend i{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--color-ink)}
+.stage .legend i.sq{border-radius:1px;transform:rotate(45deg) scale(.9);background:var(--color-accent-2)}
+.stage .legend i.ho{background:transparent;border:1.5px solid var(--color-ink-3)}
+.stage .legend i.ln{width:16px;height:1.5px;border-radius:0;background:var(--color-line-2)}
+.stage .legend i.fd{width:14px;height:9px;border-radius:2px;background:linear-gradient(90deg,rgba(42,120,214,.05),rgba(42,120,214,.28))}
+@media(max-width:760px){.stage{height:auto}.stage canvas{height:min(120vw,540px)}.stage .legend{position:static;padding:10px var(--gutter) 12px;border-top:1px solid var(--color-line)}}
+.tipcard{position:absolute;z-index:5;width:320px;max-width:calc(100% - 2*var(--gutter));background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-md);padding:var(--space-4);box-shadow:var(--shadow-2);pointer-events:none;opacity:0;transition:opacity var(--dur-1)}
+.tipcard.on{opacity:1}
+.tipcard .t{font-family:var(--font-display);font-weight:600;font-size:16px;margin:4px 0 8px;line-height:1.35}
+.tipcard .e{font-size:13px;color:var(--color-ink-2);line-height:1.55;margin-top:8px;padding-top:8px;border-top:1px solid var(--color-line)}
+.tipcard .e .id{font-weight:600;color:var(--color-ink);font-variant-numeric:tabular-nums}
+.tipcard .hint{margin-top:10px;font-size:12px;color:var(--color-accent);font-weight:500}
+.stage .follow{position:absolute;right:var(--gutter);top:var(--space-4);z-index:6;display:none;align-items:center;gap:12px;background:var(--color-surface);border:1px solid var(--color-line);border-radius:var(--radius-pill);padding:6px 6px 6px 16px;font-size:13.5px;font-weight:500;box-shadow:var(--shadow-1)}
+.stage .follow.on{display:flex}
+.chains{padding-top:var(--space-8);padding-bottom:var(--space-11)} /* Top and bottom only: preserve the left and right gutters of .wrap */
+.chain{display:grid;grid-template-columns:minmax(0,1fr) 220px auto;gap:var(--space-6);align-items:center;padding:var(--space-5) 0;border-top:1px solid var(--color-line)}
+.chain:last-child{border-bottom:1px solid var(--color-line)}
+.chain h4{font-family:var(--font-display);font-size:var(--text-lg);font-weight:600;line-height:1.35}
+.chain .story{font-size:var(--text-sm);color:var(--color-ink-2);line-height:1.65;margin-top:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.chain .prog .label{display:flex;justify-content:space-between;margin-bottom:8px}
+.chain .acts{display:flex;gap:8px}
+@media(max-width:860px){.chain{grid-template-columns:1fr;gap:var(--space-4)}.chains{padding-bottom:var(--space-10)}}
 
-.gside h3{font-size:var(--text-xs);font-weight:600;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--accent);margin:0 0 var(--space-3)}
-.gside .blk{background:none;border:0;border-top:1px solid var(--line-2);border-radius:0;
-  padding:var(--space-5) 0 0;margin:0 0 var(--space-6)}
-.gside .blk:first-of-type{border-top:0;padding-top:0}
-.rank{display:flex;align-items:center;gap:10px;padding:9px 0;font-size:var(--text-sm);
-  border-bottom:1px solid var(--line);cursor:pointer}
-.rank:last-child{border-bottom:none}
-.rank:hover .rl{color:var(--accent)}
-.rank .rn{font-family:inherit;font-size:var(--text-xs);font-weight:600;width:20px;text-align:center;
-  border-radius:0;font-variant-numeric:tabular-nums;color:var(--muted)!important;background:none!important}
-.rank .rid{font-family:inherit;font-size:var(--text-xs);color:var(--muted);min-width:30px;
-  font-variant-numeric:tabular-nums}
-.rank .rl{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-  color:var(--ink-dim);transition:color var(--dur-1)}
-.loop{font-size:var(--text-sm);color:var(--ink-dim);line-height:1.6;padding:10px 0;
-  border-bottom:1px solid var(--line)}
-.loop:last-child{border:none}
-.loop b{color:var(--ink);font-weight:600}
-.loop .new{font-family:inherit;font-size:var(--text-xs);font-weight:600;color:var(--accent);
-  border:0;border-radius:0;padding:0;margin-left:6px;letter-spacing:.06em}
-/* The one filled note on the page: it carries the map's headline. */
-.hub{background:var(--accent-wash);border:0;border-left:2px solid var(--accent);
-  border-radius:0;padding:var(--space-4) var(--space-5);margin:0 0 var(--space-6);
-  font-size:var(--text-sm);line-height:1.65;color:var(--ink-dim)}
-.hub b{color:var(--accent);font-weight:600}
+/* ── This week ── */
+.moves{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-8)}
+.moves h3{font-size:var(--text-xl);display:flex;align-items:baseline;gap:10px;margin-bottom:var(--space-4)}
+.moves h3 .n{font-family:var(--font-text);font-size:var(--text-sm);color:var(--color-ink-3);font-weight:500}
+.move{padding:var(--space-4) 0;border-top:1px solid var(--color-line)}
+.move:last-child{border-bottom:1px solid var(--color-line)}
+.move .hd{display:flex;align-items:baseline;justify-content:space-between;gap:var(--space-4);width:100%}
+.move .hd .t{font-weight:500;font-size:var(--text-base);line-height:1.5}
+.move .hd .t:hover{color:var(--color-accent)}
+.move .hd .kind{font-size:var(--text-xs);font-weight:600;letter-spacing:.06em;color:var(--color-ink-3);margin-right:8px;font-variant-numeric:tabular-nums}
+.move .why{margin-top:8px;font-size:var(--text-sm);color:var(--color-ink-2);line-height:1.65}
+.move .why .more{display:none}
+.move.open .why .more{display:inline}
+.move.open .why .less{display:none}
+.move .why button{color:var(--color-accent);font-size:13px;font-weight:500;margin-left:6px}
+@media(max-width:860px){.moves{grid-template-columns:1fr;gap:var(--space-7)}}
+.sub-sec{margin-top:var(--space-10)}
+.sub-sec h3{font-size:var(--text-xl);margin-bottom:var(--space-2)}
+.sub-sec .note{max-width:65ch;margin-bottom:var(--space-5)}
+.rs{display:grid;grid-template-columns:140px 1fr;gap:var(--space-5);padding:var(--space-5) 0;border-top:1px solid var(--color-line)}
+.rs:last-child{border-bottom:1px solid var(--color-line)}
+.rs .t{font-weight:500;font-size:var(--text-md);line-height:1.5}
+.rs .verdict{display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:var(--radius-pill);border:1px solid var(--color-line-2);font-size:12px;font-weight:600;letter-spacing:.06em;margin-left:10px;color:var(--color-ink-2);vertical-align:3px}
+.rs .e{margin-top:8px;font-size:var(--text-sm);color:var(--color-ink-2);line-height:1.65}
+@media(max-width:700px){.rs{grid-template-columns:1fr;gap:6px}}
+.watch ul{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:0 var(--space-8)}
+.watch li{font-size:var(--text-base);color:var(--color-ink-2);line-height:1.6;padding:var(--space-3) 0;border-top:1px solid var(--color-line)}
+.watch li .label{display:block;margin-bottom:4px}
 
-/* ---------- Drill-in sheet ---------- */
-.scrim{position:fixed;inset:0;background:rgba(14,26,43,.28);backdrop-filter:blur(2px);
-  opacity:0;pointer-events:none;transition:opacity var(--dur-2);z-index:60}
+/* ── Method ── */
+.layers{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--color-line);border-radius:var(--radius-md);overflow:hidden;background:var(--color-surface)}
+.layer{padding:var(--space-5);border-right:1px solid var(--color-line);position:relative}
+.layer:last-child{border-right:0}
+.layer h4{font-family:var(--font-display);font-size:var(--text-xl);margin:10px 0 4px}
+.layer .zh{font-size:var(--text-sm);color:var(--color-ink-3);margin-bottom:12px}
+.layer p{font-size:var(--text-sm);color:var(--color-ink-2);line-height:1.65}
+.layer .n{position:absolute;right:var(--space-5);top:var(--space-5);font-size:var(--text-sm);color:var(--color-ink-3);font-variant-numeric:tabular-nums}
+@media(max-width:900px){.layers{grid-template-columns:1fr 1fr}.layer:nth-child(2){border-right:0}.layer:nth-child(-n+2){border-bottom:1px solid var(--color-line)}}
+@media(max-width:520px){.layers{grid-template-columns:1fr}.layer{border-right:0;border-bottom:1px solid var(--color-line)}.layer:last-child{border-bottom:0}}
+.method-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--space-8) var(--space-5);margin-top:var(--space-9)}
+.mcol{grid-column:span 6}
+.mcol h3{font-size:var(--text-xl);margin-bottom:var(--space-3)}
+.mcol p{font-size:var(--text-base);color:var(--color-ink-2);line-height:1.75;max-width:60ch}
+.mcol p + p{margin-top:var(--space-3)}
+.scale{margin:var(--space-5) 0 var(--space-3);position:relative;padding-bottom:34px}
+.scale .bands{position:absolute;left:0;right:0;top:16px;font-size:11px;color:var(--color-ink-3)}
+.scale .bands span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+.abc{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-4);margin-top:var(--space-5)}
+.abc .card{padding:var(--space-4) var(--space-4) var(--space-5);border:1px solid var(--color-line);border-radius:var(--radius-md);background:var(--color-surface)}
+.abc b{display:block;font-size:var(--text-2xl);font-weight:600;line-height:1;margin:8px 0 8px}
+.abc span{font-size:var(--text-sm);color:var(--color-ink-2);line-height:1.5;display:block}
+@media(max-width:900px){.mcol{grid-column:span 12}}
+@media(max-width:600px){.abc{grid-template-columns:1fr}}
+
+/* ── Footer ── */
+footer{padding:var(--space-7) 0 var(--space-9);border-top:1px solid var(--color-line);color:var(--color-ink-3);font-size:var(--text-sm);line-height:1.75}
+footer .wrap{display:flex;justify-content:space-between;gap:var(--space-6);flex-wrap:wrap}
+footer .l{max-width:60ch}
+footer .r{text-align:right;font-variant-numeric:tabular-nums}
+@media(max-width:700px){footer .r{text-align:left}}
+
+/* ── Slide-out panel ── */
+.scrim{position:fixed;inset:0;background:rgba(14,26,43,.28);opacity:0;pointer-events:none;transition:opacity var(--dur-2);z-index:60}
 .scrim.on{opacity:1;pointer-events:auto}
-.drill{position:fixed;top:0;right:0;bottom:0;width:min(600px,94vw);background:var(--surface);
-  border-left:0;transform:translateX(102%);transition:transform var(--dur-2) var(--ease);
-  z-index:70;overflow-y:auto;box-shadow:var(--shadow-3)}
-.drill.on{transform:none}
-.dhead{padding:var(--space-5) var(--space-6) var(--space-4);border-bottom:1px solid var(--line);
-  position:sticky;top:0;background:var(--surface);z-index:2}
-.dhead .krow{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.badge{font-family:inherit;font-size:var(--text-xs);font-weight:600;letter-spacing:.12em;
-  text-transform:uppercase;padding:0;border:0;border-radius:0;color:var(--muted)}
-.dhead .did{font-family:inherit;font-size:var(--text-xs);font-weight:600;color:var(--accent);
-  letter-spacing:.06em;font-variant-numeric:tabular-nums}
-.dclose{margin-left:auto;background:var(--surface-2);border:0;color:var(--ink-dim);
-  width:36px;height:36px;border-radius:50%;font-size:16px;line-height:1;
-  display:flex;align-items:center;justify-content:center;transition:background var(--dur-1),color var(--dur-1)}
-.dclose:hover{background:var(--accent-soft);color:var(--accent)}
-.dhead h2{font-size:var(--text-xl);line-height:1.3;margin-bottom:var(--space-4)}
-.dmetrics{display:flex;gap:var(--space-6);align-items:flex-end;flex-wrap:wrap}
-.dmetrics .m b{font-family:inherit;font-size:30px;font-weight:600;line-height:1;letter-spacing:-.02em}
-.dmetrics .m span{display:block;font-size:var(--text-xs);color:var(--muted);margin-top:6px;
-  letter-spacing:.06em}
-.dbody{padding:var(--space-5) var(--space-6) var(--space-9)}
-.field{margin-bottom:var(--space-5)}
-.field .fl{font-size:var(--text-xs);font-weight:600;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:8px}
-.field .fl::before{content:"";width:14px;height:1px;background:var(--accent)}
-.field p{margin:0;font-size:var(--text-base);color:var(--ink);line-height:1.75}
-.field.mech p{color:var(--ink-dim)}
-.field table{width:100%;border-collapse:collapse;font-size:var(--text-sm);margin:10px 0}
-.field td,.field th{border:0;border-bottom:1px solid var(--line);padding:8px 10px 8px 0;
-  text-align:left;vertical-align:top;color:var(--ink-dim)}
-.field th{color:var(--muted);font-weight:600;font-size:var(--text-xs);letter-spacing:.06em;
-  text-transform:uppercase}
-.field.log p{color:var(--ink-dim);font-size:var(--text-sm);background:var(--surface-2);
-  border:0;border-radius:var(--radius-md);padding:var(--space-4);line-height:1.7}
-.chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.chip{font-family:inherit;font-size:13px;font-weight:500;height:28px;padding:0 12px;
-  display:inline-flex;align-items:center;border-radius:var(--radius-pill);
-  background:var(--surface);border:1px solid var(--line-2);color:var(--ink-dim);cursor:pointer;
-  transition:border-color var(--dur-1),color var(--dur-1)}
-.chip:hover{border-color:var(--accent);color:var(--accent)}
-.chip.dis{cursor:default}
-.chip.dis:hover{border-color:var(--line-2);color:var(--ink-dim)}
+.sheet{position:fixed;top:0;right:0;bottom:0;width:min(600px,94vw);background:var(--color-surface);z-index:70;transform:translateX(102%);transition:transform var(--dur-3) var(--ease);overflow-y:auto;box-shadow:var(--shadow-3)}
+.sheet.on{transform:none}
+.sheet .sh{position:sticky;top:0;background:var(--color-surface);padding:var(--space-5) var(--space-6) var(--space-4);border-bottom:1px solid var(--color-line);z-index:2}
+.sheet .sh .k{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.sheet .sh h2{font-size:var(--text-xl);line-height:1.3}
+.sheet .sb{padding:var(--space-5) var(--space-6) var(--space-9);display:flex;flex-direction:column;gap:var(--space-6)}
+.sheet .status{display:flex;align-items:center;gap:var(--space-4);margin-top:var(--space-3)}
+.sheet .status .meter{flex:1}
+.sheet .blk p{font-size:var(--text-base);color:var(--color-ink-2);line-height:1.75}
+.sheet .blk p.lead{font-size:var(--text-md);color:var(--color-ink)}
+.sheet .blk + .blk{margin-top:0}
+@media(max-width:600px){.sheet .sh,.sheet .sb{padding-left:var(--space-4);padding-right:var(--space-4)}}
 
-footer{border-top:1px solid var(--line);padding:var(--space-7) 0 var(--space-9);
-  font-size:var(--text-sm);color:var(--muted);line-height:1.75}
-footer b{color:var(--ink-dim);font-weight:600}
-
-@media(max-width:719px){
-  .wrap{padding-inline:20px}
-  nav.tabs{gap:var(--space-5);overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none}
-  nav.tabs::-webkit-scrollbar{display:none}
-  .tab{height:56px;flex:0 0 auto}
-  .view{padding:var(--space-7) 0 var(--space-9)}
-  .sec-h{align-items:flex-start;margin-bottom:var(--space-4)}
-  .sec-h .hint{width:100%;margin-left:0}
-  .tg{grid-template-columns:1fr;gap:0}
-  .card{padding:var(--space-4) 0}
-  .card .ttl{font-size:var(--text-md);min-height:0}
-  .cols{margin-top:var(--space-8);gap:var(--space-7)}
-  .gstage{min-height:min(70dvh,36rem)}
-  .gstage .rd{max-width:65%}
-  .glegend{top:12px;right:12px}
-  .drill{width:100%}
-  .dhead{padding:var(--space-4)}
-  .dclose{width:44px;height:44px;font-size:19px}
-  .dbody{padding:var(--space-4) var(--space-4) var(--space-8)}
-  .chip{min-height:36px;height:auto;padding:6px 12px}
-}
-</style>
-<style>
-/* ---------- loading state + shared panel rendering ---------- */
-#boot{position:fixed;inset:0;display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center;
-  background:var(--ground);z-index:99;font-family:inherit;font-size:13px;color:var(--muted);text-align:center;padding:24px}
-#boot .err{color:var(--st-fals);max-width:520px;line-height:1.6}
+/* ── Animations ── */
+.pre{opacity:0;transform:translateY(12px)}
+.reveal{transition:opacity .7s var(--ease),transform .7s var(--ease)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.pre{opacity:1;transform:none}}
+#boot{padding:var(--space-10) var(--gutter);font-size:var(--text-sm);color:var(--color-ink-3)}
 </style>
 </head>
 <body>
-<div id="boot">Loading the model...</div>
+<a class="skip" href="#main">Skip to content</a>
 
-<header>
+<header class="top" id="top">
   <div class="wrap">
-    <nav class="tabs" role="tablist">
-      <button class="tab on" data-v="ov" role="tab"><span>Overview</span></button>
-      <button class="tab" data-v="gr" role="tab"><span>Relationship map</span></button>
+    <a class="wordmark" href="#main"><span class="name">Future Thesis OS</span><span class="sub">World Model</span></a>
+    <nav class="primary" aria-label="Page navigation">
+      <a href="#futures">Futures</a><a href="#forces">Trends</a><a href="#map">Map</a><a href="#week">Revisions</a><a href="#method">Method</a>
     </nav>
   </div>
 </header>
 
-<main class="wrap">
-  <section class="view on" id="v-ov">
-    <div class="sec-h"><h2>Trends</h2><span class="c" id="tc"></span><span class="hint">Model snapshot from 29 August 2026</span></div>
-    <div class="grid tg" id="trend-grid"></div>
-    <div class="cols">
-      <div class="scen">
-        <div class="sec-h"><h2>Scenarios</h2><span class="c" id="sc"></span></div>
-        <div class="grid sgrid" id="scen-grid"></div>
+<div id="boot">Loading world model …</div>
+<main id="main" hidden>
+
+  <section class="hero" id="hero">
+    <canvas id="heroField" aria-hidden="true"></canvas>
+    <div class="veil" aria-hidden="true"></div>
+    <div class="wrap">
+      <p class="eyebrow">World Model · snapshot of <span id="heroDate" class="num"></span></p>
+      <h1>A weekly<br>self-correcting<br>future world model</h1>
+      <p class="lede">It places technological trends, industry signals, and first-principles reasoning onto the same map, describing the future with falsifiable scenarios rather than opinions. Every Saturday, an autonomous programme revises each judgement against that week's evidence, and publicly registers what would prove it wrong.</p>
+      <div class="top3"><p class="k eyebrow quiet">Top three strongest beliefs right now</p><div class="grid" id="top3"></div></div>
+      <div class="stats" id="stats"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="futures">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="l"><p class="eyebrow">Scenarios</p><h2>Seven future scenarios</h2></div>
+        <p class="r note">Scenarios are the core units of this model: what a local part of the world will look like after multiple trends converge. Each carries a belief strength that is continuously revised by evidence, along with a clearly stated "what would change the model's view". Click any scenario to view.</p>
       </div>
-      <div>
-        <div class="sec-h"><h2>Chains</h2><span class="c" id="cc"></span></div>
-        <div class="grid sgrid" id="chain-list"></div>
+      <div class="futures" id="futuresList"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="forces">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="l"><p class="eyebrow">Trends</p><h2>Trends driving the world</h2></div>
+        <p class="r note">Each trend is an independent, directional structural judgement. It only describes its current strength and trajectory, without explaining causality. Causality is left for the map in the next section. Click any trend to view its first-principles mechanism, cross-domain analogies, and confirmation / falsification signals.</p>
+      </div>
+      <div id="forcesList"></div>
+    </div>
+  </section>
+
+  <section class="sec map" id="map">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="l"><p class="eyebrow">Couplings & Chains</p><h2>How they connect</h2></div>
+        <p class="r note">One trend pushes another through specific mechanisms, with time lags, strength, and reverse feedback in between. Connecting these wires yields a map that propagates evidence on its own. The background shading is a contour field calculated from the belief strength of each node, where the denser the lines, the more concentrated the belief. Hover to view neighbours, click a node to read deeply, or follow a causal chain below.</p>
+      </div>
+    </div>
+    <div class="stage" id="stage">
+      <canvas id="mapCanvas" role="img" aria-label="World model couplings map"></canvas>
+      <div class="tipcard" id="tipcard" role="status" aria-live="polite"></div>
+      <div class="follow" id="follow"><span id="followText"></span><button class="btn icon" id="followExit" aria-label="Stop following" style="width:30px;height:30px;font-size:14px">✕</button></div>
+      <div class="legend"><span><i></i>Structural trends</span><span><i class="sq"></i>Scenarios</span><span><i class="ho"></i>Off-map nodes</span><span><i class="ln"></i>Causal couplings</span><span><i class="fd"></i>Belief field</span></div>
+    </div>
+    <div class="wrap chains" id="chains">
+      <div class="sec-head" style="margin-bottom:var(--space-5)">
+        <div class="l"><p class="eyebrow">Chains</p><h2 class="compact">Five end-to-end causal chains</h2></div>
+        <p class="r note">Chains answer "how far along the entire path has been travelled". Progress is not probability, but the progress of end-to-end realisation.</p>
+      </div>
+      <div id="chainList"></div>
+    </div>
+  </section>
+
+  <section class="sec" id="week">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="l"><p class="eyebrow">Snapshot week · <span id="weekWin" class="num"></span></p><h2>What moved that week</h2></div>
+        <p class="r note" id="weekLede"></p>
+      </div>
+      <div class="moves">
+        <div><h3>Revised up <span class="n num" id="nUp"></span></h3><div id="upList"></div></div>
+        <div><h3>Revised down <span class="n num" id="nDown"></span></h3><div id="downList"></div></div>
+      </div>
+      <div class="sub-sec" id="resolved">
+        <h3>Judgements adjudicated by reality</h3>
+        <p class="note">Every judgement has pre-written "if X happens, it means we are right / wrong". When X truly happens, it is recorded here, neither deleted nor modified.</p>
+        <div id="resolvedList"></div>
+      </div>
+      <div class="sub-sec watch" id="watch">
+        <h3>New hypotheses under observation</h3>
+        <p class="note">Candidates not yet in the map. They need to find enough independent evidence within four weeks, otherwise they will be abandoned.</p>
+        <ul id="watchList"></ul>
       </div>
     </div>
   </section>
 
-  <section class="view" id="v-gr">
-    <div class="sec-h"><h2>Relationship map</h2><span class="c" id="gcount"></span>
-      <span class="hint">Drag to rearrange. Hover to trace a path. Click to inspect.</span></div>
-    <div class="gwrap">
-      <div class="gstage">
-        <div class="glegend" id="glegend"></div>
-        <svg id="net" viewBox="0 0 900 620" role="img" aria-label="Map of relationships between trends"></svg>
-        <div class="rd" id="rd"></div>
+  <section class="sec" id="method">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="l"><p class="eyebrow">Method</p><h2>How this model works</h2></div>
+        <p class="r note">It does not predict a certain future, but simultaneously maintains multiple possible futures, and continuously asks: which is becoming more probable, why, and what signals would falsify it.</p>
       </div>
-      <div class="gside">
-        <div class="hub" id="hub"></div>
-        <div class="blk"><h3>Where pressures converge</h3><div id="indeg"></div></div>
-        <div class="blk"><h3>What drives the system</h3><div id="outdeg"></div></div>
-        <div class="blk"><h3>Closed loops</h3><div id="loops"></div></div>
+      <div class="layers" id="layers"></div>
+      <div class="method-grid">
+        <div class="mcol">
+          <h3>Probability is belief strength, not frequency</h3>
+          <p>The world will only run once, so "0.76" is not "76% will happen", but the model's current belief strength that the proposition is true. It does not pursue absolute accuracy, but requires comparability: a belief strength of 0.76 must truly be stronger than 0.62.</p>
+          <div class="scale" id="scaleDemo"></div>
+          <p>The weekly revision magnitude is restricted to a very small range, unless a pre-registered event truly happens and triggers an adjudication.</p>
+        </div>
+        <div class="mcol">
+          <h3>What would prove it wrong</h3>
+          <p>Every judgement has registered falsification conditions, divided into three categories: Class A will be adjudicated by a specific event within a foreseeable time; Class B is a tripwire, which once triggered only weakens and does not strengthen; Class C is a long-cycle open proposition, continuously increasing or decreasing belief strength according to evidence.</p>
+          <div class="abc" id="abc"></div>
+        </div>
+        <div class="mcol">
+          <h3>How it absorbs the world</h3>
+          <p>Every Saturday morning, an autonomously running programme reads the industry news, research, and signals of the week, finds out which evidence hits existing judgements and which structural trends are not yet in the map, and then revises them one by one. Every modification is written into an append-only evolution log, therefore the full history of any belief can be reconstructed week by week.</p>
+        </div>
+        <div class="mcol">
+          <h3>What it does not do</h3>
+          <p>It does not look at stock prices, holds no stances, and gives no investment advice. It is isolated in data from any market-perspective systems, and only deduces the future starting from structural changes of the world. Calibration only measures "whether confidence tiers correlate with hit rates", and does not measure profit and loss.</p>
+        </div>
       </div>
     </div>
   </section>
-
-
-  <footer id="foot"></footer>
 </main>
 
+<footer>
+  <div class="wrap">
+    <div class="l">Future Thesis OS · A personal strategic insight system that combines multi-source knowledge, technological trends, industry signals, and first-principles reasoning, used to continuously generate, compare, and update hypotheses of the future evolution of the world. Probability is Bayesian credence (belief strength) rather than frequency. This site does not constitute any investment advice.</div>
+    <div class="r" id="footMeta"></div>
+  </div>
+</footer>
+
 <div class="scrim" id="scrim"></div>
-<aside class="drill" id="drill" aria-hidden="true"></aside>
+<aside class="sheet" id="sheet" aria-hidden="true" role="dialog" aria-modal="true"></aside>
 
 <script>
-/* ===================== bootstrap: fetch the snapshot data ===================== */
+(async function(){
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
-const esc=s=>String(s??"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
-async function boot(){
-  try{
-    const res=await fetch("./data.json",{cache:"no-store"});
-    if(!res.ok)throw new Error("HTTP "+res.status);
-    const data=await res.json();
-    $("#boot").remove();
-    render(data);
-  }catch(err){
-    $("#boot").innerHTML=`<div class="err">Could not load data.json: ${esc(err.message)}<br>
-      This page reads its data from data.json next to it.<br>
-      Open it over HTTP rather than from the local file system.</div>`;
-  }
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const clean=s=>String(s??'').replace(/\*\*/g,'').replace(/`/g,'').replace(/\[Q[123]\]/g,'').replace(/\|Δp\|=[0-9.]+\s*/g,'').replace(/\s{2,}/g,' ').trim();
+const framed=window.parent!==window;
+const hostFrame=()=>{try{return parent.document.querySelector('iframe.studio-app__frame');}catch(err){return null;}};
+const goTo=(el,block)=>{
+  if(!framed){el.scrollIntoView({behavior:reduced?'auto':'smooth',block:block||'start'});return;}
+  const fr=hostFrame();if(!fr)return;
+  const r=el.getBoundingClientRect();
+  let top=fr.getBoundingClientRect().top+parent.scrollY+r.top;
+  top-=block==='center'?Math.max(0,(parent.innerHeight-r.height)/2):12;
+  parent.scrollTo({top:Math.max(0,top),behavior:reduced?'auto':'smooth'});
+};
+if(framed)document.addEventListener('click',e=>{
+  const a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a)return;
+  const id=a.getAttribute('href').slice(1);const el=id?document.getElementById(id):null;if(!el)return;
+  e.preventDefault();goTo(el,'start');
+});
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const TOK={ink:'#0E1A2B',ink2:'#46546A',ink3:'#7C8798',line:'#E1E6EC',line2:'#CBD3DD',accent:'#1C5CAB',accent2:'#2A78D6',surface:'#FFFFFF'};
+const FONT=()=>getComputedStyle(document.body).fontFamily;
+
+let D;
+try{ D = window.__FTOS_DATA__ || await (await fetch('./data.json',{cache:'no-store'})).json(); }
+catch(e){ $('#boot').textContent='World model data is temporarily unreadable.'; return; }
+$('#boot').remove(); $('#main').hidden=false;
+
+/* ───────── helpers ───────── */
+const credLabel=p=>p<0.40?'Opposite inclination':p<0.55?'Uncertain':p<0.65?'Slightly inclined':p<0.75?'Clearly inclined':p<0.85?'Strong belief':'Extremely strong belief';
+const fmt=p=>p==null?'—':p.toFixed(2);
+const meter=(p,ticks=false)=>`<div class="meter" role="img" aria-label="Belief strength ${fmt(p)}">${ticks?[0.40,0.55,0.65,0.75,0.85].map(t=>`<span class="tick" style="left:${t*100}%"></span>`).join(''):''}<i style="width:${(p||0)*100}%"></i><b style="left:${(p||0)*100}%"></b></div>`;
+const cred=(p,lab)=>`<div class="cred"><span class="lab">${lab||credLabel(p)}</span><span class="val">${fmt(p)}</span></div>`;
+const deltaChip=o=>o.delta?`<span class="delta ${o.delta>0?'u':'d'}">This week ${o.delta>0?'+':''}${o.delta.toFixed(2)}</span>`:'';
+const ALL=[...D.trends,...D.scenarios,...D.chains,...D.couplings];
+const IDX={}; ALL.forEach(o=>IDX[o.id]=o);
+const shortTitle=(t,max=10)=>{let s=String(t||'').replace(/^\d{4}(?:-\d{4})?\s*/,'').replace(/\s*\/\s*/g,'/').replace(/\s+/g,' ').split(/[（(：:]/)[0].trim();return s.length>max?s.slice(0,max)+'…':s;};
+const reasonOf=(log)=>{const parts=String(log||'').split(/\s*·\s*/);let i=0;while(i<parts.length&&/→/.test(parts[i]))i++;return clean(parts.slice(i).join(' · '));};
+const firstSentence=(s,max=96)=>{const m=s.match(/^(.{8,}?[。；;])/);let f=m?m[1]:s;if(f.length>max)f=f.slice(0,max)+'…';return f;};
+const idChip=(id,max=12)=>{const o=IDX[id];return o?`<button class="chip" data-open="${id}" title="${esc(o.title)}"><span class="id">${esc(id)}</span>${esc(shortTitle(o.title,max))}</button>`:`<span class="chip static"><span class="id">${esc(id)}</span></span>`;};
+
+/* ───────── sparkline ───────── */
+const START='2026-06-27';
+function sparkline(series){
+  const W=340,H=96,PL=6,PR=44,PT=14,PB=10;
+  const pts=(series&&series.length?series:[]).map(q=>({d:q.d||START,p:q.p}));
+  if(!pts.length) return '<div class="spark"><p class="small">No trajectory record yet</p></div>';
+  if(pts.length===1) pts.push({d:D.meta.asof,p:pts[0].p});
+  const t0=Date.parse(pts[0].d), t1=Date.parse(pts[pts.length-1].d)||t0+1, y0=0.40,y1=0.90;
+  const X=d=>PL+((Date.parse(d)-t0)/Math.max(1,t1-t0))*(W-PL-PR);
+  const Y=p=>PT+(1-(Math.min(y1,Math.max(y0,p))-y0)/(y1-y0))*(H-PT-PB);
+  const path=pts.map((q,i)=>(i?'L':'M')+X(q.d).toFixed(1)+' '+Y(q.p).toFixed(1)).join(' ');
+  const area=path+` L${X(pts[pts.length-1].d).toFixed(1)} ${(H-PB).toFixed(1)} L${X(pts[0].d).toFixed(1)} ${(H-PB).toFixed(1)} Z`;
+  const last=pts[pts.length-1];
+  const grid=[0.5,0.7].map(g=>`<line x1="${PL}" x2="${W-PR}" y1="${Y(g).toFixed(1)}" y2="${Y(g).toFixed(1)}" stroke="${TOK.line}" stroke-width="1"/><text x="${W-PR+8}" y="${(Y(g)+4).toFixed(1)}" font-family="Inter,system-ui,sans-serif" font-size="10.5" fill="${TOK.ink3}">${g.toFixed(1)}</text>`).join('');
+  const id='sp'+Math.random().toString(36).slice(2,8);
+  const html=`<div class="spark" data-spark="${id}"><svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" aria-label="Belief trajectory, current ${fmt(last.p)}">
+    ${grid}
+    <path d="${area}" fill="${TOK.accent2}" fill-opacity=".10"/>
+    <path d="${path}" fill="none" stroke="${TOK.accent2}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <line class="xh" x1="0" x2="0" y1="${PT}" y2="${H-PB}" stroke="${TOK.ink3}" stroke-width="1" opacity="0"/>
+    <circle class="hd" r="4.5" fill="${TOK.accent2}" stroke="#fff" stroke-width="2" opacity="0"/>
+    <circle cx="${X(last.d).toFixed(1)}" cy="${Y(last.p).toFixed(1)}" r="4.5" fill="${TOK.accent2}" stroke="#fff" stroke-width="2"/>
+    <text x="${(X(last.d)+9).toFixed(1)}" y="${(Y(last.p)+4).toFixed(1)}" font-family="Inter,system-ui,sans-serif" font-size="12" font-weight="600" fill="${TOK.ink}">${fmt(last.p)}</text>
+  </svg><div class="tip"></div><div class="axis"><span>${pts[0].d}</span><span>${last.d}</span></div></div>`;
+  queueMicrotask(()=>{
+    const root=document.querySelector(`[data-spark="${id}"]`); if(!root) return;
+    const svg=root.querySelector('svg'), tip=root.querySelector('.tip'), xh=svg.querySelector('.xh'), hd=svg.querySelector('.hd');
+    const move=ev=>{const r=svg.getBoundingClientRect();const x=(ev.clientX-r.left)/r.width*W;let best=pts[0],bd=1e9;for(const q of pts){const d=Math.abs(X(q.d)-x);if(d<bd){bd=d;best=q;}}
+      const cx=X(best.d),cy=Y(best.p);xh.setAttribute('x1',cx);xh.setAttribute('x2',cx);xh.setAttribute('opacity','1');hd.setAttribute('cx',cx);hd.setAttribute('cy',cy);hd.setAttribute('opacity','1');
+      tip.innerHTML=`<b>${fmt(best.p)}</b> · ${esc(best.d)}`;tip.style.left=(cx/W*r.width)+'px';tip.style.top=(cy/H*r.height)+'px';tip.style.opacity='1';};
+    const leave=()=>{xh.setAttribute('opacity','0');hd.setAttribute('opacity','0');tip.style.opacity='0';};
+    svg.addEventListener('pointermove',move);svg.addEventListener('pointerleave',leave);svg.tabIndex=0;
+    svg.addEventListener('focus',()=>move({clientX:svg.getBoundingClientRect().right-PR}));svg.addEventListener('blur',leave);
+  });
+  return html;
 }
 
-/* ===================== render ===================== */
-function render(DATA){
-const M=DATA.meta;
-const STc={"Emerging":"var(--st-emerging)","Strengthening":"var(--st-strength)","Mainstream":"var(--st-main)","Loosening":"var(--st-loose)","Falsified":"var(--st-fals)"};
-const fmt=p=>p==null?"Not set":p.toFixed(2);
-/* The mark is drawn by `.delta::before`, so the polarity colour sits on the
-   triangle while the number stays in the ink ramp. Emitting a ▲/▼/■ glyph here
-   as well would print two marks. */
-const dchip=d=>{const s=d>0?"u":d<0?"d":"f";
-  const t=d===0?"held":(d>0?"+":"")+d.toFixed(2);return `<span class="delta ${s}">${t}</span>`;};
-const ago=iso=>{if(!iso)return"";const d=(new Date(M.asof)-new Date(iso))/864e5;
-  return d<=0?"this week":d<=7?"last week":Math.round(d/7)+" weeks ago";};
-const heldLabel=o=>o.lastMoved?"last changed "+ago(o.lastMoved):"latest note "+(o.logDate||"not dated");
+/* ───────── hero ───────── */
+$('#heroDate').textContent=D.meta.asof;
+const topS=[...D.scenarios].sort((a,b)=>b.prob-a.prob).slice(0,3);
+$('#top3').innerHTML=topS.map(s=>`<button class="belief" data-open="${s.id}"><span class="label">${esc(s.id)}</span><span class="t">${esc(s.title)}</span>${cred(s.prob)}</button>`).join('');
+const disc=D.meta.disconfirmers||{}; let nDisc=(disc.A||0)+(disc.B||0)+(disc.C||0);
+/* The public snapshot ships the falsifiers as text on each scenario rather than as
+   an A/B/C tally, so count them instead of printing a false zero. */
+if(!nDisc)nDisc=D.scenarios.reduce((n,s)=>n+(String(s.falsify||'').match(/^\s*-\s+/gm)||[]).length,0);
+$('#stats').innerHTML=[[D.trends.length,'Trends'],[D.meta.active_couplings,'Causal couplings'],[D.chains.length,'Causal chains'],[D.scenarios.length,'Scenarios'],[nDisc,'Registered falsifications']]
+  .map(([n,l])=>`<div class="stat"><b>${n}</b><span>${l}</span></div>`).join('');
 
-const ALL=[...DATA.trends,...DATA.scenarios,...DATA.chains,...DATA.couplings];
-const IDX={};ALL.forEach(o=>IDX[o.id]=o);
+/* ───────── Seven Scenarios ───────── */
+$('#futuresList').innerHTML=[...D.scenarios].sort((a,b)=>b.prob-a.prob).map(s=>`<article class="future" id="${s.id}">
+  <button class="row" aria-expanded="false" aria-controls="${s.id}-panel">
+    <div><h3>${esc(s.title)}</h3><p class="one">${esc(s.oneliner)}</p></div>
+    <div class="side">${cred(s.prob)}${meter(s.prob)}<div class="foot"><span class="label">${esc(s.id)}</span><span style="display:flex;align-items:center;gap:14px">${deltaChip(s)}<span class="chev" aria-hidden="true"></span></span></div></div>
+  </button>
+  <div class="panel" id="${s.id}-panel"><div><div class="inner">
+    <div class="blk"><h4>Key assumptions it depends on</h4><ul>${(s.assumptions||[]).slice(0,6).map(a=>`<li>${esc(firstSentence(a,140))}</li>`).join('')||'<li>—</li>'}</ul></div>
+    <div class="blk"><h4>What would make the model change its mind</h4><ul>${(s.falsify||'').split('\n').filter(Boolean).map(f=>`<li class="q">${esc(f.replace(/^-\s*/,''))}</li>`).join('')||'<li>—</li>'}</ul></div>
+    <div class="spark-blk"><div class="blk"><h4>Belief strength trajectory</h4>${sparkline(s.series)}</div><div class="blk"><h4>Converging causal chains</h4><div class="chips">${(s.rel_chain||[]).map(id=>idChip(id)).join('')||'<span class="chip static">—</span>'}</div></div></div>
+  </div></div></div>
+</article>`).join('');
+$$('.future .row').forEach(b=>b.addEventListener('click',()=>{const f=b.closest('.future');const on=!f.classList.contains('open');f.classList.toggle('open',on);b.setAttribute('aria-expanded',on);if(on)history.replaceState(null,'','#'+f.id);}));
 
-const cardHTML=(o,c,extra="",alwaysHeld=false,inlineTitle=false)=>`<article class="card${o.delta?" moved":""}" tabindex="0" data-id="${o.id}">
-    <span class="stripe" style="background:${c}"></span>
-    <div class="top"><span class="id">${o.id}</span>${extra}
-      ${inlineTitle?`<div class="ttl">${esc(o.title)}</div>`:""}
-      <span class="dslot">${dchip(o.delta)}</span></div>
-    ${inlineTitle?"":`<div class="ttl">${esc(o.title)}</div>`}
-    <div class="bot"><div class="bar"><i style="width:${o.prob*100}%;background:${c}"></i>${o.delta?`<u style="left:${o.prev*100}%"></u>`:""}</div>
-      <span class="pv">${fmt(o.prob)}</span></div>
-    ${(!o.delta||alwaysHeld)?`<div class="held">${o.delta?"":heldLabel(o)}</div>`:""}
-  </article>`;
+/* ───────── Trends ───────── */
+const GROUPS=[['Overarching judgements','Governing law',['T01']],['Physical layer of compute','Physical layer',['T02','T03','T04','T05','T06','T07','T08','T09']],['Software layer of intelligence','Software layer',['T10','T11','T12','T13','T14','T18']],['Architecture and supply chain','Architecture & supply chain',['T15','T24']],['Capital and geopolitics','Capital & geopolitics',['T19','T20']],['Physical world','Physical world',['T23']]];
+const placed=new Set(GROUPS.flatMap(g=>g[2]));const rest=D.trends.filter(t=>!placed.has(t.id)).map(t=>t.id);if(rest.length)GROUPS.push(['Recently added trends','Recently added',rest]);
+const forceCard=t=>`<button class="force" data-open="${t.id}" id="${t.id}"><div class="meta"><span class="label">${esc(t.id)} · ${esc(t.status)}</span>${cred(t.prob)}</div><h4>${esc(t.title)}</h4><p class="one">${esc(t.oneliner)}</p>${meter(t.prob)}</button>`;
+$('#forcesList').innerHTML=GROUPS.map(([zh,en,ids])=>{const ts=ids.map(id=>IDX[id]).filter(Boolean);if(!ts.length)return'';return`<div class="group"><div class="gh"><h3>${zh}</h3><span class="eyebrow quiet">${en}</span><span class="label">${ts.length}</span></div><div class="forces">${ts.map(forceCard).join('')}</div></div>`;}).join('');
 
-/* trends */
-$("#tc").textContent=DATA.trends.length;
-$("#trend-grid").innerHTML=DATA.trends.slice().sort((a,b)=>b.prob-a.prob).map(t=>{
-  const c=STc[t.status]||"var(--muted)";
-  const extra=`<span class="st" style="color:${c};background:color-mix(in srgb,${c} 15%,transparent)">${t.status}</span>
-      ${t.upgraded?'<span class="up-badge">↑ promoted</span>':''}`;
-  return cardHTML(t,c,extra);
-}).join("");
-
-/* scenarios and chains share the trend card: id, delta, title, bar + value */
-$("#sc").textContent=DATA.scenarios.length;
-$("#scen-grid").innerHTML=DATA.scenarios.slice().sort((a,b)=>b.prob-a.prob)
-  .map(s=>cardHTML(s,"var(--mark-scen)","",true,true)).join("");
-$("#cc").textContent=DATA.chains.length;
-$("#chain-list").innerHTML=DATA.chains.slice().sort((a,b)=>b.prob-a.prob)
-  .map(c=>cardHTML(c,"var(--mark-chain)","",true,true)).join("");
-
-/* ---------- graph ---------- */
-const G=DATA.graph;
-const cls=n=>n.bottleneck?"bottleneck":n.driver?"driver":({trend:"trend",scen:"scen",pattern:"pat"}[n.kind]||"ext");
-const NC={bottleneck:"var(--bottleneck)",driver:"var(--driver)",trend:"var(--ink-dim)",scen:"var(--accent)",pat:"var(--pat)",ext:"var(--ext)"};
-$("#glegend").innerHTML=[["bottleneck","Convergence point"],["driver","System driver"],["trend","Trend"],["scen","Scenario"],["pat","Pattern"],["ext","External factor"]]
-  .map(([k,l])=>`<span><i style="background:${NC[k]}"></i>${l}</span>`).join("");
-$("#gcount").textContent=M.active_couplings+" couplings · "+G.edges.length+" edges · "+G.nodes.length+" nodes";
-$("#hub").innerHTML=G.hub
-  ?`<b>Structural hub ${G.hub.id}</b><br>${esc(G.hub.label.replace(G.hub.id,"").trim())}<br>${G.hub.indeg} incoming and ${G.hub.outdeg} outgoing relationships. This is where the most paths meet and continue.`
-  :"No structural hub found.";
-
-const W=900,H=620,PAD=48;
-let N=G.nodes.map(n=>({...n,cls:cls(n),deg:n.indeg+n.outdeg}));
-const nById={};N.forEach(n=>nById[n.id]=n);
-const E=G.edges.filter(e=>nById[e.src]&&nById[e.dst]);
-N.sort((a,b)=>b.deg-a.deg);
-N.forEach((n,i)=>{const a=i*2.399963,r=Math.sqrt(i/N.length)*Math.min(W,H)*0.42;
-  n.x=W/2+Math.cos(a)*r;n.y=H/2+Math.sin(a)*r;n.vx=0;n.vy=0;});
-for(let it=0;it<440;it++){
-  const k=1-it/580;
-  for(let i=0;i<N.length;i++)for(let j=i+1;j<N.length;j++){
-    const dx=N[i].x-N[j].x,dy=N[i].y-N[j].y,d2=dx*dx+dy*dy+0.01,d=Math.sqrt(d2),f=5400/d2;
-    N[i].vx+=f*dx/d*k;N[i].vy+=f*dy/d*k;N[j].vx-=f*dx/d*k;N[j].vy-=f*dy/d*k;}
-  E.forEach(e=>{if(e.src===e.dst)return;const a=nById[e.src],b=nById[e.dst];const dx=b.x-a.x,dy=b.y-a.y,d=Math.sqrt(dx*dx+dy*dy)+0.01,f=(d-118)*0.028;
-    a.vx+=f*dx/d;a.vy+=f*dy/d;b.vx-=f*dx/d;b.vy-=f*dy/d;});
-  N.forEach(n=>{n.vx+=(W/2-n.x)*0.006;n.vy+=(H/2-n.y)*0.006;
-    n.x+=n.vx*0.82;n.y+=n.vy*0.82;n.vx*=0.86;n.vy*=0.86;
-    n.x=Math.max(PAD,Math.min(W-PAD,n.x));n.y=Math.max(PAD,Math.min(H-PAD,n.y));});}
-const svg=$("#net"),SVGNS="http://www.w3.org/2000/svg";
-const el=(t,a)=>{const e=document.createElementNS(SVGNS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
-const defs=el("defs",{});
-defs.innerHTML='<marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--line-2)"/></marker>';
-svg.appendChild(defs);
-const gE=el("g",{}),gN=el("g",{});svg.appendChild(gE);svg.appendChild(gN);
-const rad=n=>9+n.deg*2.3;
-const edgeEls=E.map(e=>{
-  if(e.src===e.dst){const c=el("circle",{fill:"none",stroke:"var(--line-2)","stroke-width":1.5,opacity:.55,r:16});c._e=e;c._self=1;gE.appendChild(c);return c;}
-  const ln=el("line",{stroke:"var(--line-2)","stroke-width":e.meta?1:1.5,
-  "stroke-dasharray":e.meta?"3 3":"","marker-end":"url(#ar)",opacity:.55});ln._e=e;gE.appendChild(ln);return ln;});
-const nodeEls=N.map(n=>{const g=el("g",{style:"cursor:pointer"});g._n=n;g.classList.add("gn");
-  const c=el("circle",{r:rad(n),stroke:NC[n.cls],"stroke-width":(n.bottleneck||n.driver)?2.5:1.5,
-    fill:(n.bottleneck||n.driver)?"color-mix(in srgb,"+NC[n.cls]+" 22%,var(--surface))":"var(--surface-2)"});
-  const tx=el("text",{"text-anchor":"middle",dy:"0.34em","font-size":n.deg>2?11:9.5,"font-family":"inherit",
-    fill:(n.bottleneck||n.driver)?NC[n.cls]:"var(--ink-dim)","font-weight":600,"pointer-events":"none"});
-  tx.textContent=n.id.length<=7?n.id:n.label.slice(0,4);
-  g.appendChild(c);g.appendChild(tx);gN.appendChild(g);return g;});
-function place(){edgeEls.forEach(ln=>{const e=ln._e,a=nById[e.src],b=nById[e.dst];
-  if(ln._self){ln.setAttribute("cx",a.x+rad(a)+8);ln.setAttribute("cy",a.y-rad(a)-2);return;}
-  const dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy)||1,rb=rad(b)+3;
-  ln.setAttribute("x1",a.x);ln.setAttribute("y1",a.y);
-  ln.setAttribute("x2",b.x-dx/d*rb);ln.setAttribute("y2",b.y-dy/d*rb);});
-  nodeEls.forEach(g=>g.setAttribute("transform","translate("+g._n.x+","+g._n.y+")"));}
-place();
-const RD='Hover over a node to trace its relationships. <b>Red</b> marks convergence points. <b>Blue</b> marks systemic drivers. Dashed lines show meta relationships.';
-$("#rd").innerHTML=RD;
-function focus(n){const nb=new Set([n.id]);E.forEach(e=>{if(e.src===n.id)nb.add(e.dst);if(e.dst===n.id)nb.add(e.src);});
-  nodeEls.forEach(g=>g.style.opacity=nb.has(g._n.id)?1:.18);
-  edgeEls.forEach(ln=>{const on=ln._e.src===n.id||ln._e.dst===n.id;
-    ln.setAttribute("opacity",on?.95:.06);ln.setAttribute("stroke",on?"var(--accent)":"var(--line-2)");
-    ln.setAttribute("stroke-width",on?2:(ln._e.meta?1:1.5));});
-  const outs=E.filter(e=>e.src===n.id),ins=E.filter(e=>e.dst===n.id);
-  $("#rd").innerHTML=`<b>${n.id}</b> ${esc(n.label.replace(n.id,"").trim())}<br>${n.indeg} incoming and ${n.outdeg} outgoing relationships`
-    +(outs.length?"<br>Drives: "+outs.map(e=>`<b>${e.dst}</b> (${e.cid})`).join(", "):"")
-    +(ins.length?"<br>Driven by: "+ins.map(e=>`<b>${e.src}</b> (${e.cid})`).join(", "):"");}
-function blur(){nodeEls.forEach(g=>g.style.opacity=1);
-  edgeEls.forEach(ln=>{ln.setAttribute("opacity",.55);ln.setAttribute("stroke","var(--line-2)");
-    ln.setAttribute("stroke-width",ln._e.meta?1:1.5);});$("#rd").innerHTML=RD;}
-let drag=null;
-const pt=ev=>{const r=svg.getBoundingClientRect(),cx=ev.touches?ev.touches[0].clientX:ev.clientX,
-  cy=ev.touches?ev.touches[0].clientY:ev.clientY;return{x:(cx-r.left)/r.width*W,y:(cy-r.top)/r.height*H};};
-nodeEls.forEach(g=>{
-  g.addEventListener("mouseenter",()=>{if(!drag)focus(g._n);});
-  g.addEventListener("mouseleave",()=>{if(!drag)blur();});
-  g.addEventListener("mousedown",ev=>{drag=g._n;ev.preventDefault();});
-  g.addEventListener("touchstart",()=>{drag=g._n;focus(g._n);},{passive:true});
-  g.addEventListener("click",()=>{if(IDX[g._n.id])openDrill(g._n.id);});});
-addEventListener("mousemove",ev=>{if(drag){const p=pt(ev);drag.x=p.x;drag.y=p.y;place();}});
-addEventListener("touchmove",ev=>{if(drag){const p=pt(ev);drag.x=p.x;drag.y=p.y;place();}},{passive:true});
-addEventListener("mouseup",()=>{if(drag){drag=null;blur();}});
-addEventListener("touchend",()=>{if(drag){drag=null;blur();}});
-
-const rankRows=k=>N.filter(n=>n[k]>0).sort((a,b)=>b[k]-a[k]).slice(0,5).map(n=>{
-  const col=k==="indeg"?"var(--bottleneck)":"var(--driver)";
-  return `<div class="rank" data-id="${n.id}"><span class="rn" style="color:${col};background:color-mix(in srgb,${col} 15%,transparent)">${n[k]}</span>
-    <span class="rid">${n.id}</span><span class="rl">${esc(n.label.replace(n.id,"").trim())}</span></div>`;}).join("");
-$("#indeg").innerHTML=rankRows("indeg");
-$("#outdeg").innerHTML=rankRows("outdeg");
-/* Closed loops: directed cycles detected from the graph structure + the "closed loop detection" section declared in each chain file */
-$("#loops").innerHTML=[
-  ...(G.loops||[]).map(l=>`<div class="loop"><b>Feedback loop${l.nodes.length===2&&l.nodes[0]===l.nodes[1]?" within one node":""}</b> ${
-    l.nodes.map((n,i)=>i<l.cids.length?`${esc(n)} →(${l.cids[i]}) `:esc(n)).join("")}</div>`),
-  ...DATA.chains.filter(c=>c.loop).map(c=>`<div class="loop"><b>${c.id} · ${esc(c.loop)}</b><br>${esc(c.story)}</div>`)
-].join("")||'<div class="loop">No feedback loop found.</div>';
-
-
-$("#foot").innerHTML=`Snapshot from 29 August 2026. Each probability records the model's current confidence in a thesis.`;
-
-/* ---------- drill ---------- */
-const drill=$("#drill"),scrim=$("#scrim");
-const relChip=id=>{const o=IDX[id];return `<span class="chip${o?'':' dis'}" ${o?`data-id="${id}"`:''}>${id}</span>`;};
-function showDrill(){drill.classList.add("on");scrim.classList.add("on");drill.setAttribute("aria-hidden","false");
-  $(".dclose",drill).onclick=closeDrill;drill.scrollTop=0;}
-function openDrill(id){const o=IDX[id];if(!o)return;
-  const kind={trend:"TREND",scenario:"SCENARIO",chain:"CHAIN",coupling:"COUPLING"}[o.kind];
-  const c=o.kind==="trend"?(STc[o.status]||"var(--accent)"):"var(--accent)";
-  /* Body text is plain prose apart from the occasional pipe table, which is
-     rendered as a table rather than escaped into a row of literal pipes. */
-  const rich=v=>{const out=[];let tbl=null;
-    const flush=()=>{if(tbl){out.push("<table>"+tbl.map((r,i)=>"<tr>"+r.map(c=>i===0?`<th>${c}</th>`:`<td>${c}</td>`).join("")+"</tr>").join("")+"</table>");tbl=null;}};
-    for(const raw of String(v).split("\n")){const t=raw.trim();
-      if(/^\|.*\|$/.test(t)){const cells=t.replace(/^\||\|$/g,"").split("|").map(c=>esc(c.trim()));
-        if(cells.every(c=>/^[-: ]*$/.test(c)))continue;(tbl??=[]).push(cells);continue;}
-      flush();out.push(esc(raw)+"<br>");}
-    flush();return out.join("").replace(/(<br>)+$/,"");};
-  const f=(l,v,cl="")=>v?`<div class="field ${cl}"><div class="fl">${l}</div><p>${rich(v)}</p></div>`:"";
-  let metrics="",body="";
-  if(o.kind==="coupling"){
-    metrics=`<div class="dmetrics"><div class="m"><b style="font-size:18px">${esc(o.frm)} → ${esc(o.to)}</b><span>Direction</span></div>
-      <div class="m"><b style="font-size:18px;color:var(--accent)">${o.strength||"Not set"}</b><span>Strength</span></div></div>`;
-    body=f("Claim",o.cause)+f("How the change travels",o.mechanism,"mech")
-      +`<div class="field"><div class="fl">Type</div><div class="chips"><span class="chip dis">${(o.type||"").replace("_"," ")}</span>${o.candidate?'<span class="chip dis">under review</span>':""}</div></div>`;
-  }else{
-    const sub=o.kind==="chain"?"Progress":"Probability";
-    metrics=`<div class="dmetrics">
-      <div class="m"><b style="color:${c}">${fmt(o.prob)}</b><span>${sub}</span></div>
-      ${o.kind==="trend"?`<div class="m"><b style="font-size:15px;color:${c}">${o.status}</b><span>Status${o.upgraded?", promoted this week":""}</span></div>`:""}
-      <div class="m"><b style="font-size:19px;color:${o.delta>0?'var(--up)':o.delta<0?'var(--down)':'var(--flat)'}">${
-        o.delta===0?"held":(o.delta>0?"+":"")+o.delta.toFixed(2)}</b><span>${
-        o.delta?`this week, previously ${o.prev.toFixed(2)}`:`held this week, ${heldLabel(o)}`}</span></div></div>`;
-    if(o.kind==="trend") body=f("Thesis",o.oneliner)+f("Mechanism",o.mechanism,"mech")+f("Analogy",o.analogy,"mech")
-      +(o.dclass?`<div class="field"><div class="fl">Falsifier registry</div><div class="chips">${
-        o.dclass.split("+").map(x=>`<span class="chip dis">Class ${x.trim()}</span>`).join("")}<span class="chip dis">${o.nsrc} primary sources</span></div></div>`:"")
-      +((o.rel_scen.length||o.rel_coup.length)?`<div class="field"><div class="fl">Related objects</div><div class="chips">${
-        o.rel_scen.map(relChip).join("")}${o.rel_coup.map(relChip).join("")}</div></div>`:"");
-    else if(o.kind==="scenario") body=f("Scenario",o.oneliner)+f("What would change this view",o.falsify,"mech")
-      +(o.rel_chain.length?`<div class="field"><div class="fl">Supporting chains</div><div class="chips">${o.rel_chain.map(relChip).join("")}</div></div>`:"");
-    else body=f("Chain",o.story)+f("Main constraint",o.bottleneck,"mech")
-      +(o.loop?`<div class="field"><div class="fl">Closed loops</div><div class="chips"><span class="chip dis">${o.loop}</span></div></div>`:"")
-      +(o.rel_scen.length?`<div class="field"><div class="fl">Scenarios reinforced</div><div class="chips">${o.rel_scen.map(relChip).join("")}</div></div>`:"");
-    if(o.lastLog) body+=f("Latest update, "+o.logDate,o.lastLog,"log");
-  }
-  drill.innerHTML=`<div class="dhead"><div class="krow"><span class="badge">${kind}</span><span class="did">${o.id}</span>
-    <button class="dclose" aria-label="Close">✕</button></div><h2>${esc(o.title)}</h2>${metrics}</div><div class="dbody">${body}</div>`;
-  showDrill();}
-function closeDrill(){drill.classList.remove("on");scrim.classList.remove("on");drill.setAttribute("aria-hidden","true");}
-scrim.onclick=closeDrill;
-addEventListener("keydown",e=>{if(e.key==="Escape")closeDrill();});
-addEventListener("click",e=>{const h=e.target.closest("[data-id]");
-  if(!h||e.target.closest(".gn"))return;const id=h.getAttribute("data-id");if(IDX[id])openDrill(id);});
-addEventListener("keydown",e=>{if(e.key!=="Enter")return;const h=e.target.closest("[data-id]");
-  if(h&&IDX[h.getAttribute("data-id")])openDrill(h.getAttribute("data-id"));});
-
-$$(".tab").forEach(b=>b.onclick=()=>{$$(".tab").forEach(x=>x.classList.remove("on"));b.classList.add("on");
-  $$(".view").forEach(v=>v.classList.remove("on"));$("#v-"+b.dataset.v).classList.add("on");scrollTo({top:0});});
+/* ───────── Map · Data and layout ───────── */
+const G=D.graph;
+const nodes=G.nodes.filter(n=>n.kind!=='pattern').map(n=>({...n}));
+const nById={}; nodes.forEach(n=>nById[n.id]=n);
+const edges=G.edges.filter(e=>!e.meta&&nById[e.src]&&nById[e.dst]&&e.src!==e.dst);
+const STRENGTH={'High':2.2,'Medium-high':1.8,'Medium':1.4,'Medium':1.4,'Medium-low':1.1,'Low':.9,'Weak':.9,'Strong':2.2};
+edges.forEach(e=>{e.w=STRENGTH[(e.strength||'').split(/[-–~]/)[0]]||1.2;e.sign=((e.src.charCodeAt(1)+e.dst.charCodeAt(1)+e.cid.length)%2)?1:-1;});
+const EXT_SHORT={CUDA:'CUDA ecosystem',SAAS:'SaaS industry',CE:'Consumer electronics downstream',CAP:'Capital markets',COMPFIN:'Compute financial infrastructure',PHYS:'Physical supply chain lead times',SCI:'Scientific data supply',TRUST:'Trust tax',MONO:'Agent monoculture',AIBK:'AI breakthrough speed',MEP:'Electromechanical terminal lead times'};
+const stripId=(n)=>String(n.label||'').replace(new RegExp('^'+n.id+'\\s*'),'').trim();
+nodes.forEach(n=>{n.deg=n.indeg+n.outdeg;const o=IDX[n.id];n.p=o&&o.prob!=null?o.prob:0.5;n.w=o?n.p:0.45;
+  n.full=o?o.title:stripId(n);n.name=o?shortTitle(o.title,10):(EXT_SHORT[n.id]||shortTitle(stripId(n),9));});
+function layout(A){ // Layout in canvas with given aspect ratio A; returns {id:{x,y}} (0–1 normalised, quantile clipped) 
+  const N=nodes.length,ns=nodes.map(n=>({id:n.id,deg:n.deg})).sort((a,b)=>b.deg-a.deg);
+  ns.forEach((n,i)=>{const a=i*2.399963,r=Math.sqrt(i/N)*.45;n.x=A/2+Math.cos(a)*r*A;n.y=.5+Math.sin(a)*r;n.vx=0;n.vy=0;});
+  const by={};ns.forEach(n=>by[n.id]=n);const ky=Math.max(1,A*.8);
+  for(let it=0;it<760;it++){const k=1-it/900;
+    for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){const a=ns[i],b=ns[j];const dx=a.x-b.x,dy=(a.y-b.y)*ky,d2=dx*dx+dy*dy+1e-4,d=Math.sqrt(d2),f=.016/d2;a.vx+=f*dx/d*k;a.vy+=f*dy/d*k/ky;b.vx-=f*dx/d*k;b.vy-=f*dy/d*k/ky;}
+    edges.forEach(e=>{const a=by[e.src],b=by[e.dst];const dx=b.x-a.x,dy=b.y-a.y,d=Math.sqrt(dx*dx+dy*dy)+1e-4,f=(d-.30)*.025;a.vx+=f*dx/d;a.vy+=f*dy/d;b.vx-=f*dx/d;b.vy-=f*dy/d;});
+    ns.forEach(n=>{n.vx+=(A/2-n.x)*.0025;n.vy+=(.5-n.y)*.006;n.x+=n.vx*.8;n.y+=n.vy*.8;n.vx*=.85;n.vy*=.85;});}
+  const q=(arr,t)=>{const s=[...arr].sort((a,b)=>a-b);return s[Math.min(s.length-1,Math.max(0,Math.round((s.length-1)*t)))];};
+  const xs=ns.map(n=>n.x),ys=ns.map(n=>n.y),x0=q(xs,.04),x1=q(xs,.96),y0=q(ys,.04),y1=q(ys,.96),pos={};
+  ns.forEach(n=>{pos[n.id]={x:.07+Math.min(1,Math.max(0,(n.x-x0)/((x1-x0)||1)))*.86,y:.12+Math.min(1,Math.max(0,(n.y-y0)/((y1-y0)||1)))*.70};});
+  return pos;
 }
-boot();
+
+/* ───────── Map · Render engine ─────────
+   Belief strength field = Σ node weights × Gaussian kernel. Two-layer expression: ① binned colour bands (coarse grid → bilinear magnification, like layered colouring of a topographic map)
+   ② contour lines (marching squares, index contours slightly thicker). Edges are arcs with flow direction, thickness follows coupling strength; nodes have volume and projection; labels have halos. */
+function fieldGrid(w,h,cell,sigma,pos){
+  const nx=Math.ceil(w/cell)+1,ny=Math.ceil(h/cell)+1,f=new Float32Array(nx*ny);let mx=0;
+  for(let j=0;j<ny;j++)for(let i=0;i<nx;i++){const px=i*cell,py=j*cell;let v=0;for(const n of nodes){const q=pos[n.id];const dx=px-q.x*w,dy=py-q.y*h;v+=n.w*Math.exp(-(dx*dx+dy*dy)/(2*sigma*sigma));}f[j*nx+i]=v;if(v>mx)mx=v;}
+  return {nx,ny,f,mx,cell};
+}
+function bandLayer(grid,w,h,maxAlpha){
+  const {nx,ny,f,mx}=grid,off=document.createElement('canvas');off.width=nx;off.height=ny;const oc=off.getContext('2d'),img=oc.createImageData(nx,ny);
+  for(let k=0;k<nx*ny;k++){const t=f[k]/(mx||1);const lvl=Math.floor(Math.min(.999,t)*7)/7;const a=Math.round(255*maxAlpha*lvl);img.data[k*4]=42;img.data[k*4+1]=120;img.data[k*4+2]=214;img.data[k*4+3]=a;}
+  oc.putImageData(img,0,0);return off;
+}
+function contourSegs(grid){
+  const {nx,ny,f,mx,cell}=grid,levels=[.09,.18,.29,.42,.56,.72,.88].map(t=>t*mx),segs=[],lerp=(a,b,t)=>a+(b-a)*t;
+  for(let li=0;li<levels.length;li++){const L=levels[li];
+    for(let j=0;j<ny-1;j++)for(let i=0;i<nx-1;i++){
+      const a=f[j*nx+i],b=f[j*nx+i+1],c=f[(j+1)*nx+i+1],d=f[(j+1)*nx+i];const idx=(a>L?8:0)|(b>L?4:0)|(c>L?2:0)|(d>L?1:0);if(idx===0||idx===15)continue;
+      const x0=i*cell,y0=j*cell;
+      const top=[lerp(x0,x0+cell,(L-a)/((b-a)||1e-9)),y0],right=[x0+cell,lerp(y0,y0+cell,(L-b)/((c-b)||1e-9))],bot=[lerp(x0,x0+cell,(L-d)/((c-d)||1e-9)),y0+cell],left=[x0,lerp(y0,y0+cell,(L-a)/((d-a)||1e-9))];
+      const T={1:[left,bot],2:[bot,right],3:[left,right],4:[top,right],5:[top,left,bot,right],6:[top,bot],7:[top,left],8:[top,left],9:[top,bot],10:[top,right,bot,left],11:[top,right],12:[left,right],13:[bot,right],14:[left,bot]}[idx];
+      for(let s=0;s<T.length;s+=2)segs.push([T[s],T[s+1],li]);}}
+  return segs;
+}
+function drawContours(ctx,segs,alpha){
+  ctx.lineCap='round';
+  for(let li=0;li<7;li++){const idxLine=li%2===1;ctx.lineWidth=idxLine?1.2:.8;ctx.strokeStyle=`rgba(42,120,214,${(alpha*(idxLine?.42:.24)).toFixed(3)})`;ctx.beginPath();
+    for(const [p,q,l] of segs){if(l!==li)continue;ctx.moveTo(p[0],p[1]);ctx.lineTo(q[0],q[1]);}ctx.stroke();}
+}
+let RSCALE=1;const R=n=>(7+Math.min(7,n.deg)*1.5)*RSCALE;
+function edgeGeom(e,w,h,pos){const a=pos[e.src],b=pos[e.dst];const ax=a.x*w,ay=a.y*h,bx=b.x*w,by=b.y*h;const mx=(ax+bx)/2,my=(ay+by)/2,dx=bx-ax,dy=by-ay,L=Math.hypot(dx,dy)||1;
+  const off=Math.min(60,L*.14)*e.sign;const cx=mx-dy/L*off,cy=my+dx/L*off;return {ax,ay,bx,by,cx,cy,L};}
+function qPoint(g,t){const u=1-t;return [u*u*g.ax+2*u*t*g.cx+t*t*g.bx,u*u*g.ay+2*u*t*g.cy+t*t*g.by];}
+function drawEdge(ctx,e,w,h,state,pos){ // state: 'on' | 'dim' | 'base'
+  const g=edgeGeom(e,w,h,pos),rb=R(nById[e.dst])+4;
+  // End point steps back to target node edge
+  let tEnd=1;for(let t=1;t>.5;t-=.01){const [x,y]=qPoint(g,t);if(Math.hypot(x-g.bx,y-g.by)>=rb){tEnd=t;break;}}
+  const [ex,ey]=qPoint(g,tEnd),[px,py]=qPoint(g,tEnd-.04),ang=Math.atan2(ey-py,ex-px);
+  const col=state==='on'?TOK.accent2:state==='dim'?'rgba(203,211,221,.35)':'rgba(14,26,43,.16)';
+  if(state==='on'){ctx.lineWidth=e.w+5;ctx.strokeStyle='rgba(42,120,214,.12)';ctx.beginPath();ctx.moveTo(g.ax,g.ay);ctx.quadraticCurveTo(g.cx,g.cy,ex,ey);ctx.stroke();}
+  ctx.lineWidth=state==='on'?e.w+.6:e.w;ctx.strokeStyle=col;ctx.beginPath();ctx.moveTo(g.ax,g.ay);ctx.quadraticCurveTo(g.cx,g.cy,ex,ey);ctx.stroke();
+  const s=state==='on'?8:6.5;ctx.fillStyle=col;ctx.beginPath();ctx.moveTo(ex,ey);ctx.lineTo(ex-Math.cos(ang-.42)*s,ey-Math.sin(ang-.42)*s);ctx.lineTo(ex-Math.cos(ang+.42)*s,ey-Math.sin(ang+.42)*s);ctx.closePath();ctx.fill();
+  return g;
+}
+function drawNode(ctx,n,x,y,r,hot,dim){
+  ctx.save();ctx.globalAlpha=dim?.18:1;
+  if(!dim){ctx.shadowColor='rgba(14,26,43,.18)';ctx.shadowBlur=10;ctx.shadowOffsetY=4;}
+  if(n.kind==='scen'){const g=ctx.createLinearGradient(x-r,y-r,x+r,y+r);g.addColorStop(0,'#3987E5');g.addColorStop(1,'#1C5CAB');ctx.fillStyle=g;ctx.translate(x,y);ctx.rotate(Math.PI/4);ctx.beginPath();ctx.rect(-r*.82,-r*.82,r*1.64,r*1.64);ctx.fill();ctx.shadowColor='transparent';ctx.lineWidth=2;ctx.strokeStyle='#fff';ctx.stroke();if(hot){ctx.lineWidth=2;ctx.strokeStyle=TOK.accent2;ctx.strokeRect(-r*.82-4,-r*.82-4,r*1.64+8,r*1.64+8);}}
+  else if(n.kind==='trend'){const g=ctx.createRadialGradient(x-r*.35,y-r*.4,r*.1,x,y,r);g.addColorStop(0,hot?'#3D6FB8':'#2B3D5C');g.addColorStop(1,hot?'#1C5CAB':'#0E1A2B');ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();ctx.shadowColor='transparent';ctx.lineWidth=2;ctx.strokeStyle='#fff';ctx.stroke();if(hot){ctx.beginPath();ctx.arc(x,y,r+4,0,Math.PI*2);ctx.lineWidth=2;ctx.strokeStyle=TOK.accent2;ctx.stroke();}}
+  else{ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(x,y,r*.85,0,Math.PI*2);ctx.fill();ctx.shadowColor='transparent';ctx.lineWidth=1.5;ctx.strokeStyle=hot?TOK.accent2:TOK.ink3;ctx.stroke();}
+  ctx.restore();
+}
+function drawLabel(ctx,text,x,y,hot,dim,align='center',base='top'){
+  ctx.save();ctx.globalAlpha=dim?.25:1;ctx.font=`${hot?'600 12.5px':'500 11.5px'} ${FONT()}`;ctx.textAlign=align;ctx.textBaseline=base;
+  ctx.lineJoin='round';ctx.lineWidth=4;ctx.strokeStyle='rgba(255,255,255,.92)';ctx.strokeText(text,x,y);ctx.fillStyle=hot?TOK.ink:TOK.ink2;ctx.fillText(text,x,y);ctx.restore();
+}
+/* Label placement: by degree from high to low, sequentially try bottom / top / right / left four positions, give way if colliding with placed labels or other nodes; highlighted labels are always drawn */
+function placeLabels(ctx,items,nodeBoxes){
+  const placed=[];const hit=(a,b)=>!(a.x1<b.x0||a.x0>b.x1||a.y1<b.y0||a.y0>b.y1);
+  const sorted=[...items].sort((a,b)=>(b.hot-a.hot)||(b.deg-a.deg));
+  for(const it of sorted){
+    ctx.font=`${it.hot?'600 12.5px':'500 11.5px'} ${FONT()}`;const tw=ctx.measureText(it.text).width+6,th=16;
+    const cands=[{x:it.x,y:it.y+it.r+6,al:'center',bs:'top',box:{x0:it.x-tw/2,y0:it.y+it.r+6,x1:it.x+tw/2,y1:it.y+it.r+6+th}},
+                 {x:it.x,y:it.y-it.r-6,al:'center',bs:'bottom',box:{x0:it.x-tw/2,y0:it.y-it.r-6-th,x1:it.x+tw/2,y1:it.y-it.r-6}},
+                 {x:it.x+it.r+7,y:it.y,al:'left',bs:'middle',box:{x0:it.x+it.r+7,y0:it.y-th/2,x1:it.x+it.r+7+tw,y1:it.y+th/2}},
+                 {x:it.x-it.r-7,y:it.y,al:'right',bs:'middle',box:{x0:it.x-it.r-7-tw,y0:it.y-th/2,x1:it.x-it.r-7,y1:it.y+th/2}}];
+    let pick=null;
+    for(const c of cands){if(c.box.x0<2||c.box.x1>it.w-2||c.box.y0<2||c.box.y1>it.h-2)continue;if(placed.some(b=>hit(b,c.box)))continue;if(nodeBoxes.some(b=>b.id!==it.id&&hit(b,c.box)))continue;pick=c;break;}
+    if(!pick){if(it.hot)pick=cands[0];else continue;}
+    placed.push(pick.box);drawLabel(ctx,it.text,pick.x,pick.y,it.hot,it.dim,pick.al,pick.bs);
+  }
+}
+function drawEdgeTag(ctx,g,text){const [x,y]=qPoint(g,.5);ctx.save();ctx.font=`600 10.5px ${FONT()}`;const w=ctx.measureText(text).width+12,h=18;ctx.fillStyle='#fff';ctx.strokeStyle=TOK.line2;ctx.lineWidth=1;
+  ctx.beginPath();if(ctx.roundRect)ctx.roundRect(x-w/2,y-h/2,w,h,9);else ctx.rect(x-w/2,y-h/2,w,h);ctx.fill();ctx.stroke();ctx.fillStyle=TOK.accent;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,x,y+.5);ctx.restore();}
+
+/* hero · ambient */
+(function hero(){
+  const cv=$('#heroField'),ctx=cv.getContext('2d');let w=0,h=0,grid,band,segs,t=0,pos;
+  const size=()=>{const r=cv.parentElement.getBoundingClientRect();w=Math.round(r.width);h=Math.round(r.height);cv.width=w*devicePixelRatio;cv.height=h*devicePixelRatio;ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+    pos=layout(w/h);grid=fieldGrid(w,h,10,Math.min(w,h)*.15,pos);band=bandLayer(grid,w,h,.10);segs=contourSegs(fieldGrid(w,h,7,Math.min(w,h)*.15,pos));};
+  const pt=(n,k)=>[pos[n.id].x*w+Math.sin(t*.0005+k*1.7)*4,pos[n.id].y*h+Math.cos(t*.0004+k*2.3)*4];
+  const draw=()=>{RSCALE=1;ctx.clearRect(0,0,w,h);ctx.imageSmoothingEnabled=true;ctx.drawImage(band,0,0,w,h);drawContours(ctx,segs,.7);
+    edges.forEach(e=>{const a=pt(nById[e.src],e.src.length),b=pt(nById[e.dst],e.dst.length);ctx.lineWidth=1;ctx.strokeStyle='rgba(14,26,43,.10)';ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke();});
+    nodes.forEach((n,i)=>{const [x,y]=pt(n,i);ctx.beginPath();ctx.arc(x,y,R(n)*.5,0,Math.PI*2);ctx.fillStyle=n.kind==='scen'?'rgba(42,120,214,.5)':'rgba(14,26,43,.22)';ctx.fill();ctx.lineWidth=1.5;ctx.strokeStyle='#fff';ctx.stroke();});};
+  size();draw();if(!reduced){const loop=ts=>{t=ts;draw();requestAnimationFrame(loop);};requestAnimationFrame(loop);}
+  addEventListener('resize',()=>{size();draw();});
+})();
+
+/* map · interactive */
+const map=(function(){
+  const stage=$('#stage'),cv=$('#mapCanvas'),ctx=cv.getContext('2d'),tip=$('#tipcard');
+  let w=0,h=0,band,segs,hover=null,pinned=null,path=null,step=-1,timer=null,pos=null,aspect=0,mobile=false;
+  const P=n=>[pos[n.id].x*w,pos[n.id].y*h];
+  const size=()=>{const r=cv.getBoundingClientRect();w=Math.round(r.width);h=Math.round(r.height);cv.width=w*devicePixelRatio;cv.height=h*devicePixelRatio;ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+    const A=w/h;if(!pos||Math.abs(A-aspect)/aspect>.12){pos=layout(A);aspect=A;}mobile=w<700;
+    band=bandLayer(fieldGrid(w,h,8,Math.min(w,h)*.16,pos),w,h,.13);segs=contourSegs(fieldGrid(w,h,5,Math.min(w,h)*.16,pos));draw();};
+  const neighbors=id=>{const s=new Set([id]);edges.forEach(e=>{if(e.src===id)s.add(e.dst);if(e.dst===id)s.add(e.src);});return s;};
+  function draw(){
+    const act=hover||pinned;RSCALE=mobile?.82:1;
+    ctx.clearRect(0,0,w,h);ctx.imageSmoothingEnabled=true;ctx.drawImage(band,0,0,w,h);drawContours(ctx,segs,1);
+    const focus=act?neighbors(act.id):path?new Set(path.slice(0,step+1)):null;
+    const onEdges=[];
+    edges.forEach(e=>{let st='base';
+      if(act){st=(e.src===act.id||e.dst===act.id)?'on':'dim';}
+      else if(path){const i=path.indexOf(e.src),j=path.indexOf(e.dst);st=(i>=0&&j>=0&&Math.abs(i-j)===1&&Math.max(i,j)<=step)?'on':'dim';}
+      if(st==='on'){onEdges.push(e);return;}drawEdge(ctx,e,w,h,st,pos);});
+    const tags=[];onEdges.forEach(e=>{const g=drawEdge(ctx,e,w,h,'on',pos);tags.push([g,e.cid]);});
+    nodes.forEach(n=>{const [x,y]=P(n),r=R(n);const dim=focus?!focus.has(n.id):false;const hot=(act&&act.id===n.id)||(path&&path[step]===n.id);drawNode(ctx,n,x,y,r,hot,dim);});
+    const items=[],nodeBoxes=[];
+    nodes.forEach(n=>{const [x,y]=P(n),r=R(n);nodeBoxes.push({id:n.id,x0:x-r,y0:y-r,x1:x+r,y1:y+r});const dim=focus?!focus.has(n.id):false;const hot=(act&&act.id===n.id)||(path&&path[step]===n.id);
+      const inFocus=focus&&focus.has(n.id);
+      if(mobile&&!hot&&!inFocus&&n.deg<4)return; // Narrow screens only label hub nodes, others shown after being selected
+      if(dim&&!mobile)return; // Faded nodes are no longer labelled, to make the highlighted neighbours clearer
+      const text=mobile&&n.name.length>7?n.name.slice(0,7)+'…':n.name;
+      items.push({id:n.id,text,x,y,r,hot:hot?1:0,dim,deg:n.deg+(inFocus?100:0),w,h});});
+    placeLabels(ctx,items,nodeBoxes);
+    tags.forEach(([g,cid])=>drawEdgeTag(ctx,g,cid));
+  }
+  const hit=(mx,my)=>{let best=null,bd=1e9;nodes.forEach(n=>{const [x,y]=P(n);const d=Math.hypot(mx-x,my-y);if(d<R(n)+12&&d<bd){bd=d;best=n;}});return best;};
+  const showTip=(n,mx,my)=>{const o=IDX[n.id];const rel=edges.filter(e=>e.src===n.id||e.dst===n.id).slice(0,3);
+    tip.innerHTML=`<span class="label">${n.kind==='scen'?'Future scenarios':n.kind==='trend'?'Structural trends':'Off-map nodes'} · ${esc(n.id)}</span><div class="t">${esc(n.full)}</div>${o&&o.prob!=null?cred(o.prob):''}${rel.map(e=>`<div class="e"><span class="id">${esc(e.cid)}</span> ${esc(e.src===n.id?'→ '+nById[e.dst].name:'← '+nById[e.src].name)}<br>${esc(String(e.cause||'').slice(0,90))}${(e.cause||'').length>90?'…':''}</div>`).join('')}${o&&(n.kind==='trend'||n.kind==='scen')?'<div class="hint">Click to read more ↗</div>':''}`;
+    const r=cv.getBoundingClientRect();let left=mx+18,top=my+18;if(left+336>r.width)left=Math.max(8,mx-336);if(top+240>r.height)top=Math.max(8,my-230);tip.style.left=left+'px';tip.style.top=top+'px';tip.classList.add('on');};
+  cv.addEventListener('pointermove',ev=>{if(ev.pointerType==='touch')return;const r=cv.getBoundingClientRect();const n=hit(ev.clientX-r.left,ev.clientY-r.top);if(n!==hover){hover=n;draw();}if(n)showTip(n,ev.clientX-r.left,ev.clientY-r.top);else if(!pinned)tip.classList.remove('on');cv.style.cursor=n?'pointer':'default';});
+  cv.addEventListener('pointerleave',()=>{hover=null;if(!pinned)tip.classList.remove('on');draw();});
+  cv.addEventListener('click',ev=>{const r=cv.getBoundingClientRect();const n=hit(ev.clientX-r.left,ev.clientY-r.top);
+    if(ev.pointerType==='touch'||matchMedia('(hover: none)').matches){ if(n&&pinned&&pinned.id===n.id){if(IDX[n.id]&&(n.kind==='trend'||n.kind==='scen'))openSheet(n.id);return;} pinned=n;draw();if(n)showTip(n,ev.clientX-r.left,ev.clientY-r.top);else tip.classList.remove('on');return;}
+    if(n&&IDX[n.id]&&(n.kind==='trend'||n.kind==='scen'))openSheet(n.id);});
+  function follow(chain){stop();path=chain.path.filter(id=>nById[id]);if(!path.length)return;step=-1;$('#follow').classList.add('on');$('#followText').textContent=chain.id+' · '+chain.title;
+    goTo(stage,'center');const tick=()=>{step++;draw();if(step<path.length-1)timer=setTimeout(tick,reduced?0:720);};tick();}
+  function stop(){clearTimeout(timer);timer=null;path=null;step=-1;$('#follow').classList.remove('on');draw();}
+  $('#followExit').addEventListener('click',stop);
+  size();addEventListener('resize',size);
+  return {follow,stop};
+})();
+$('#chainList').innerHTML=D.chains.map(c=>`<div class="chain" id="${c.id}">
+  <div><h4>${esc(c.title)}</h4><p class="story">${esc(c.story)}</p></div>
+  <div class="prog"><div class="label"><span>Progress</span><span>${fmt(c.prob)}</span></div>${meter(c.prob)}</div>
+  <div class="acts"><button class="btn sm" data-follow="${c.id}">Follow on map</button><button class="btn sm ghost" data-open="${c.id}">Details</button></div>
+</div>`).join('');
+$$('[data-follow]').forEach(b=>b.addEventListener('click',()=>map.follow(IDX[b.dataset.follow])));
+
+/* ───────── This week ───────── */
+const win=D.meta.weekWindow;$('#weekWin').textContent=win?`${win.from} → ${win.to}`:D.meta.asof;
+const movers=[...D.trends,...D.scenarios,...D.chains];
+const ups=movers.filter(o=>o.delta>0).sort((a,b)=>b.delta-a.delta),downs=movers.filter(o=>o.delta<0).sort((a,b)=>a.delta-b.delta),held=movers.filter(o=>!o.delta);
+$('#weekLede').textContent=`That week ${ups.length} judgements were raised, ${downs.length} lowered and ${held.length} held${(D.meta.resolved||[]).some(r=>r.date===D.meta.asof)?', and some judgements have been falsified or confirmed by reality':''}. The revisions are all minor: this model's rules state that without falsification or confirmation events, only fine-tuning is permitted in a single week; belief strength relies on accumulation instead of sudden jumps.`;
+const kindOf=o=>o.kind==='trend'?'Trends':o.kind==='scenario'?'Scenarios':'Chains';
+const moveRow=o=>{const why=reasonOf(o.lastLog),fs=firstSentence(why);const more=why.length>fs.length;
+  return`<div class="move"><button class="hd" data-open="${o.id}"><span class="t"><span class="kind">${kindOf(o)} · ${esc(o.id)}</span>${esc(o.title)}</span><span class="delta ${o.delta>0?'u':'d'}">${fmt(o.prev)} → ${fmt(o.prob)}</span></button>
+  ${why?`<p class="why"><span class="less">${esc(fs)}</span><span class="more">${esc(why)}</span>${more?`<button data-more aria-expanded="false">Expand reasons</button>`:''}</p>`:''}</div>`;};
+$('#nUp').textContent=ups.length;$('#nDown').textContent=downs.length;
+$('#upList').innerHTML=ups.map(moveRow).join('')||'<p class="small">None raised this week.</p>';
+$('#downList').innerHTML=downs.map(moveRow).join('')||'<p class="small">None lowered this week.</p>';
+$$('[data-more]').forEach(b=>b.addEventListener('click',()=>{const m=b.closest('.move');const on=!m.classList.contains('open');m.classList.toggle('open',on);b.textContent=on?'Collapse':'Expand reasons';b.setAttribute('aria-expanded',on);}));
+const res=D.meta.resolved||[];
+$('#resolvedList').innerHTML=res.length?res.map(r=>`<div class="rs"><div class="label">${esc(r.date)}</div><div><div class="t">${esc(r.title)}<span class="verdict">${esc(r.verdict)}</span></div>${r.event?`<p class="e">${esc(firstSentence(r.event,220))}</p>`:''}</div></div>`).join(''):'<p class="small">No judgements falsified or confirmed yet.</p>';
+const cands=D.candidates||[];
+if(cands.length)$('#watchList').innerHTML=cands.map(c=>`<li><span class="label">${c.layer==='coupling'?'Couplings':c.layer==='trend'?'Trends':c.layer==='scenario'?'Scenarios':'Chains'}</span>${esc(c.title)}</li>`).join('');else $('#watch').hidden=true;
+
+/* ───────── Method ───────── */
+$('#layers').innerHTML=[['Trend','Trends','Single structural trend. Answers "what trend is moving".',D.trends.length],['Coupling','Couplings','Causal wires between trends. Answers "how do trends propagate".',D.meta.active_couplings],['Chain','Chains','End-to-end paths formed by multiple wires. Answers "what does the full path look like after propagating".',D.chains.length],['Scenario','Scenarios','Scenarios after the confluence of multiple chains. Answers "what the world will become".',D.scenarios.length]]
+  .map(([en,zh,p,n])=>`<div class="layer"><span class="eyebrow">${en}</span><span class="n">${n}</span><h4>${zh}</h4><p>${p}</p></div>`).join('');
+$('#scaleDemo').innerHTML=meter(0.76,true)+`<div class="bands"><span style="left:20%">Against</span><span style="left:47.5%">Uncertain</span><span style="left:60%">Slight</span><span style="left:70%">Clear</span><span style="left:80%">Strong</span><span style="left:92.5%">Very strong</span></div>`;
+$('#abc').innerHTML=[['A','Event verdict',disc.A,'A foreseeable event will provide the answer'],['B','Tripwire',disc.B,'Triggering weakens it, silence does not count as confirmation'],['C','Long-term proposition',disc.C,'Continuously increase or decrease belief strength based on evidence']]
+  .map(([k,t,n,d])=>`<div class="card"><span class="eyebrow">${k} category · ${t}</span><b>${n??'—'}</b><span>${d}</span></div>`).join('');
+$('#footMeta').innerHTML=`Snapshot of ${esc(D.meta.asof)} — this copy is frozen and does not update<br>The working model is kept as markdown and revised weekly; only that date is shown here`;
+
+/* ───────── sheet ───────── */
+const sheet=$('#sheet'),scrim=$('#scrim');let lastFocus=null;
+if(framed){
+  const place=()=>{
+    try{
+      const fr=parent.document.querySelector('iframe.studio-app__frame');if(!fr)return;
+      const h=parent.innerHeight;
+      const y=Math.min(Math.max(0,-fr.getBoundingClientRect().top),Math.max(0,fr.offsetHeight-h));
+      for(const el of [sheet,scrim]){el.style.position='absolute';el.style.top=y+'px';el.style.height=h+'px';el.style.bottom='auto';}
+    }catch(err){}
+  };
+  const track=()=>{if(sheet.classList.contains('on'))place();};
+  new MutationObserver(track).observe(sheet,{attributes:true,attributeFilter:['class']});
+  parent.addEventListener('scroll',track,{passive:true});
+  parent.addEventListener('resize',track);
+}
+function openSheet(id){const o=IDX[id];if(!o)return;lastFocus=document.activeElement;
+  const kind={trend:'Structural trends · Trend',scenario:'Scenarios · Scenario',chain:'Causal chains · Chain'}[o.kind];if(!kind)return;
+  const list=(title,arr,q=false)=>arr&&arr.length?`<div class="blk"><h4>${title}</h4><ul>${arr.map(x=>`<li${q?' class="q"':''}>${esc(x)}</li>`).join('')}</ul></div>`:'';
+  let body='';
+  if(o.kind==='trend'){body=`<div class="status">${cred(o.prob)}${meter(o.prob)}<span class="label">${esc(o.status)}</span></div>
+    <div class="blk"><p class="lead">${esc(o.oneliner)}</p></div><div class="blk"><h4>First-principles mechanism</h4><p>${esc(o.mechanism)}</p></div><div class="blk"><h4>Cross-domain analogy</h4><p>${esc(o.analogy)}</p></div>
+    ${list('Confirmation signal',o.hit)}${list('Falsification signal',o.falsify,true)}${list('Key assumptions',(o.assumptions||[]).map(a=>firstSentence(a,160)))}
+    <div class="blk"><h4>Belief trajectory</h4>${sparkline(o.series)}</div>
+    ${o.rel_scen&&o.rel_scen.length?`<div class="blk"><h4>Associated scenarios</h4><div class="chips">${o.rel_scen.map(s=>idChip(s,14)).join('')}</div></div>`:''}`;}
+  else if(o.kind==='scenario'){body=`<div class="status">${cred(o.prob)}${meter(o.prob)}</div><div class="blk"><p class="lead">${esc(o.oneliner)}</p></div>
+    ${list('Key assumptions it relies on',(o.assumptions||[]).map(a=>firstSentence(a,160)))}${list('What would make the model change its mind',(o.falsify||'').split('\n').filter(Boolean).map(f=>f.replace(/^-\s*/,'')),true)}
+    <div class="blk"><h4>Belief trajectory</h4>${sparkline(o.series)}</div>
+    ${o.rel_chain&&o.rel_chain.length?`<div class="blk"><h4>Which causal chains merge here</h4><div class="chips">${o.rel_chain.map(id=>idChip(id)).join('')}</div></div>`:''}`;}
+  else{body=`<div class="status">${cred(o.prob,'Progress')}${meter(o.prob)}</div><div class="blk"><p class="lead">${esc(o.story)}</p></div>
+    ${o.path&&o.path.length?`<div class="blk"><h4>Path</h4><div class="chips">${o.path.map(id=>idChip(id)).join('<span class="arrow">→</span>')}</div></div>`:''}
+    <div class="blk"><h4>Key bottleneck node</h4><p>${esc(o.bottleneck)}</p></div>${o.loop?`<div class="blk"><h4>Closed loop</h4><p>${esc(o.loop)}</p></div>`:''}
+    <div class="blk"><h4>Progress trajectory</h4>${sparkline(o.series)}</div><div class="blk"><button class="btn primary" data-follow-sheet="${o.id}">Follow this chain on the map</button></div>`;}
+  sheet.innerHTML=`<div class="sh"><div class="k"><span class="eyebrow">${kind} · ${esc(o.id)}</span><button class="btn icon close" aria-label="Close">✕</button></div><h2>${esc(o.title)}</h2></div><div class="sb">${body}</div>`;
+  sheet.classList.add('on');scrim.classList.add('on');sheet.setAttribute('aria-hidden','false');sheet.scrollTop=0;document.body.style.overflow='hidden';
+  sheet.querySelector('.close').focus();history.replaceState(null,'','#'+id);
+  const fb=sheet.querySelector('[data-follow-sheet]');if(fb)fb.addEventListener('click',()=>{closeSheet();map.follow(o);});
+}
+function closeSheet(){sheet.classList.remove('on');scrim.classList.remove('on');sheet.setAttribute('aria-hidden','true');document.body.style.overflow='';if(lastFocus&&lastFocus.focus)lastFocus.focus();}
+scrim.addEventListener('click',closeSheet);
+addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet();});
+document.addEventListener('click',e=>{const c=e.target.closest('.close');if(c&&sheet.contains(c)){closeSheet();return;}const b=e.target.closest('[data-open]');if(!b)return;const id=b.dataset.open;const o=IDX[id];if(!o)return;
+  if(o.kind==='scenario'&&!sheet.contains(b)){const f=document.getElementById(id);if(f){f.classList.add('open');f.querySelector('.row').setAttribute('aria-expanded','true');goTo(f,'start');history.replaceState(null,'','#'+id);return;}}
+  openSheet(id);});
+
+/* ───────── nav / reveal / deep link ───────── */
+const topbar=$('#top');addEventListener('scroll',()=>topbar.classList.toggle('scrolled',scrollY>8),{passive:true});
+const secs=['futures','forces','map','week','method'].map(id=>document.getElementById(id));
+if('IntersectionObserver' in window){
+  const navIO=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting){$$('nav.primary a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+en.target.id));}});},{rootMargin:'-40% 0px -55% 0px'});
+  if(!framed)secs.forEach(s=>navIO.observe(s));
+  if(!reduced&&!framed){const vh=innerHeight;const targets=$$('.future, .force, .group .gh, .chain, .move, .rs, .layer, .mcol, .sec-head');
+    targets.forEach(el=>{if(el.getBoundingClientRect().top>vh)el.classList.add('pre','reveal');});
+    const revIO=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting){en.target.classList.remove('pre');revIO.unobserve(en.target);}});},{rootMargin:'0px 0px -6% 0px'});
+    targets.forEach(el=>revIO.observe(el));}
+}
+const hash=location.hash.replace('#','');
+if(hash&&IDX[hash]){const o=IDX[hash];if(o.kind==='scenario'){const f=document.getElementById(hash);if(f){f.classList.add('open');f.querySelector('.row').setAttribute('aria-expanded','true');setTimeout(()=>goTo(f,'start'),50);}}else setTimeout(()=>openSheet(hash),80);}
+})();
 </script>
-</body></html>
+<!--ARTIFACT:END-->
+</body>
+</html>
