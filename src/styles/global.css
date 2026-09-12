@@ -1930,6 +1930,27 @@ textarea {
   overflow-x: auto;
 }
 
+/* A table of five or more columns cannot fit the prose measure. Left alone it
+   squeezes rather than scrolls, and every cell wraps to four or five lines.
+   Give those tables a floor wide enough to read and let the block scroll
+   instead. Narrower tables, which is every other one on the site, keep the
+   `width: 100%` behaviour above and never overflow. */
+.prose table:has(th:nth-child(5)) :is(th, td) {
+  min-width: 6.5rem;
+}
+
+.prose table:has(th:nth-child(5)) :is(th, td):first-child {
+  min-width: 10rem;
+}
+
+.prose table:has(th:nth-child(5)) :is(th, td):nth-child(4) {
+  min-width: 16rem;
+}
+
+.prose table:has(th:nth-child(5)) :is(th, td):nth-child(5) {
+  min-width: 12rem;
+}
+
 .prose th,
 .prose td {
   border-bottom: 1px solid var(--color-hairline);

@@ -37,20 +37,20 @@ The remaining three dimensions decide whether a promising idea can survive conta
 
 Applying those dimensions across the stack produces a map rather than a ranking. Engineering pain is distributed widely, but the strength of the available oracle varies enormously, and that variation predicts which domains can support autonomous iteration.
 
-| Engineering domain | Engineering pain | Oracle strength | Best AI role |
-| --- | --- | --- | --- |
-| Architecture and design-space exploration | High | Low to medium | Surrogate modeling, exploration, decision support |
-| RTL development | Medium to high | Medium | Generation, review, refactoring, tool-assisted coding |
-| Digital verification | Very high | Very high | Verification and debug agent |
-| Synthesis | Medium to high | High | Optimization and recipe search |
-| Physical design | Very high | High | Optimization and cross-domain closure agent |
-| Timing closure | Very high | Very high | Diagnosis, ECO generation, iterative closure |
-| Signoff | High | Very high | Triage, orchestration, root-cause assistance |
-| Analog and custom design | Very high | High | Physics-in-the-loop optimizer |
-| Compact modeling | High | Medium to high | Parameter optimization, multimodal quality assurance |
-| DTCO and STCO | High | Medium to high | Cross-layer surrogates and decision intelligence |
-| Manufacturing yield analysis | Very high | Low to medium | Knowledge-assisted root-cause agent |
-| Defect detection and virtual metrology | High | Medium to high | Prediction, anomaly detection, classification |
+| Engineering domain | Engineering pain | Oracle strength | Core difficulty | Best AI role |
+| --- | --- | --- | --- | --- |
+| Architecture and design-space exploration | High | Low to medium | Sparse feedback across an enormous cross-layer trade space | Surrogate modeling, exploration, decision support |
+| RTL development | Medium to high | Medium | Turning ambiguous specifications into exact behavior | Generation, review, refactoring, tool-assisted coding |
+| Digital verification | Very high | Very high | State-space explosion, coverage closure, debug effort | Verification and debug agent |
+| Synthesis | Medium to high | High | A large implementation search space with conflicting PPA objectives | Optimization and recipe search |
+| Physical design | Very high | High | Timing, congestion, power, area, and routing are strongly coupled | Optimization and cross-domain closure agent |
+| Timing closure | Very high | Very high | A few critical paths can dominate the whole design | Diagnosis, ECO generation, iterative closure |
+| Signoff | High | Very high | Expensive tail problems across timing, design rules, IR drop, and reliability | Triage, orchestration, root-cause assistance |
+| Analog and custom design | Very high | High | Strong physics, continuous variables, process and temperature spread, layout parasitics | Physics-in-the-loop optimizer |
+| Compact modeling | High | Medium to high | Coupled parameters, physical consistency, downstream accuracy | Parameter optimization, multimodal quality assurance |
+| DTCO and STCO | High | Medium to high | Technology metrics do not map directly onto system metrics | Cross-layer surrogates and decision intelligence |
+| Manufacturing yield analysis | Very high | Low to medium | Heterogeneous data, confounding, causal ambiguity | Knowledge-assisted root-cause agent |
+| Defect detection and virtual metrology | High | Medium to high | High-dimensional manufacturing signals | Prediction, anomaly detection, classification |
 
 The pattern worth noticing is that pain alone does not determine suitability. Manufacturing root-cause analysis is extremely painful and economically valuable, yet its weak causal oracle makes autonomous intervention much harder than digital verification. Verification is unusually attractive precisely because both the pain and the oracle are strong: simulation, assertions, regression, and formal methods can directly evaluate many AI-generated actions, which makes iterative experimentation comparatively safe.
 
