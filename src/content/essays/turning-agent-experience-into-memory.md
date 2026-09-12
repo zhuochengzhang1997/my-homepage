@@ -6,7 +6,7 @@ subtitle: "Logs preserve what happened. Durable agent memory requires a governed
 date: 2026-05-31
 description: "How agent systems can turn execution traces into reusable experience without allowing weak, stale, or contradictory lessons to accumulate."
 ogSlug: turning-agent-experience-into-memory
-order: 8
+order: 9
 ---
 
 Persistent memory changes an agent from a stateless executor into a system that can carry experience across tasks. But persistence alone is not learning. The difficult part is deciding which experience deserves to survive, how it should be rewritten, what evidence supports it, and when it should be retired.

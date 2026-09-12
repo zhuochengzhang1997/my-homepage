@@ -6,7 +6,7 @@ subtitle: "Generic runtimes are becoming infrastructure. Durable advantage lies 
 date: 2026-05-31
 description: "Why most companies should treat agent runtimes as infrastructure and invest their differentiation in the domain-specific layer above them."
 ogSlug: the-domain-layer
-order: 6
+order: 7
 ---
 
 As agent platforms mature, most companies should stop treating the generic agent runtime as the primary place to differentiate. The durable engineering work is moving upward: into domain context, tool interfaces, permission boundaries, evaluation, approval, audit, and the mechanisms that turn repeated execution into reusable operational knowledge.

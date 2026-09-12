@@ -6,7 +6,7 @@ subtitle: "As intelligence becomes abundant, coordination becomes scarce. Value 
 date: 2026-08-31
 description: "Why system coordination may become the defining infrastructure problem as AI spreads across software, hardware, energy, and enterprise operations."
 ogSlug: ai-at-system-scale
-order: 3
+order: 4
 ---
 
 As AI capabilities become more abundant, the binding constraint is beginning to shift from producing intelligence to coordinating it. The next high-value layer is therefore unlikely to be a single model, chip, or software component. It is the system capability that can observe state, interpret context, apply policy, allocate resources, act on the world, and close the feedback loop.

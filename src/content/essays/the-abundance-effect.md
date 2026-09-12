@@ -6,7 +6,7 @@ subtitle: "When AI makes a task cheaper, more of that task becomes worth doing. 
 date: 2026-08-31
 description: "Why cheaper AI capability can release latent demand, increase total activity, and shift scarcity to verification, infrastructure, and coordination."
 ogSlug: the-abundance-effect
-order: 2
+order: 3
 ---
 
 AI efficiency does not necessarily reduce total work. In many domains, it lowers the cost of capability enough to activate demand that previously never entered the market. The result is not simply automation, but a broader expansion of what becomes economically worth doing.

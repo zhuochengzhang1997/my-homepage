@@ -7,7 +7,7 @@ subtitle: "Enterprise knowledge becomes useful to agents only when it is compile
 date: 2026-07-31
 description: "Why reliable enterprise agents require organizational knowledge to be turned into an executable and governed operating structure."
 ogSlug: compiling-enterprise-knowledge
-order: 4
+order: 5
 ---
 
 As foundation models become more capable and more widely available, the limiting factor in enterprise agents is shifting. The difficult part is increasingly not whether a model can reason, but whether an organization can translate its own knowledge into a form that an agent can use reliably.

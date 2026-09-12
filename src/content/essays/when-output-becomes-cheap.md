@@ -6,7 +6,7 @@ subtitle: "AI can make output abundant without making judgment, understanding, o
 date: 2026-07-31
 description: "How cheap machine-generated output moves the bottleneck toward verification, sense-making, problem framing, and accountable judgment."
 ogSlug: when-output-becomes-cheap
-order: 5
+order: 6
 ---
 
 AI is making many forms of professional output cheaper faster than it is making understanding, judgment, responsibility, or meaning cheaper. That difference will reshape both jobs and organizations. The central question is no longer only which tasks machines can perform. It is which parts of professional value remain scarce once answers, code, documents, designs, and analyses can be produced at very low marginal cost.

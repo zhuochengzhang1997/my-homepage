@@ -6,7 +6,7 @@ subtitle: "No single mechanism can preserve exact history and compress endless s
 date: 2026-05-31
 description: "Why future systems may combine attention, recurrent state, episodic storage, retrieval, and consolidation instead of choosing one memory architecture."
 ogSlug: beyond-transformer-and-mamba
-order: 7
+order: 8
 ---
 
 The important question is not whether Mamba replaces the Transformer. It is whether future intelligent systems can combine two different memory capabilities: high-fidelity access to recent or exact history, and low-cost compression of long-running state. For Physical AI, that distinction is likely to matter more than the choice of a single sequence operator.

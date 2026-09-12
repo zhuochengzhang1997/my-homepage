@@ -6,7 +6,7 @@ subtitle: "AI can search far beyond human scale only when the surrounding system
 date: 2026-06-30
 description: "How observable state, scalable search, low-cost feedback, and trusted verification turn a complex domain into a learnable system."
 ogSlug: verifiable-learning-loops
-order: 9
+order: 10
 ---
 
 The ability of AI to make progress in a complex domain depends on more than model scale, data volume, or the apparent complexity of the world being modeled. A deeper constraint is whether the domain can be turned into a learning system with observable state, scalable candidate generation, measurable objectives, low-cost feedback, and a verifier that can reliably reject bad answers.
