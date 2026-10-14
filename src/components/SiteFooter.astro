@@ -21,7 +21,7 @@ const { name = "Zhuocheng Zhang" } = Astro.props;
 const year = new Date().getFullYear();
 
 const [profileEntry] = await getCollection("profile");
-const email = profileEntry.data.email ?? "zhuochengzhang@foxmail.com";
+const email = profileEntry.data.email ?? "zczhang1997@gmail.com";
 const identities = profileEntry.data.identities ?? {};
 
 // Channels that ship, in the order a reader deciding whether to write would
