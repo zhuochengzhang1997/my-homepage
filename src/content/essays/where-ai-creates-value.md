@@ -134,8 +134,7 @@ It also suggests that maximum autonomy is the wrong objective. In high-risk engi
 
 The long-term shift is unlikely to run from EDA software to AI replacing EDA software. The more plausible transition changes the interface rather than the stack beneath it. A traditional workflow moves an engineer through individual tools, reports, manual interpretation, and then the next tool. An AI-native workflow puts engineering intent and constraints into a reasoning layer that operates those same tools and returns a verified result.
 
-```text
-Human
+<pre class="prose-flow" tabindex="0" aria-label="The emerging architecture diagram"><code>Human
 Goals, constraints, trade-offs, responsibility
 
 AI agent
@@ -145,8 +144,7 @@ Engineering tools
 Simulation, formal, synthesis, place and route, timing, extraction, SPICE, signoff
 
 Physical world
-Devices, interconnects, layouts, packages, wafers, silicon
-```
+Devices, interconnects, layouts, packages, wafers, silicon</code></pre>
 
 The deterministic tools remain essential because they encode numerical algorithms, physical models, signoff methodology, and certification that took decades to establish and that no model reproduces by being fluent about them. AI occupies a different layer: reasoning, orchestration, diagnosis, planning, search, and knowledge reuse. What changes is the interface between an engineer and the toolchain, not the existence of the toolchain.
 

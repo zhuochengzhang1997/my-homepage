@@ -1956,6 +1956,12 @@ textarea {
   font-size: inherit;
 }
 
+.prose pre.prose-flow {
+  /* Keep the shared diagram type size when long lines scroll on mobile. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 .prose img {
   border-radius: var(--radius-card);
   margin-inline: auto;
