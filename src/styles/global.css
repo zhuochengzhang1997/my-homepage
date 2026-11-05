@@ -859,6 +859,38 @@ textarea {
   line-height: var(--type-lead-lh);
 }
 
+.home-hero__availability {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-top: var(--space-3);
+  color: var(--color-accent);
+  font-size: var(--type-body-sm);
+  font-weight: 600;
+  line-height: 1.5;
+  text-decoration: underline;
+  text-decoration-color: var(--color-line);
+  text-underline-offset: 0.2em;
+}
+
+.home-hero__availability::before {
+  content: "";
+  flex: none;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: currentColor;
+  transform: translateY(-0.08em);
+}
+
+.home-hero__availability:hover {
+  text-decoration-color: currentColor;
+}
+
+.home-hero__availability span {
+  text-wrap: balance;
+}
+
 /* Shared frost plate (kit R12 P10 S2 G1 F58 K4 Ndrop Sf). Home portrait +
    Research diagrams. Not chrome, not a header, not a second glass system. */
 .frost-plate {
@@ -932,8 +964,14 @@ textarea {
     font-size: 1.125rem;
   }
 
-  .proof-grid {
+  .home-hero__availability {
     order: 5;
+    justify-self: start;
+    margin-top: -0.75rem;
+  }
+
+  .proof-grid {
+    order: 6;
     margin-top: 0;
   }
 
@@ -1205,7 +1243,8 @@ textarea {
     translate: 0 1rem;
   }
 
-  .home-hero__lead {
+  .home-hero__lead,
+  .home-hero__availability {
     translate: 0 2.5rem;
   }
 
