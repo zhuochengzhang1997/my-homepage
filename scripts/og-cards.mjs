@@ -3,7 +3,7 @@
  *
  * Single source of truth, shared by two consumers:
  *   - scripts/generate-og.mjs renders each entry to public/og/<file>.png
- *   - src/pages/writing/[slug].astro checks whether a per-essay card exists
+ *   - src/pages/essays/[slug].astro checks whether a per-essay card exists
  *
  * Adding an essay: add an entry here, run `npm run og`, commit the PNG.
  */
@@ -44,5 +44,10 @@ export const OG_CARDS = [
   },
 ];
 
-/** File stems that generate-og.mjs has been told to produce. */
-export const OG_CARD_FILES = OG_CARDS.map((card) => card.file);
+/** Custom images in public/og/ shared with just the article title. */
+export const MINIMAL_ESSAY_CARD_FILES = [
+  "essay-why-ai-should-invest-in-the-semiconductor-industry",
+  "essay-can-ai-move-from-discovery-to-invention",
+];
+
+export const OG_CARD_FILES = [...OG_CARDS.map((card) => card.file), ...MINIMAL_ESSAY_CARD_FILES];

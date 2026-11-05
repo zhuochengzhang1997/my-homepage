@@ -18,6 +18,7 @@ interface Props {
   description: string;
   date?: Date;
   image?: string;
+  minimalShareCard?: boolean;
   /** What kind of piece this is, shown above the title. Not every essay is a
    * position paper, so the label travels with the entry rather than the layout. */
   kind?: string;
@@ -33,6 +34,7 @@ const {
   description,
   date,
   image,
+  minimalShareCard,
   kind = "Essay",
   indexHref = "/essays/",
 } = Astro.props;
@@ -47,7 +49,12 @@ const formattedDate = date
 const isoDate = date ? date.toISOString().slice(0, 10) : undefined;
 ---
 
-<BaseLayout title={title} description={description} image={image}>
+<BaseLayout
+  title={title}
+  description={description}
+  image={image}
+  minimalShareCard={minimalShareCard}
+>
   <main id="main-content" class="section-band section-band--canvas prose-main">
     <div class="prose-rail">
       <article class="prose-article">

@@ -3,7 +3,7 @@ import type { GetStaticPaths } from "astro";
 import { getCollection, render } from "astro:content";
 
 import ProseLayout from "../../layouts/ProseLayout.astro";
-import { OG_CARD_FILES } from "../../../scripts/og-cards.mjs";
+import { MINIMAL_ESSAY_CARD_FILES, OG_CARD_FILES } from "../../../scripts/og-cards.mjs";
 
 export const getStaticPaths = (async () => {
   const entries = await getCollection("essays");
@@ -19,9 +19,8 @@ export const getStaticPaths = (async () => {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 
-// Per-essay cards are declared in scripts/og-cards.mjs, rendered by `npm run og`
-// and committed under public/og/. If an essay has no card declared yet, fall
-// back to the section card rather than pointing og:image at a URL that 404s.
+// Per-essay cards in public/og/ are registered in scripts/og-cards.mjs.
+// Essays without a registered card use the shared section image.
 const cardStem = `essay-${entry.data.ogSlug ?? entry.id}`;
 const ogImage = OG_CARD_FILES.includes(cardStem) ? `/og/${cardStem}.png` : "/og/essays.png";
 ---
@@ -34,6 +33,7 @@ const ogImage = OG_CARD_FILES.includes(cardStem) ? `/og/${cardStem}.png` : "/og/
   kind={entry.data.kind}
   date={entry.data.date}
   image={ogImage}
+  minimalShareCard={MINIMAL_ESSAY_CARD_FILES.includes(cardStem)}
   indexHref={`/essays/#${entry.id}-title`}
 >
   <Content />
