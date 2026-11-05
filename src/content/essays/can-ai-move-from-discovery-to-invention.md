@@ -2,7 +2,7 @@
 title: "Can AI Move from Discovery to Invention?"
 date: 2026-11-05
 description: "AI may move beyond discovering possibilities within existing rules toward questioning assumptions, reconstructing theories, and creating new capabilities."
-order: 11
+order: 12
 ---
 
 **AI can already discover possibilities that humans have not explored within existing rules. The deeper question is whether it can go further: question those rules, construct new theories, and invent capabilities that did not previously exist.**
